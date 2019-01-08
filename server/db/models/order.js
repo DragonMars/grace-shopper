@@ -6,3 +6,5 @@ const Order = db.define('order', {
     type: Sequelize.STRING
   }
 })
+
+module.exports = Order
