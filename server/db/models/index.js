@@ -39,15 +39,6 @@ LineItem.prototype.getTotal = async lineItem => {
   return price * lineItem.quantity
 }
 
-// eager load all product info for each line item per order
-const getProductInfoPerOrder = async orderId => {
-  const productInfo = await LineItem.findAll({
-    where: {orderId: orderId},
-    include: {model: Product}
-  })
-  return productInfo
-}
-
 module.exports = {
   User,
   Category,
