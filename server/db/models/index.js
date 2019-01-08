@@ -22,5 +22,7 @@ ShippingAddress.hasMany(Order)
 Order.belongsTo(ShippingAddress)
 
 module.exports = {
-  User
+  User,
+  Order,
+  ShippingAddress
 }
