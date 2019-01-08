@@ -16,12 +16,14 @@ install:
 before_script:
   - psql -c 'create database "dragon-mars-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
 
-# before_deploy:
-#   - npm run build-client # make the bundle
-#   - rm -rf node_modules # omit from the tarball, since we skip cleanup
-# deploy:
-#   skip_cleanup: true # prevents travis from deleting the build
-#   provider: heroku
-#   app: YOUR-HEROKU-APP-NAME-HERE # see README
-#   api_key:
-#     secure: YOUR-***ENCRYPTED***-API-KEY-HERE # see README
+before_deploy:
+  - npm run build-client # make the bundle
+  - rm -rf node_modules # omit from the tarball, since we skip cleanup
+deploy:
+  skip_cleanup: true # prevents travis from deleting the build
+  provider: heroku
+  app: dragonmars # see README
+  api_key:
+    secure: hwUezF7QPOah3q5xRbKzgDk2ilfjWgj2I72+d/CF2ErFWbAq9L4hZtNvHg2K9H/Ew82RzeQVbUscXphKb9OYGuTvsgY8tEffn4R6rnruw8HwFGkXNsZm/Yy8GHpA3hMaSNZtKTMX925SF2wAhkqqPEOdMBUYuP7v18jYF6/kLyON2aeuKwx6kL7m9RrkJghC2pcZZYYiDmi1yHZ/aoeyEOzv2u8iL6WjjgYWYIXCYz6iwfoWqLAOpVj08IYUasNBeuUL3uHkgJzrhjTsJxHZI2KAzJzdUaYtPdwitn7Mie3rbLbJXv+x9c6pHOZmFqOe3CZ1kAWw20fe6uUTIiQjduEU/V0YajAJbcZi86bz/fQBLLdUqEqFNHWeujM1mg+wLI8NBvscxCoEpcSHhjU1VkXemCs4UiaQzor1JrAs5E417DIf8zKvw4KtqfHpElavoGmXAIKONo3ZD18fF/D47cBzkSRmDiFhA0ju94oLnZtmQ0afpbhKjoVr2aCTjPVNt4P1LIgnYqPVgbOgi2HP7rIJ25fxh9Sccbmqk1WY69f9Du9JFnhGaRXb80/j4hoHfdObKWp61KoD5j3CgSobC9YlwxYKo0pNIePcw3wdDeUnsPImmQOpkJnuqq7AMKxklwBY1kIG69B5Shn50M5qPlk0fD5RtYUycHOug83nA24= # see README
+
+# note - if something is going wrong, try adding double quotes to either side of encrypted key
