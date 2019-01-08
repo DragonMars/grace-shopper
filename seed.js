@@ -4,15 +4,26 @@ const {green, red} = require('chalk')
 const userData = [
   {
     name: 'Geoff',
-    email: 'Geoff@isruesdad.com'
+    email: 'Geoff@isruesdad.gov'
   }
 ]
 
 const orderData = []
 
-const shippingAddressData = []
+const shippingAddressData = [
+  {
+    streetAddress: '23232 Yemen Ln',
+    city: 'Yemen',
+    state: 'California',
+    zipcode: '90210'
+  }
+]
 
-const lineItemData = []
+const lineItemData = [
+  {
+    quantity: 2
+  }
+]
 
 const productData = [
   {
@@ -45,7 +56,10 @@ const seed = async () => {
 
   const response = await Promise.all([
     db.models.user.bulkCreate(userData, {returning: true}),
-    db.models.product.bulkCreate(productData, {returning: true})
+    db.models.product.bulkCreate(productData, {returning: true}),
+    db.models.category.bulkCreate(categoryData, {returning: true}),
+    db.models.lineItem.bulkCreate(lineItemData, {returning: true}),
+    db.models.shippingAddress.bulkCreate(shippingAddressData, {returning: true})
   ])
   console.log(green('As seedy as Killarny Rose!'))
   db.close()
