@@ -5,27 +5,21 @@ module.exports = router
 // GET all products
 router.get('/', async (req, res, next) => {
   try {
+    if (req.query.category) {
+      const productsByCategory = await Product.findAll({
+        include: [
+          {
+            model: Category,
+            where: {name: req.query.category}
+          }
+        ]
+      })
+      res.json(productsByCategory)
+    }
     const products = await Product.findAll({
       include: {model: Category}
     })
     res.json(products)
-  } catch (err) {
-    next(err)
-  }
-})
-
-// GET products by category
-router.get('/:category', async (req, res, next) => {
-  try {
-    const productsByCategory = await Product.findAll({
-      include: [
-        {
-          model: Category,
-          where: {name: req.params.category}
-        }
-      ]
-    })
-    res.send(productsByCategory)
   } catch (err) {
     next(err)
   }
