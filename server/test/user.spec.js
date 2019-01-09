@@ -8,17 +8,24 @@ describe('User model', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
+  afterEach(() => {
+    return db.sync({force: true})
+  })
 
   describe('instanceMethods', () => {
     describe('correctPassword', () => {
       let cody
 
       beforeEach(async () => {
-        cody = await User.create({
-          email: 'cody@puppybook.com',
-          password: 'bones',
-          name: 'Cody'
-        })
+        try {
+          cody = await User.create({
+            email: 'cody@puppybook.com',
+            password: 'bones',
+            name: 'Cody'
+          })
+        } catch (error) {
+          console.error(error.message)
+        }
       })
 
       it('returns true if the password is correct', () => {

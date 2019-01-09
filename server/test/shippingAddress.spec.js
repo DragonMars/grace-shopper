@@ -9,6 +9,9 @@ describe('ShippingAddress model', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
+  afterEach(() => {
+    return db.sync({force: true})
+  })
   describe('validations', () => {
     let address
 
