@@ -46,6 +46,9 @@ const categoryData = [
 const lineItemData = [
   {
     quantity: 2
+  },
+  {
+    quantity: 1
   }
 ]
 
@@ -90,15 +93,19 @@ const seed = async () => {
   const [geoff, cody, murphy] = users
   const [hangers, socks] = products
   const [apparel] = categories
-  const [firstOrderProduct] = lineitems
+  const [firstOrderProduct, secondOrderProduct] = lineitems
   const [yemenLn] = shippingAddresses
   const [firstOrder] = orders
 
   await firstOrder.setUser(geoff)
   await firstOrder.setShippingAddress(yemenLn)
   await firstOrderProduct.setOrder(firstOrder)
+  await secondOrderProduct.setOrder(firstOrder)
   await firstOrderProduct.setProduct(hangers)
   await socks.setCategory(apparel)
+
+  const test = await db.models.order.findById(1)
+  console.log(test.dataValues.lineItems[0].dataValues.product)
 
   console.log(green('As seedy as Killarny Rose!'))
   db.close()
