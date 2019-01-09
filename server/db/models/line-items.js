@@ -9,7 +9,15 @@ const LineItem = db.define(
   {
     quantity: {
       type: Sequelize.INTEGER,
-      notNull: true
+      allowNull: false,
+      defaultValue: 1,
+      validate: {
+        min: 1
+      }
+    },
+    price: {
+      type: Sequelize.INTEGER //price in cents
+      //should be null for all open orders
     }
   },
   {

@@ -8,6 +8,9 @@ const Order = db.define(
   {
     stripeTransactionId: {
       type: Sequelize.STRING
+    },
+    status: {
+      type: Sequelize.ENUM('open', 'closed')
     }
   },
   {
@@ -22,7 +25,7 @@ Order.prototype.calculateTotal = function() {
   this.lineItems.forEach(lineItem => {
     total += lineItem.product.price * lineItem.quantity
   })
-  return total
+  return total / 100
 }
 
 module.exports = Order
