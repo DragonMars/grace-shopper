@@ -45,6 +45,5 @@ module.exports = {
   Product,
   LineItem,
   Order,
-  ShippingAddress,
-  getProductInfoPerOrder
+  ShippingAddress
 }

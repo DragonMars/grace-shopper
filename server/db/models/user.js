@@ -67,6 +67,11 @@ User.encryptPassword = function(plainText, salt) {
  * hooks
  */
 const setSaltAndPassword = user => {
+  user.salt = User.generateSalt()
+  user.password = User.encryptPassword(user.password(), user.salt())
+}
+
+const updateSaltAndPassword = user => {
   if (user.changed('password')) {
     user.salt = User.generateSalt()
     user.password = User.encryptPassword(user.password(), user.salt())
@@ -74,4 +79,4 @@ const setSaltAndPassword = user => {
 }
 
 User.beforeCreate(setSaltAndPassword)
-User.beforeUpdate(setSaltAndPassword)
+User.beforeUpdate(updateSaltAndPassword)
