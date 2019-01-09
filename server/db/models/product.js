@@ -4,19 +4,32 @@ const Sequelize = require('sequelize')
 const Product = db.define('product', {
   name: {
     type: Sequelize.STRING,
-    notNull: true
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   imageUrl: {
     type: Sequelize.STRING,
-    notNull: true
+    allowNull: false,
+    validate: {
+      notEmpty: true
+      //isUrl
+    }
   },
   description: {
     type: Sequelize.TEXT,
-    notNull: true
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   price: {
     type: Sequelize.FLOAT,
-    notNull: true
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   }
 })
 

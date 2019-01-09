@@ -9,7 +9,11 @@ const LineItem = db.define(
   {
     quantity: {
       type: Sequelize.INTEGER,
-      notNull: true
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+      //default: 1, min 1
     }
   },
   {
