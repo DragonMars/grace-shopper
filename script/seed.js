@@ -3,9 +3,9 @@ const {green, red} = require('chalk')
 
 const userData = [
   {
-    name: 'Geoff',
     email: 'Geoff@isruesdad.gov',
-    password: 'rue'
+    password: 'rue',
+    name: 'Geoff'
   },
   {
     email: 'cody@email.com',

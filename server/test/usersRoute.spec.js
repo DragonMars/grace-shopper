@@ -10,6 +10,9 @@ describe('User routes', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
+  afterEach(() => {
+    return db.sync({force: true})
+  })
 
   describe('/api/users/', () => {
     const codysEmail = 'cody@puppybook.com'
@@ -17,7 +20,8 @@ describe('User routes', () => {
     beforeEach(() => {
       return User.create({
         email: codysEmail,
-        name: 'Cody'
+        name: 'Cody',
+        password: 'sfdkjw'
       })
     })
 
