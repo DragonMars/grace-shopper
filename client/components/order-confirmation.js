@@ -45,15 +45,17 @@ const order = {
 const OrderConfirmation = () => {
   const arrivalDate = new Date()
   arrivalDate.setDate(arrivalDate.getDate() + 2)
+  const {lineItems, shippingAddress} = order
+
   return (
     <div>
       <h1>Thank you for your order!</h1>
       <p>
-        Your order has been placed and will arrive on{' '}
-        {arrivalDate.toDateString()}.
+        Your order has been placed and will at {shippingAddress.streetAddress}{' '}
+        arrive on {arrivalDate.toDateString()}.
       </p>
       <h2>Order Details:</h2>
-      {order.lineItems.map(lineItem => (
+      {orderProducts.map(lineItem => (
         <div key={lineItem.id}>
           <h4>{lineItem.product.name}</h4>
           <img src={lineItem.product.imageUrl} height="200px" width="auto" />

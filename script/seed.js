@@ -102,10 +102,8 @@ const seed = async () => {
   await firstOrderProduct.setOrder(firstOrder)
   await secondOrderProduct.setOrder(firstOrder)
   await firstOrderProduct.setProduct(hangers)
+  await secondOrderProduct.setProduct(socks)
   await socks.setCategory(apparel)
-
-  const test = await db.models.order.findById(1)
-  console.log(test.dataValues.lineItems[0].dataValues.product)
 
   console.log(green('As seedy as Killarny Rose!'))
   db.close()

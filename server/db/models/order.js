@@ -17,4 +17,12 @@ const Order = db.define(
   }
 )
 
+Order.prototype.calculateTotal = function() {
+  let total = 0
+  this.lineItems.forEach(lineItem => {
+    total += lineItem.product.price * lineItem.quantity
+  })
+  return total
+}
+
 module.exports = Order
