@@ -5,7 +5,8 @@ const userData = [
   {
     email: 'Geoff@isruesdad.gov',
     password: 'rue',
-    name: 'Geoff'
+    name: 'Geoff',
+    isAdmin: true
   },
   {
     email: 'cody@email.com',
@@ -14,7 +15,7 @@ const userData = [
   },
   {
     email: 'murphy@email.com',
-    password: '123',
+    password: 'jkl',
     name: 'Murphy'
   }
 ]
@@ -24,16 +25,18 @@ const productData = [
     name: 'Fred Sloths On a Vine Picture Hangers, Set of 6',
     imageUrl:
       'https://images-na.ssl-images-amazon.com/images/I/61AZ243PatL._SL1092_.jpg',
+    altText: 'adorable sloth hangers',
     description:
       "Six sloths included in each package 36 inch 'vine' included Everyone's favorite so-so mammal ready to hang onto your pictures 3 different sloth poses Fun and functional",
-    price: 10.27
+    price: 1027
   },
   {
     name: 'Sloth Womens Knee High Sock',
     imageUrl: 'https://www.sockittome.com/images/detailed/1/F0171.jpg',
+    altText: 'purple socks featuring sloths hanging from vines',
     description:
       'Feeling lazy? Want everyone to get off your back so you can just hang out? Send out the message strong with our new contest winner Sloth socks. 54% Cotton, 44% Polyester, 2% Spandex.Made in Korea. Our threads are certified by OEKO- TEX® Standard 100, which means we leave out harmful chemicals to keep your skin safe and happy. Approximately fits womens shoe size 5-10.',
-    price: 12.0
+    price: 1200
   }
 ]
 
@@ -45,15 +48,18 @@ const categoryData = [
 
 const lineItemData = [
   {
-    quantity: 2
+    quantity: 2,
+    price: 1027
   },
   {
-    quantity: 1
+    quantity: 1,
+    price: 1200
   }
 ]
 
 const shippingAddressData = [
   {
+    name: 'Q Liu',
     streetAddress: '23232 Yemen Ln',
     city: 'Yemen',
     state: 'California',
@@ -63,7 +69,8 @@ const shippingAddressData = [
 
 const orderData = [
   {
-    stripeTransactionId: 'T123KKBSLFN'
+    stripeTransactionId: 'T123KKBSLFN',
+    status: 'closed'
   }
 ]
 
