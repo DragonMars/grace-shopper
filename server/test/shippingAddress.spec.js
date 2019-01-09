@@ -32,6 +32,7 @@ describe('ShippingAddress model', () => {
         stripeTransactionId: 'T2523NM'
       })
       orderAddress = await ShippingAddress.create({
+        name: 'Brad Pitt',
         streetAddress: '123 Cherry Tree Lane',
         city: 'Pelham',
         state: 'NY',
