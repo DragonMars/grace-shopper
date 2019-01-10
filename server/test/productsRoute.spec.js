@@ -18,16 +18,20 @@ describe('Product routes', () => {
   describe('GET /api/products', () => {
     beforeEach(async () => {
       const product1 = await Product.create({
+        id: 1,
         name: 'mug',
-        imageUrl: 'default',
+        imageUrl: 'https://fakeimg.pl/300/',
         description: 'fun',
-        price: 2
+        price: 2,
+        altText: 'mug'
       })
       const product2 = await Product.create({
+        id: 2,
         name: 'mug2',
-        imageUrl: 'default',
+        imageUrl: 'https://fakeimg.pl/300/',
         description: 'more fun',
-        price: 6
+        price: 6,
+        altText: 'mug2'
       })
       const category = await Category.create({
         name: 'funStuff'
@@ -50,6 +54,15 @@ describe('Product routes', () => {
       expect(res.body).to.be.an.instanceOf(Array)
       expect(res.body).to.have.length(1)
       expect(res.body[0].name).to.equal('mug')
+    })
+
+    describe('GET /api/products/:productId', () => {
+      it('responds with one product via JSON', async () => {
+        const res = await agent.get('/api/products/2').expect(200)
+
+        expect(res.body).to.be.an.instanceOf(Object)
+        expect(res.body.name).to.equal('mug2')
+      })
     })
   }) // end describe 'api/products'
 })

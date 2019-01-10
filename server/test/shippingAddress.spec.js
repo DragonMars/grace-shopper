@@ -9,6 +9,9 @@ describe('ShippingAddress model', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
+  afterEach(() => {
+    return db.sync({force: true})
+  })
   describe('validations', () => {
     let address
 
@@ -32,6 +35,7 @@ describe('ShippingAddress model', () => {
         stripeTransactionId: 'T2523NM'
       })
       orderAddress = await ShippingAddress.create({
+        name: 'Brad Pitt',
         streetAddress: '123 Cherry Tree Lane',
         city: 'Pelham',
         state: 'NY',
