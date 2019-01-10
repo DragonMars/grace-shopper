@@ -1,7 +1,23 @@
 import React from 'react'
 
+const calculateTotal = function(order) {
+  let total = 0
+  order.lineItems.forEach(lineItem => {
+    total += lineItem.price * lineItem.quantity
+  })
+  return total / 100
+}
+
 const OrderProducts = ({lineItems, order}) => {
-  const total = order.id ? cal
+  let total
+  if (order) {
+    total = calculateTotal(order)
+  } else {
+    total = 0
+    lineItems.forEach(lineItem => {
+      total += lineItem.product.price * lineItem.quantity / 100
+    })
+  }
   return (
     <div>
       {lineItems.map(lineItem => (
@@ -14,26 +30,17 @@ const OrderProducts = ({lineItems, order}) => {
             width="auto"
           />
 
-          <p>quantity: {lineItem.quantity} </p>
+          <p>Quantity: {lineItem.quantity} </p>
           {lineItem.orderId ? (
-            <p>price: ${lineItem.price / 100}</p>
+            <p>Price: ${lineItem.price / 100}</p>
           ) : (
-            <p>price: ${lineItem.product.price / 100}</p>
+            <p>Price: ${lineItem.product.price / 100}</p>
           )}
         </div>
       ))}
-      {/* <p>Total: ${order.calculateTotal()}</p> */}
+      <p>Total: ${total}</p>
     </div>
   )
 }
-
-calculateTotal = function(order) {
-  let total = 0
-  this.lineItems.forEach(lineItem => {
-    total += lineItem.price * lineItem.quantity
-  })
-  return total / 100
-}
-
 
 export default OrderProducts
