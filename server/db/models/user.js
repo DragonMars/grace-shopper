@@ -3,13 +3,6 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const User = db.define('user', {
-  name: {
-    type: Sequelize.STRING
-    // allowNull: false,
-    // validate: {
-    //   notEmpty: true
-    // }
-  },
   email: {
     type: Sequelize.STRING,
     unique: true,
@@ -60,6 +53,7 @@ User.generateSalt = function() {
 }
 
 User.encryptPassword = function(plainText, salt) {
+  console.log('salt', salt)
   return crypto
     .createHash('RSA-SHA256')
     .update(plainText)
