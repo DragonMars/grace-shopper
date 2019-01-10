@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {MapStateToProps, MapDispatchToProps, connect} from 'react-redux'
 
 export default class ShippingAddressForm extends Component {
   constructor() {
@@ -29,27 +30,33 @@ export default class ShippingAddressForm extends Component {
   render() {
     return (
       <div>
+        <h1>Shipping Address</h1>
         <form onSubmit={this.handleSubmit}>
+          <label>Name</label>
           <input
             name="name"
             value={this.state.name}
             onChange={this.handleChange}
           />
+          <label>Street Address</label>
           <input
             name="streetAddress"
             value={this.state.streetAddress}
             onChange={this.handleChange}
           />
+          <label>City</label>
           <input
             name="city"
             value={this.state.city}
             onChange={this.handleChange}
           />
+          <label>State</label>
           <input
             name="state"
             value={this.state.state}
             onChange={this.handleChange}
           />
+          <label>zipcode</label>
           <input
             name="zipcode"
             value={this.state.zipcode}
