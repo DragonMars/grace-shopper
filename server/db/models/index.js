@@ -3,7 +3,7 @@ const Category = require('./category')
 const Product = require('./product')
 const LineItem = require('./line-items')
 const Order = require('./order')
-const ShippingAddress = require('./shippingAddress')
+const ShippingAddress = require('./shipping-address')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -33,11 +33,8 @@ LineItem.belongsTo(Product)
 Category.hasMany(Product)
 Product.belongsTo(Category)
 
-// instance method to get total amout of each line item
-LineItem.prototype.getTotal = async lineItem => {
-  const price = await Product.findById(lineItem.productId).price
-  return price * lineItem.quantity
-}
+User.hasMany(LineItem)
+LineItem.belongsTo(User)
 
 module.exports = {
   User,

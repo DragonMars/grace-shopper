@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-const ShippingAddress = require('./shippingAddress')
+const ShippingAddress = require('./shipping-address')
 const LineItem = require('./line-items')
 
 const Order = db.define(
@@ -22,7 +22,7 @@ Order.prototype.calculateTotal = function() {
   this.lineItems.forEach(lineItem => {
     total += lineItem.product.price * lineItem.quantity
   })
-  return total
+  return total / 100
 }
 
 module.exports = Order
