@@ -79,7 +79,7 @@ const OrderConfirmation = () => {
         arrive on {arrivalDate.toDateString()}.
       </p>
       <h2>Order Details:</h2>
-      <OrderProducts lineItems={lineItems} />
+      <OrderProducts lineItems={lineItems} order={order} />
     </div>
   )
 }

@@ -6,7 +6,7 @@ import user from './user'
 import products from './products'
 import category from './category'
 import lineItems from './line-items'
-import shippingAddress from './shippingAddress'
+import shippingAddress from './shipping-address'
 import order from './order'
 
 const reducer = combineReducers({
@@ -24,3 +24,8 @@ const store = createStore(reducer, middleware)
 
 export default store
 export * from './user'
+export * from './products'
+export * from './category'
+export * from './line-items'
+export * from './shipping-address'
+export * from './order'
