@@ -20,16 +20,18 @@ describe('Product routes', () => {
       const product1 = await Product.create({
         id: 1,
         name: 'mug',
-        imageUrl: 'default',
+        imageUrl: 'https://fakeimg.pl/300/',
         description: 'fun',
-        price: 2
+        price: 2,
+        altText: 'mug'
       })
       const product2 = await Product.create({
         id: 2,
         name: 'mug2',
-        imageUrl: 'default',
+        imageUrl: 'https://fakeimg.pl/300/',
         description: 'more fun',
-        price: 6
+        price: 6,
+        altText: 'mug2'
       })
       const category = await Category.create({
         name: 'funStuff'
