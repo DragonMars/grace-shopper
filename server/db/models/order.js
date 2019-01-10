@@ -8,9 +8,6 @@ const Order = db.define(
   {
     stripeTransactionId: {
       type: Sequelize.STRING
-    },
-    status: {
-      type: Sequelize.ENUM('open', 'closed')
     }
   },
   {
