@@ -3,29 +3,35 @@
 // //ACTION TYPES
 
 // //THUNK TYPES
-// const POST_SHIPPING_ADDRESS = "POST_SHIPPING_ADDRESS";
+// const POST_SHIPPING_ADDRESS = 'POST_SHIPPING_ADDRESS'
 
 // //INITIAL STATE
-// const defaultShippingAddress = {}
+// const initialState = {
+//   name: '',
+//   streetAddress: '',
+//   city: '',
+//   state: '',
+//   zipcode: ''
+// }
 
 // //ACTION CREATORS
 
 // //THUNK CREATORS
-// // const postShippingAddress = () => {
-
-// //   return async function (dispatch) {
-// //     return {
-// //       type:
-// //     }
-// //   }
-// // }
+// const postShippingAddress = () => {
+//   return async function(dispatch) {
+//     return {
+//       // type:
+//     }
+//   }
+// }
 
 // //REDUCER
-// export default function (state= defaultShippingAddress, action) {
+// export default function(state = initialState, action) {
+//   const newState = {...state}
 //   switch (action.type) {
+//     //case :
 
 //     default:
-//       break;
+//       return state
 //   }
-
 // }
