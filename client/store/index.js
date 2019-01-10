@@ -3,8 +3,20 @@ import createLogger from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
+import products from './products'
+import category from './category'
+import lineItems from './line-items'
+import shippingAddress from './shippingAddress'
+import order from './order'
 
-const reducer = combineReducers({user})
+const reducer = combineReducers({
+  user,
+  products,
+  category,
+  lineItems,
+  shippingAddress,
+  order
+})
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )

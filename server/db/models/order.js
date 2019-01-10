@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-const ShippingAddress = require('./shippingAddress')
+const ShippingAddress = require('./shipping-address')
 const LineItem = require('./line-items')
 
 const Order = db.define(
