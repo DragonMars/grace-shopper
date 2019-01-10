@@ -5,18 +5,15 @@ const userData = [
   {
     email: 'Geoff@isruesdad.gov',
     password: 'rue',
-    name: 'Geoff',
     isAdmin: true
   },
   {
     email: 'cody@email.com',
-    password: '123',
-    name: 'Cody'
+    password: '123'
   },
   {
     email: 'murphy@email.com',
-    password: 'jkl',
-    name: 'Murphy'
+    password: 'jkl'
   }
 ]
 
