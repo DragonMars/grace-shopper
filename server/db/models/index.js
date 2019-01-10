@@ -33,11 +33,8 @@ LineItem.belongsTo(Product)
 Category.hasMany(Product)
 Product.belongsTo(Category)
 
-// instance method to get total amout of each line item
-LineItem.prototype.getTotal = async lineItem => {
-  const price = await Product.findById(lineItem.productId).price
-  return price * lineItem.quantity
-}
+User.hasMany(LineItem)
+LineItem.belongsTo(User)
 
 module.exports = {
   User,

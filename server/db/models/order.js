@@ -22,7 +22,7 @@ Order.prototype.calculateTotal = function() {
   this.lineItems.forEach(lineItem => {
     total += lineItem.product.price * lineItem.quantity
   })
-  return total
+  return total / 100
 }
 
 module.exports = Order

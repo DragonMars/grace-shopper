@@ -80,7 +80,7 @@ const OrderConfirmation = () => {
           <img src={lineItem.product.imageUrl} height="200px" width="auto" />
 
           <p>quantity: {lineItem.quantity} </p>
-          <p>price: ${lineItem.product.price}</p>
+          <p>price: ${lineItem.price}</p>
         </div>
       ))}
       {/* <p>Total: ${order.calculateTotal()}</p> */}
