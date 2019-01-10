@@ -33,6 +33,9 @@ LineItem.belongsTo(Product)
 Category.hasMany(Product)
 Product.belongsTo(Category)
 
+User.hasMany(LineItem)
+LineItem.belongsTo(User)
+
 module.exports = {
   User,
   Category,
