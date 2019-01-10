@@ -2,7 +2,11 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
+<<<<<<< HEAD
 import {Login, Signup, UserHome, ShippingAddressForm} from './components'
+=======
+import {Login, Signup, UserHome, SingleProduct, ProductItem} from './components'
+>>>>>>> master
 import {me} from './store'
 import OrderConfirmation from './components/order-confirmation'
 
@@ -26,6 +30,9 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/shipping-address-form" component={ShippingAddressForm} />
+        <Route path="/single-product" component={SingleProduct} />
+        {/* note that the "/product-item" route is exclusively for testing purposes. ProductItem should only ever be a child component of AllProducts or ProductsByCategory */}
+        <Route path="/product-item" component={ProductItem} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
