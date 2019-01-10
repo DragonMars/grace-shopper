@@ -62,6 +62,7 @@ export default class ShippingAddressForm extends Component {
             value={this.state.zipcode}
             onChange={this.handleChange}
           />
+          <button type="submit">Use this address</button>
         </form>
       </div>
     )
