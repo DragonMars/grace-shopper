@@ -87,4 +87,6 @@ User.beforeBulkCreate(users => {
   users.forEach(setSaltAndPassword)
 })
 User.beforeUpdate(updateSaltAndPassword)
-User.beforeBulkUpdate(updateSaltAndPassword)
+User.beforeBulkUpdate(users => {
+  users.forEach(setSaltAndPassword)
+})
