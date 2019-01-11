@@ -7,14 +7,14 @@ function SingleProductViewForAllProduct(props) {
 
   return (
     <div>
-      <li>
+      <Link to={`/products/${product.id}`}>
         <div>
           <img src={product.imageUrl} alt={product.altText} />
         </div>
         <div>
           <h3>{product.name}</h3>
         </div>
-      </li>
+      </Link>
     </div>
   )
 }

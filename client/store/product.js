@@ -10,7 +10,6 @@ const GOT_ONE_PRODUCT = 'GOT_ONE_PRODUCT'
  * INITIAL STATE
  */
 const defaultProducts = []
-
 /**
  * ACTION CREATORS
  */
@@ -44,7 +43,7 @@ export default function product(state = defaultProducts, action) {
       return action.products
     }
     case GOT_ONE_PRODUCT: {
-      return action.oneProduct
+      return [action.oneProduct]
     }
     default:
       return state

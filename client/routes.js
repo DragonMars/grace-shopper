@@ -31,7 +31,7 @@ class Routes extends Component {
         <Route path="/success" component={OrderConfirmation} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/single-product" component={SingleProduct} />
+        <Route path="/products/:productId" component={SingleProduct} />
         {/* note that the "/product-item" route is exclusively for testing purposes. ProductItem should only ever be a child component of AllProducts or ProductsByCategory */}
         <Route path="/product-item" component={ProductItem} />
         {isLoggedIn && (
