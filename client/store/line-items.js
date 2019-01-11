@@ -4,6 +4,7 @@ import axios from 'axios'
  * ACTION TYPES
  */
 const GOT_NEW_ITEM = 'GOT_NEW_ITEM'
+const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
 
 /**
  * INITIAL STATE
@@ -14,13 +15,33 @@ const defaultCart = []
  * ACTION CREATORS
  */
 const gotNewItem = newLineItem => ({type: GOT_NEW_ITEM, newLineItem})
+const updateQuantity = updatedLineItem => ({
+  type: UPDATED_QUANTITY,
+  updatedLineItem
+})
 
 /**
  * THUNK CREATORS
  */
-export const postItem = newLineItem => async dispatch => {
-  const {data} = await axios.post('/api/cart', newLineItem)
-  dispatch(gotNewItem(data))
+export const postOrUpdateItem = newLineItem => async (dispatch, getState) => {
+  let inCart = false
+  let newQuantity
+  const {productId} = newLineItem
+  getState().lineItems.forEach(async lineItem => {
+    if (productId === lineItem.productId) {
+      inCart = true
+      newQuantity = lineItem.quantity + 1
+      const {data} = await axios.put('/api/line-items', {
+        id: lineItem.id,
+        quantity: newQuantity
+      })
+      dispatch(updateQuantity(data))
+    }
+  })
+  if (!inCart) {
+    const {data} = await axios.post('/api/line-items', newLineItem)
+    dispatch(gotNewItem(data))
+  }
 }
 
 /**
@@ -29,8 +50,12 @@ export const postItem = newLineItem => async dispatch => {
 export default function lineItem(state = defaultCart, action) {
   switch (action.type) {
     case GOT_NEW_ITEM: {
-      return action.lineItem
+      return [...state, action.lineItem]
     }
+    case UPDATE_QUANTITY:
+      return state
+        .filter(lineItem => lineItem.id !== action.updatedLineItem.id)
+        .push(action.updatedLineItem)
     default:
       return state
   }
