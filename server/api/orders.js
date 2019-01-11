@@ -21,12 +21,14 @@ router.post('/', async (req, res, next) => {
   try {
     //to read the data read the item as string then convert to JSON object
     // assumes localStorage.setItem('localOrders', JSON.stringify(array))
-
+    console.log('post order route req.body ', req.body)
+    console.log('user id is ', req.user.id)
     const newOrder = await Order.create({
       stripeTransactionId: '297379GHKOU0', // ???
       userId: req.user.id,
-      addressId: req.body.shippingAddress.id
+      shippingAddressId: req.body.order.shippingAddress.id
     })
+    console.log('newOrder is ', newOrder)
     const orderLineItems = await LineItem.update(
       {
         orderId: newOrder.id,
@@ -40,6 +42,7 @@ router.post('/', async (req, res, next) => {
         plain: true
       }
     )
+    console.log('orderLineItems is ', orderLineItems)
     res.json(orderLineItems[1])
   } catch (err) {
     next(err)

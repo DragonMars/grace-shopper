@@ -12,9 +12,9 @@ const postedOrder = order => {
 }
 
 //THUNK CREATORS
-export const postOrder = order => {
+export const postOrder = (order, id) => {
   return async dispatch => {
-    const {data} = await axios.post('/api/orders', order)
+    const {data} = await axios.post('/api/orders', {order, id})
     dispatch(postedOrder(data))
   }
 }
@@ -28,8 +28,8 @@ export default function(state = initialState, action) {
   const newState = {...state}
   switch (action.type) {
     case POSTED_ORDER:
-      break
-
+      newState.order = action.order
+      return newState
     default:
       return newState
   }

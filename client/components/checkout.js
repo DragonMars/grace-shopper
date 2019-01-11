@@ -3,13 +3,12 @@ import {connect} from 'react-redux'
 import {OrderProducts, ShippingAddressForm} from './index'
 import {postOrder} from '../store'
 
-const order = {
+const fakeOrder = {
   id: 1,
   stripeTransactionId: 'T123KKBSLFN',
   createdAt: '2019-01-09T17:35:23.096Z',
   updatedAt: '2019-01-09T17:35:23.129Z',
-  userId: 1,
-  shippingAddressId: 1,
+  userId: 2,
   lineItems: [
     {
       id: 2,
@@ -73,23 +72,24 @@ class Checkout extends Component {
   }
 
   handleSubmit(event) {
+    console.log('before preventDefault')
     event.preventDefault()
     //need to pass postOrder
-    this.props.postOrder(this.props.shippingAddress)
+    console.log('props on submit ', this.props)
+    this.props.postOrder(fakeOrder, this.props.shippingAddress.id)
   }
 
   render() {
-    console.log(order.lineItems)
     return (
       <div>
         <h1>Checkout</h1>
         <ShippingAddressForm />
         {/* add Stripe - research Stripe UI */}
-        <OrderProducts lineItems={order.lineItems} order={order} />
+        <OrderProducts lineItems={fakeOrder.lineItems} />
         {/* order products will be hooked up to the LineItem model with a GET route */}
-        <button type="submit" onSubmit={this.handleSubmit}>
-          Place Your Order
-        </button>
+        <form onSubmit={this.handleSubmit}>
+          <button type="submit">Place Your Order</button>
+        </form>
       </div>
     )
   }
@@ -103,7 +103,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    postOrder: order => dispatch(postOrder(order))
+    postOrder: (order, id) => dispatch(postOrder(order, id))
   }
 }
 
