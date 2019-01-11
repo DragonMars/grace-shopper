@@ -8,10 +8,10 @@ import {
   UserHome,
   AllProductContainer,
   SingleProduct,
-  ProductItem
+  ProductItem,
+  OrderConfirmation
 } from './components'
 import {me} from './store'
-import OrderConfirmation from './components/order-confirmation'
 
 /**
  * COMPONENT

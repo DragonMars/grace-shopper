@@ -7,6 +7,7 @@ class SingleProduct extends Component {
     const {productId} = this.props.match.params
     loadSingleProduct(productId)
   }
+
   render() {
     const {product} = this.props
     return (

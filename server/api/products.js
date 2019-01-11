@@ -2,7 +2,8 @@ const router = require('express').Router()
 const {Product, Category} = require('../db/models')
 module.exports = router
 
-// GET all products
+// GET /api/products
+//gets all products/or all products in a single category
 router.get('/', async (req, res, next) => {
   try {
     if (req.query.category) {
@@ -25,7 +26,8 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-//GET one product by id
+//GET /api/products/productID
+//gets one product by id
 router.get('/:productId', async (req, res, next) => {
   try {
     const product = await Product.findById(req.params.productId)

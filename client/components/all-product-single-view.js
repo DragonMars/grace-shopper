@@ -2,9 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
-function SingleProductViewForAllProduct(props) {
-  const product = props.product
-
+function SingleProductViewForAllProduct({product}) {
   return (
     <div>
       <Link to={`/products/${product.id}`}>

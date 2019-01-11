@@ -30,7 +30,7 @@ export const fetchAllProducts = category => async dispatch => {
 }
 
 export const fetchOneProduct = productId => async dispatch => {
-  const {data} = await axios.get(`api/product/${productId}`)
+  const {data} = await axios.get(`api/products/${productId}`)
   dispatch(gotOneProduct(data))
 }
 
