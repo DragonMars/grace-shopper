@@ -16,7 +16,7 @@ const defaultCart = []
  */
 const gotNewItem = newLineItem => ({type: GOT_NEW_ITEM, newLineItem})
 const updateQuantity = updatedLineItem => ({
-  type: UPDATED_QUANTITY,
+  type: UPDATE_QUANTITY,
   updatedLineItem
 })
 
@@ -46,7 +46,7 @@ export const postOrUpdateItem = newLineItem => async (dispatch, getState) => {
 /**
  * REDUCER
  */
-export default function lineItem(state = defaultCart, action) {
+export default function lineItemReducer(state = defaultCart, action) {
   switch (action.type) {
     case GOT_NEW_ITEM: {
       return [...state, action.lineItem]
