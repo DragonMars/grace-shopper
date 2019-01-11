@@ -6,33 +6,44 @@ module.exports = router
 // localOrder {
 //    productId: quantity,
 //    productId: quantity
-// }
+// } const localOrder = JSON.parse(localStorage.getItem('localOrder'))
+// const newLineItems = await Promise.all(
+//   localStorage.lineItems.map(lineItem =>
+//     LineItem.create({
+//       quantity: lineItem.quantity,
+//       productId: lineItem.product_id,
+//       orderId: newOrder.id
+//     })
+//   )
+// )
 
-router.post('/orders', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
-    const localOrder = JSON.parse(localStorage.getItem('localOrder')) //to read the data read the item as string then convert to JSON object
+    //to read the data read the item as string then convert to JSON object
     // assumes localStorage.setItem('localOrders', JSON.stringify(array))
-    const newAddress = await ShippingAddress.create({
-      steetAddress: req.body.shippingAddress.streetAddress,
-      city: req.body.shippingAddress.city,
-      state: req.body.shippingAddress.state,
-      zipcode: req.body.shippingAddress.zipcode
-    }) // should we add name?
+    console.log('post order route req.body ', req.body)
+    console.log('user id is ', req.user.id)
     const newOrder = await Order.create({
-      stripeTransactionId: localOrder.stripeTransactionId,
-      userId: localOrder.userId,
-      addressId: newAddress.id
+      stripeTransactionId: '297379GHKOU0', // ???
+      userId: req.user.id,
+      shippingAddressId: req.body.order.shippingAddress.id
     })
-    const newLineItems = await Promise.all(
-      localStorage.lineItems.map(lineItem =>
-        LineItem.create({
-          quantity: lineItem.quantity,
-          productId: lineItem.product_id,
-          orderId: newOrder.id
-        })
-      )
+    console.log('newOrder is ', newOrder)
+    const orderLineItems = await LineItem.update(
+      {
+        orderId: newOrder.id,
+        userId: null
+      },
+      {
+        where: {
+          userId: req.user.id
+        },
+        returning: true,
+        plain: true
+      }
     )
-    res.json(newLineItems)
+    console.log('orderLineItems is ', orderLineItems)
+    res.json(orderLineItems[1])
   } catch (err) {
     next(err)
   }
