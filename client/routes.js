@@ -7,6 +7,7 @@ import {
   Signup,
   UserHome,
   ShippingAddressForm,
+  AllProductContainer,
   SingleProduct,
   ProductItem
 } from './components'
@@ -26,10 +27,9 @@ class Routes extends Component {
 
     return (
       <Switch>
-        {
-          /* Routes placed here are available to all visitors */
-          <Route path="/success" component={OrderConfirmation} />
-        }
+        {/* Routes placed here are available to all visitors */}
+        <Route exact path="/" component={AllProductContainer} />
+        <Route path="/success" component={OrderConfirmation} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/shipping-address" component={ShippingAddressForm} />

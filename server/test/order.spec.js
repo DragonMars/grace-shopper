@@ -25,8 +25,7 @@ describe('Order model', () => {
       try {
         jen = await User.create({
           email: 'jen@slothlover.com',
-          password: 'slothsforever',
-          name: 'Jen'
+          password: 'slothsforever'
         })
         newOrder = await Order.create({
           stripeTransactionId: 'T2523NM'
@@ -50,7 +49,7 @@ describe('Order model', () => {
     it('returns the correct user after user is set', async () => {
       newOrder.setUser(jen)
       const newOrderUser = await newOrder.getUser()
-      expect(newOrderUser.name).to.be.equal('Jen')
+      expect(newOrderUser.email).to.be.equal('jen@slothlover.com')
     })
   }) // end describe('User/Order association')
 }) // end describe('Order model')
