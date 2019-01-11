@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {postShippingAddress} from '../store'
+import {Redirect} from 'react-router-dom'
 
 class ShippingAddressForm extends Component {
   constructor() {
@@ -34,6 +35,7 @@ class ShippingAddressForm extends Component {
       state: '',
       zipcode: ''
     })
+    // <Redirect to={Checkout} />
   }
 
   render() {
