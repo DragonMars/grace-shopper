@@ -10,8 +10,8 @@ import {
   AllProductContainer,
   SingleProduct,
   ProductItem,
-  OrderConfirmation,
-  Checkout
+  Checkout,
+  OrderConfirmation
 } from './components'
 import {me} from './store'
 
@@ -33,9 +33,9 @@ class Routes extends Component {
         <Route path="/success" component={OrderConfirmation} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/products/:productId" component={SingleProduct} />
         <Route path="/shipping-address" component={ShippingAddressForm} />
         <Route path="/checkout" component={Checkout} />
+        <Route path="/products/:productId" component={SingleProduct} />
         {/* note that the "/product-item" route is exclusively for testing purposes. ProductItem should only ever be a child component of AllProducts or ProductsByCategory */}
         <Route path="/product-item" component={ProductItem} />
         {isLoggedIn && (

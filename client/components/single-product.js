@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchOneProduct} from '../store'
+import {fetchOneProduct, postOrUpdateItem} from '../store'
 
 class SingleProduct extends Component {
   componentDidMount() {
@@ -8,6 +8,8 @@ class SingleProduct extends Component {
     console.log(productId)
     this.props.loadSingleProduct(productId)
   }
+
+  handleClick() {}
 
   render() {
     const product = this.props.product
@@ -45,6 +47,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   loadSingleProduct: productId => {
     dispatch(fetchOneProduct(productId))
+  },
+  createOrUpdateCart: ({productId}) => {
+    dispatch(postOrUpdateItem({productId}))
   }
 })
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
