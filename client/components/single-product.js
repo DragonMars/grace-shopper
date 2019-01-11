@@ -4,28 +4,30 @@ import {fetchOneProduct} from '../store'
 
 class SingleProduct extends Component {
   componentDidMount() {
-    const {productId} = this.props.match.params
-    loadSingleProduct(productId)
+    const productId = this.props.match.params.productId
+    console.log(productId)
+    this.props.loadSingleProduct(productId)
   }
 
   render() {
-    const {product} = this.props
+    const product = this.props.product
+    const singleProduct = product[0]
     return (
       <div>
         {product.length === 1 && (
           <div>
             <div id="single-product-information">
-              <div
+              <img
                 id="single-product-image"
-                alt={product.altText}
-                src={product.imageUrl}
-              >
-                render image large on lefthand side
-              </div>
+                alt={singleProduct.altText}
+                src={singleProduct.imageUrl}
+              />
               <div id="single-product-details">
-                <div id="single-product-name">{product.name}</div>
-                <div id="single-product-description">{product.description}</div>
-                <div id="single-product-price">Price</div>
+                <div id="single-product-name">{singleProduct.name}</div>
+                <div id="single-product-description">
+                  {singleProduct.description}
+                </div>
+                <div id="single-product-price">{singleProduct.price}</div>
               </div>
             </div>
             <button id="add-to-cart">Add to cart</button>
@@ -42,7 +44,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   loadSingleProduct: productId => {
-    fetchOneProduct(productId)
+    dispatch(fetchOneProduct(productId))
   }
 })
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
