@@ -32,7 +32,7 @@ class Routes extends Component {
         }
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/shipping-address-form" component={ShippingAddressForm} />
+        <Route path="/shipping-address" component={ShippingAddressForm} />
         <Route path="/single-product" component={SingleProduct} />
         {/* note that the "/product-item" route is exclusively for testing purposes. ProductItem should only ever be a child component of AllProducts or ProductsByCategory */}
         <Route path="/product-item" component={ProductItem} />

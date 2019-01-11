@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import {MapStateToProps, MapDispatchToProps, connect} from 'react-redux'
+import {connect} from 'react-redux'
+import {postShippingAddress} from '../store'
 
-export default class ShippingAddressForm extends Component {
+class ShippingAddressForm extends Component {
   constructor() {
     super()
     this.state = {
@@ -25,6 +26,14 @@ export default class ShippingAddressForm extends Component {
     event.preventDefault()
     //mapDispatchToProps must pass us a dispatcher function that calls POST '/orders'
     //navigate to OrderConfirmation
+    this.props.postShippingAddress(this.state)
+    this.setState({
+      name: '',
+      streetAddress: '',
+      city: '',
+      state: '',
+      zipcode: ''
+    })
   }
 
   render() {
@@ -68,3 +77,12 @@ export default class ShippingAddressForm extends Component {
     )
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    postShippingAddress: shippingAddress =>
+      dispatch(postShippingAddress(shippingAddress))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(ShippingAddressForm)
