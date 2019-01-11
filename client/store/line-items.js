@@ -25,12 +25,11 @@ const updateQuantity = updatedLineItem => ({
  */
 export const postOrUpdateItem = newLineItem => async (dispatch, getState) => {
   let inCart = false
-  let newQuantity
   const {productId} = newLineItem
   getState().lineItems.forEach(async lineItem => {
     if (productId === lineItem.productId) {
       inCart = true
-      newQuantity = lineItem.quantity + 1
+      const newQuantity = newLineItem.quantity || lineItem.quantity + 1
       const {data} = await axios.put('/api/line-items', {
         id: lineItem.id,
         quantity: newQuantity
