@@ -17,6 +17,7 @@ const reducer = combineReducers({
   shippingAddress,
   order
 })
+
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )
