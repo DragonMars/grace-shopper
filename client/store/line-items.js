@@ -26,7 +26,6 @@ const updateQuantity = updatedLineItem => ({
 export const postOrUpdateItem = newLineItem => async (dispatch, getState) => {
   let inCart = false
   const {productId} = newLineItem
-  console.log(getState())
   getState().lineItems.forEach(async lineItem => {
     if (productId === lineItem.productId) {
       inCart = true

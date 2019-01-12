@@ -28,7 +28,8 @@ router.post('/', async (req, res, next) => {
     const {productId} = req.body
     console.log(req.body)
     const lineItem = await LineItem.create({userId, productId})
-    res.status(201).json(lineItem)
+    lineItemWithProduct = await LineItem.findById(lineItem.id)
+    res.status(201).json(lineItemWithProduct)
   } catch (err) {
     next(err)
   }
@@ -47,7 +48,8 @@ router.put('/', async (req, res, next) => {
         plain: true
       }
     )
-    res.json(lineItem)
+    lineItemWithProduct = await LineItem.findById(id)
+    res.json(lineItemWithProduct)
   } catch (err) {
     next(err)
   }
