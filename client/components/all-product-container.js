@@ -15,7 +15,9 @@ class AllProducts extends React.Component {
       <div>
         <h1>Hello World</h1>
         {products &&
-          products.map(product => <SingleProductView product={product} />)}
+          products.map(product => (
+            <SingleProductView product={product} key={product.id} />
+          ))}
       </div>
     )
   }

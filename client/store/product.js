@@ -22,16 +22,17 @@ const gotOneProduct = oneProduct => ({type: GOT_ONE_PRODUCT, oneProduct})
  */
 export const fetchAllProducts = category => async dispatch => {
   if (category) {
-    const {data} = await axios.get(`api/products?category=${category}`)
+    const {data} = await axios.get(`/api/products?category=${category}`)
     dispatch(gotProducts(data))
   } else {
-    const {data} = await axios.get('api/products')
+    const {data} = await axios.get('/api/products')
     dispatch(gotProducts(data))
   }
 }
 
 export const fetchOneProduct = productId => async dispatch => {
-  const {data} = await axios.get(`api/product/${productId}`)
+  const {data} = await axios.get(`/api/products/${productId}`)
+  console.log('productId', productId, 'data', data)
   dispatch(gotOneProduct(data))
 }
 
@@ -44,7 +45,7 @@ export default function product(state = defaultProducts, action) {
       return action.products
     }
     case GOT_ONE_PRODUCT: {
-      return action.oneProduct
+      return [action.oneProduct]
     }
     default:
       return state
