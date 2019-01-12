@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {OrderProducts, ShippingAddressForm} from './index'
 import {postOrder} from '../store'
+import {Form} from 'semantic-ui-react'
 
 const fakeOrder = {
   id: 1,
@@ -72,10 +73,7 @@ class Checkout extends Component {
   }
 
   handleSubmit(event) {
-    console.log('before preventDefault')
     event.preventDefault()
-    //need to pass postOrder
-    console.log('props on submit ', this.props)
     this.props.postOrder(fakeOrder, this.props.shippingAddress.id)
   }
 
@@ -87,9 +85,9 @@ class Checkout extends Component {
         {/* add Stripe - research Stripe UI */}
         <OrderProducts lineItems={fakeOrder.lineItems} />
         {/* order products will be hooked up to the LineItem model with a GET route */}
-        <form onSubmit={this.handleSubmit}>
-          <button type="submit">Place Your Order</button>
-        </form>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Button>Place Your Order</Form.Button>
+        </Form>
       </div>
     )
   }
