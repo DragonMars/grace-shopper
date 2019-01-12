@@ -21,10 +21,9 @@ router.post('/', async (req, res, next) => {
   try {
     //to read the data read the item as string then convert to JSON object
     // assumes localStorage.setItem('localOrders', JSON.stringify(array))
-
-    if (req.user.id) {
+    if (req.user) {
       console.log('post order route req.body ', req.body)
-      console.log('user id is ', req.user.id)
+      console.log('user is ', req.user)
       const newOrder = await Order.create({
         stripeTransactionId: '297379GHKOU0', // ???
         userId: req.user.id,
@@ -57,26 +56,25 @@ router.post('/', async (req, res, next) => {
 
       */
     } else {
-      const cart = localStorage.getItem('cart')
-      const cartArray = Object.keys(cart)
-
-      const lineItemData = cartArray.map(elem => {
-        return {
-          quantity: cart[elem],
-          price: Product.findById(parseInt(elem)).price
-        }
-      })
-
       const newOrder = await Order.create({
         stripeTransactionId: '297379GHKOU0', // ???
-        userId: req.session.id,
-        shippingAddressId: req.body.order.shippingAddress.id
+        userId: null,
+        shippingAddressId: req.body.shippingAddressId
       })
-
-      const orderLineItems = await LineItem.bulkCreate(lineItemData, {
-        returning: true
-      })
-      res.json(orderLineItems)
+      const newLineItemDataWithPrice = req.body.lineItemData.map(
+        async lineItem => {
+          const idx = lineItem.productId
+          const product = await Product.findById(idx)
+          const newLineItem = await LineItem.create({
+            quantity: lineItem.quantity,
+            price: product.price,
+            productId: product.id,
+            orderId: newOrder.id
+          })
+          return newLineItem
+        }
+      )
+      res.json(newLineItemDataWithPrice)
     }
   } catch (err) {
     next(err)
