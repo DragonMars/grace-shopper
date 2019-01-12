@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {postShippingAddress} from '../store'
 import {Redirect} from 'react-router-dom'
+import {Form, Container, Header} from 'semantic-ui-react'
 
 class ShippingAddressForm extends Component {
   constructor() {
@@ -40,42 +41,48 @@ class ShippingAddressForm extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Shipping Address</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label>Name</label>
-          <input
+      <Container>
+        <Header size="large">Shipping Address</Header>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Input
+            required
+            label="Name"
             name="name"
+            placeholder="Name"
             value={this.state.name}
             onChange={this.handleChange}
           />
-          <label>Street Address</label>
-          <input
+          <Form.Input
+            required
+            label="Street Address"
             name="streetAddress"
             value={this.state.streetAddress}
             onChange={this.handleChange}
           />
-          <label>City</label>
-          <input
+          <Form.Input
+            required
+            label="City"
             name="city"
             value={this.state.city}
             onChange={this.handleChange}
           />
-          <label>State</label>
-          <input
+          <Form.Input
+            required
+            label="State"
             name="state"
             value={this.state.state}
             onChange={this.handleChange}
           />
-          <label>zipcode</label>
-          <input
+          <Form.Input
+            required
+            label="Zipcode"
             name="zipcode"
             value={this.state.zipcode}
             onChange={this.handleChange}
           />
-          <button type="submit">Use this address</button>
-        </form>
-      </div>
+          <Form.Button>Use this address</Form.Button>
+        </Form>
+      </Container>
     )
   }
 }
