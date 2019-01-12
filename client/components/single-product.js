@@ -3,13 +3,21 @@ import {connect} from 'react-redux'
 import {fetchOneProduct, postOrUpdateItem} from '../store'
 
 class SingleProduct extends Component {
+  constructor(props) {
+    super(props)
+    this.handleClick = this.handleClick.bind(this)
+  }
   componentDidMount() {
     const productId = this.props.match.params.productId
     console.log(productId)
     this.props.loadSingleProduct(productId)
   }
 
-  handleClick() {}
+  handleClick() {
+    const {product, createOrUpdateCart} = this.props
+    console.log('in handle click', product)
+    createOrUpdateCart({productId: product[0].id})
+  }
 
   render() {
     const product = this.props.product
@@ -29,10 +37,14 @@ class SingleProduct extends Component {
                 <div id="single-product-description">
                   {singleProduct.description}
                 </div>
-                <div id="single-product-price">{singleProduct.price}</div>
+                <div id="single-product-price">
+                  Price: ${singleProduct.price / 100}
+                </div>
               </div>
             </div>
-            <button id="add-to-cart">Add to cart</button>
+            <button onClick={this.handleClick} id="add-to-cart">
+              Add to Cart
+            </button>
           </div>
         )}
       </div>

@@ -26,6 +26,7 @@ const updateQuantity = updatedLineItem => ({
 export const postOrUpdateItem = newLineItem => async (dispatch, getState) => {
   let inCart = false
   const {productId} = newLineItem
+  console.log(getState())
   getState().lineItems.forEach(async lineItem => {
     if (productId === lineItem.productId) {
       inCart = true
@@ -49,12 +50,15 @@ export const postOrUpdateItem = newLineItem => async (dispatch, getState) => {
 export default function lineItemReducer(state = defaultCart, action) {
   switch (action.type) {
     case GOT_NEW_ITEM: {
-      return [...state, action.lineItem]
+      return [...state, action.newLineItem]
     }
-    case UPDATE_QUANTITY:
-      return state
-        .filter(lineItem => lineItem.id !== action.updatedLineItem.id)
-        .push(action.updatedLineItem)
+    case UPDATE_QUANTITY: {
+      const updated = state.filter(
+        lineItem => lineItem.id !== action.updatedLineItem.id
+      )
+      updated.push(action.updatedLineItem)
+      return updated
+    }
     default:
       return state
   }

@@ -1,14 +1,20 @@
 const router = require('express').Router()
-const LineItems = require('../db/models')
+const {LineItem} = require('../db/models')
 module.exports = router
 
 // GET /api/line-items
 // get cart
 router.get('/', async (req, res, next) => {
   try {
-    const userId = req.user.id
-    const lineItems = await LineItems.findAll({where: {userId, orderId: null}})
-    res.json(lineItems)
+    if (req.user) {
+      const userId = req.user.id
+      const lineItems = await LineItem.findAll({
+        where: {userId, orderId: null}
+      })
+      res.json(lineItems)
+    } else {
+      res.sendStatus(401)
+    }
   } catch (err) {
     next(err)
   }
@@ -20,9 +26,9 @@ router.post('/', async (req, res, next) => {
   try {
     const userId = req.user.id
     const {productId} = req.body
-    const lineItem = await LineItems.create({userId, productId})
-    res.status(201)
-    res.json(lineItem)
+    console.log(req.body)
+    const lineItem = await LineItem.create({userId, productId})
+    res.status(201).json(lineItem)
   } catch (err) {
     next(err)
   }
@@ -32,9 +38,9 @@ router.post('/', async (req, res, next) => {
 // change quantity
 router.put('/', async (req, res, next) => {
   try {
-    const {id, newQuantity} = req.body
-    const [affectedRow, lineItem] = await LineItems.update(
-      {quantity: newQuantity},
+    const {id, quantity} = req.body
+    const [affectedRow, lineItem] = await LineItem.update(
+      {quantity},
       {
         where: {id},
         returning: true,
