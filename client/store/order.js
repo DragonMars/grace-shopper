@@ -12,18 +12,18 @@ const postedOrder = order => {
 }
 
 //THUNK CREATORS
-export const postOrder = (order, shippingAddressId, userId) => {
+export const postOrder = (cartItems, shippingAddressId, userId) => {
   if (userId) {
+    console.log('we have the userId!')
     return async dispatch => {
-      const {data} = await axios.post('/api/orders', {order, shippingAddressId})
+      const {data} = await axios.post('/api/orders', {
+        cartItems,
+        shippingAddressId
+      })
       dispatch(postedOrder(data))
     }
   } else {
     return async dispatch => {
-      const tmpCart = localStorage.setItem(
-        'cart',
-        JSON.stringify({1: 2, 2: 3, 4: 4})
-      )
       const cart = JSON.parse(localStorage.getItem('cart'))
       const cartArray = Object.keys(cart)
       const lineItemData = cartArray.map(elem => {
