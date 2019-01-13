@@ -38,6 +38,7 @@ export const postOrder = (cartItems, shippingAddressId, userId) => {
         shippingAddressId
       })
       dispatch(postedOrder(data))
+      localStorage.clear()
     }
   }
 }
