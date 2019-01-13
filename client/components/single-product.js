@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchOneProduct, postOrUpdateItem} from '../store'
+import {fetchOneProduct, setOrUpdateItem} from '../store'
 import {Card, Image, Container, Button} from 'semantic-ui-react'
 
 class SingleProduct extends Component {
@@ -15,9 +15,9 @@ class SingleProduct extends Component {
   }
 
   handleClick() {
-    const {product, createOrUpdateCart} = this.props
-    console.log('in handle click', product)
-    createOrUpdateCart({productId: product[0].id})
+    const {product, setOrUpdateCart, createOrUpdateCart} = this.props
+    setOrUpdateCart({productId: product[0].id})
+    // createOrUpdateCart({productId: product[0].id})
   }
 
   render() {
@@ -61,8 +61,8 @@ const mapDispatchToProps = dispatch => ({
   loadSingleProduct: productId => {
     dispatch(fetchOneProduct(productId))
   },
-  createOrUpdateCart: ({productId}) => {
-    dispatch(postOrUpdateItem({productId}))
+  setOrUpdateCart: ({productId}) => {
+    dispatch(setOrUpdateItem({productId}))
   }
 })
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
