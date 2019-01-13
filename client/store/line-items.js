@@ -45,13 +45,16 @@ const updateQuantity = updatedLineItem => ({
 // }
 
 export const setOrUpdateItem = newLineItem => async (dispatch, getState) => {
+  if (!localStorage.getItem('cart')) {
+    localStorage.setItem('cart', JSON.stringify({}))
+  }
   const {productId} = newLineItem
   const [itemToBeUpdated] = getState().lineItems.filter(
     lineItem => lineItem.productId === productId
   )
-  const {user} = getState().user
+  const {user} = getState()
   if (itemToBeUpdated) {
-    if (user) {
+    if (user.id) {
       const newQuantity = itemToBeUpdated.quantity + 1
       const {data} = await axios.put('/api/line-items', {
         id: itemToBeUpdated.id,
@@ -59,24 +62,27 @@ export const setOrUpdateItem = newLineItem => async (dispatch, getState) => {
       })
       dispatch(updateQuantity(data))
     } else {
-      const quantity = window.localStorage[productId]
-      window.localStorage[productId] = Number(quantity) + 1
+      const cart = JSON.parse(localStorage.getItem('cart'))
+      cart[productId] += 1
+      localStorage.setItem('cart', JSON.stringify(cart))
       dispatch(
         updateQuantity({
           productId: productId,
-          quantity: Number(window.localStorage[productId])
+          quantity: cart[productId]
         })
       )
     }
   }
   if (!itemToBeUpdated) {
-    if (user) {
+    if (user.id) {
       console.log(newLineItem)
       const {data} = await axios.post('/api/line-items', newLineItem)
       console.log(data)
       dispatch(gotNewItem(data))
     } else {
-      window.localStorage.setItem(`${productId}`, '1')
+      const cart = JSON.parse(localStorage.getItem('cart'))
+      cart[productId] = 1
+      localStorage.setItem('cart', JSON.stringify(cart))
       dispatch(
         gotNewItem({
           quantity: 1,
@@ -97,10 +103,10 @@ export default function lineItemReducer(state = defaultCart, action) {
     }
     case UPDATE_QUANTITY: {
       const updated = state.filter(
-        lineItem => lineItem.id !== action.updatedLineItem.id
+        lineItem => lineItem.productId !== action.updatedLineItem.productId
       )
-      updated.push(action.updatedLineItem)
-      return updated
+
+      return [...updated, action.updatedLineItem]
     }
 
     default:
