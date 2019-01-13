@@ -1,17 +1,18 @@
 import React from 'react'
 
-const calculateTotal = function(order) {
-  let total = 0
-  order.lineItems.forEach(lineItem => {
-    total += lineItem.price * lineItem.quantity
-  })
-  return total / 100
-}
+// const calculateTotal = function(order) {
+//   let total = 0
+//   order.lineItems.forEach(lineItem => {
+//     total += lineItem.price * lineItem.quantity
+//   })
+//   return total / 100
+// }
 
 const OrderProducts = ({lineItems, order}) => {
   let total
   if (order) {
-    total = calculateTotal(order)
+    // total = calculateTotal(order)
+    total = order.calculateTotal()
   } else {
     total = 0
     lineItems.forEach(lineItem => {

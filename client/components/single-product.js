@@ -10,14 +10,12 @@ class SingleProduct extends Component {
   }
   componentDidMount() {
     const productId = this.props.match.params.productId
-    console.log(productId)
     this.props.loadSingleProduct(productId)
   }
 
   handleClick() {
-    const {product, setOrUpdateCart, createOrUpdateCart} = this.props
+    const {product, setOrUpdateCart} = this.props
     setOrUpdateCart({productId: product[0].id})
-    // createOrUpdateCart({productId: product[0].id})
   }
 
   render() {
