@@ -1,19 +1,24 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import {Card, Image} from 'semantic-ui-react'
 
 function SingleProductViewForAllProduct({product}) {
   return (
-    <div>
+    <Card>
       <Link to={`/products/${product.id}`}>
-        <div>
-          <img src={product.imageUrl} alt={product.altText} />
-        </div>
-        <div>
-          <h3>{product.name}</h3>
-        </div>
+        <Image src={product.imageUrl} alt={product.altText} />
+        <Card.Content>
+          <Card.Header>{product.name}</Card.Header>
+        </Card.Content>
       </Link>
-    </div>
+      <Card.Content extra>
+        {(product.price / 100).toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD'
+        })}
+      </Card.Content>
+    </Card>
   )
 }
 

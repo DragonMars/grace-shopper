@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {fetchOneProduct, postOrUpdateItem, setOrUpdateItem} from '../store'
+import {fetchOneProduct, setOrUpdateItem} from '../store'
 
 class SingleProduct extends Component {
   constructor(props) {
@@ -23,31 +23,31 @@ class SingleProduct extends Component {
     const product = this.props.product
     const singleProduct = product[0]
     return (
-      <div>
+      <Container>
         {product.length === 1 && (
-          <div>
-            <div id="single-product-information">
-              <img
-                id="single-product-image"
-                alt={singleProduct.altText}
-                src={singleProduct.imageUrl}
-              />
-              <div id="single-product-details">
-                <div id="single-product-name">{singleProduct.name}</div>
-                <div id="single-product-description">
-                  {singleProduct.description}
-                </div>
-                <div id="single-product-price">
-                  Price: ${singleProduct.price / 100}
-                </div>
-              </div>
-            </div>
-            <button onClick={this.handleClick} id="add-to-cart">
+          <Card id="single-product-information">
+            <Image
+              id="single-product-image"
+              alt={singleProduct.altText}
+              src={singleProduct.imageUrl}
+            />
+            <Card.Content id="single-product-details">
+              <Card.Header id="single-product-name">
+                {singleProduct.name}
+              </Card.Header>
+              <Card.Description id="single-product-description">
+                {singleProduct.description}
+              </Card.Description>
+              <Card.Content extra id="single-product-price">
+                Price: ${singleProduct.price / 100}
+              </Card.Content>
+            </Card.Content>
+            <Button type="submit" onClick={this.handleClick} id="add-to-cart">
               Add to Cart
-            </button>
-          </div>
+            </Button>
+          </Card>
         )}
-      </div>
+      </Container>
     )
   }
 }
@@ -60,9 +60,6 @@ const mapDispatchToProps = dispatch => ({
   loadSingleProduct: productId => {
     dispatch(fetchOneProduct(productId))
   },
-  // createOrUpdateCart: ({productId}) => {
-  //   dispatch(postOrUpdateItem({productId}))
-  // }
   setOrUpdateCart: ({productId}) => {
     dispatch(setOrUpdateItem({productId}))
   }
