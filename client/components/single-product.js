@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {fetchOneProduct, setOrUpdateItem} from '../store'
+import {Card, Image, Container, Button} from 'semantic-ui-react'
 
 class SingleProduct extends Component {
   constructor(props) {
