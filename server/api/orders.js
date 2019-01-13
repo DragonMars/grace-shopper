@@ -19,53 +19,40 @@ module.exports = router
 
 router.post('/', async (req, res, next) => {
   try {
-    //to read the data read the item as string then convert to JSON object
-    // assumes localStorage.setItem('localOrders', JSON.stringify(array))
     if (req.user) {
-      console.log('order route req.body ', req.body)
       const newOrder = await Order.create({
         stripeTransactionId: '297379GHKOU0', // ???
         userId: req.user.id,
         shippingAddressId: req.body.shippingAddressId
       })
-      const orderLineItems = await LineItem.update(
-        {
-          orderId: newOrder.id,
-          userId: null
-        },
-        {
-          where: {
-            userId: req.user.id
+      const {cartItems} = req.body
+      const updatedLineItems = cartItems.map(async cartItem => {
+        const [rowsAffected, updatedLineItem] = await LineItem.update(
+          {
+            orderId: newOrder.id,
+            userId: null,
+            price: cartItem.product.price
           },
-          returning: true,
-          plain: true
-        }
-      )
-      res.json(orderLineItems[1])
-
-      /*
-
-      localStorageCart = {
-        1: {quantity: 2},
-        2: {quantity: 3},
-        4: {quantity: 4}
-      }
-
-      */
+          {where: {id: cartItem.id}, returning: true, plain: true}
+        )
+        return updatedLineItem
+      })
+      res.json(newOrder)
     } else {
       const newOrder = await Order.create({
         stripeTransactionId: '297379GHKOU0', // ???
         userId: null,
         shippingAddressId: req.body.shippingAddressId
       })
-      const newLineItemDataWithPrice = req.body.lineItemData.map(
+      console.log(req.body.lineItemData)
+      const newLineItemDataWithPrice = req.body.cartItems.map(
         async lineItem => {
-          const idx = lineItem.productId
-          const product = await Product.findById(idx)
+          // const idx = lineItem.productId
+          // const product = await Product.findById(idx)
           const newLineItem = await LineItem.create({
             quantity: lineItem.quantity,
-            price: product.price,
-            productId: product.id,
+            price: lineItem.product.price,
+            productId: lineItem.productId,
             orderId: newOrder.id
           })
           return newLineItem
