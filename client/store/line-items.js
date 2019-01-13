@@ -3,6 +3,8 @@ import axios from 'axios'
 /**
  * ACTION TYPES
  */
+
+const GOT_ITEMS = 'GOT_ITEMS'
 const GOT_NEW_ITEM = 'GOT_NEW_ITEM'
 const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
 
@@ -14,6 +16,7 @@ const defaultCart = []
 /**
  * ACTION CREATORS
  */
+const gotItems = lineItems => ({type: GOT_ITEMS, lineItems})
 const gotNewItem = newLineItem => ({type: GOT_NEW_ITEM, newLineItem})
 const updateQuantity = updatedLineItem => ({
   type: UPDATE_QUANTITY,
@@ -23,6 +26,12 @@ const updateQuantity = updatedLineItem => ({
 /**
  * THUNK CREATORS
  */
+
+export const fetchItems = () => async (dispatch, getState) => {
+  const {data} = await axios.get('/api/line-items')
+  dispatch(gotItems(data))
+}
+
 export const postOrUpdateItem = newLineItem => async (dispatch, getState) => {
   let inCart = false
   const {productId} = newLineItem
@@ -48,6 +57,9 @@ export const postOrUpdateItem = newLineItem => async (dispatch, getState) => {
  */
 export default function lineItemReducer(state = defaultCart, action) {
   switch (action.type) {
+    case GOT_ITEMS: {
+      return action.lineItems
+    }
     case GOT_NEW_ITEM: {
       return [...state, action.newLineItem]
     }
