@@ -6,15 +6,9 @@ module.exports = router
 // get cart
 router.get('/', async (req, res, next) => {
   try {
-    if (req.user) {
-      const userId = req.user.id
-      const lineItems = await LineItem.findAll({
-        where: {userId, orderId: null}
-      })
-      res.json(lineItems)
-    } else {
-      res.sendStatus(401)
-    }
+    const userId = 2
+    const lineItems = await LineItem.findAll({where: {userId, orderId: null}})
+    res.json(lineItems)
   } catch (err) {
     next(err)
   }
@@ -26,9 +20,10 @@ router.post('/', async (req, res, next) => {
   try {
     const userId = req.user.id
     const {productId} = req.body
-    console.log(req.body)
+    console.log(productId)
     const lineItem = await LineItem.create({userId, productId})
-    res.status(201).json(lineItem)
+    res.status(201)
+    res.json(lineItem)
   } catch (err) {
     next(err)
   }
@@ -40,7 +35,7 @@ router.put('/', async (req, res, next) => {
   try {
     const {id, quantity} = req.body
     const [affectedRow, lineItem] = await LineItem.update(
-      {quantity},
+      {quantity: quantity},
       {
         where: {id},
         returning: true,
