@@ -10,7 +10,6 @@ class SingleProduct extends Component {
   }
   componentDidMount() {
     const productId = this.props.match.params.productId
-    console.log(productId)
     this.props.loadSingleProduct(productId)
   }
 

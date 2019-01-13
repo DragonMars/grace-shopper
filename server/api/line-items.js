@@ -20,9 +20,8 @@ router.post('/', async (req, res, next) => {
   try {
     const userId = req.user.id
     const {productId} = req.body
-    console.log(productId)
     const lineItem = await LineItem.create({userId, productId})
-    lineItemWithProduct = await LineItem.findById(lineItem.id)
+    const lineItemWithProduct = await LineItem.findById(lineItem.id)
     res.status(201).json(lineItemWithProduct)
   } catch (err) {
     next(err)
@@ -34,15 +33,14 @@ router.post('/', async (req, res, next) => {
 router.put('/', async (req, res, next) => {
   try {
     const {id, quantity} = req.body
-    const [affectedRow, lineItem] = await LineItem.update(
+    await LineItem.update(
       {quantity: quantity},
       {
         where: {id},
-        returning: true,
         plain: true
       }
     )
-    lineItemWithProduct = await LineItem.findById(id)
+    const lineItemWithProduct = await LineItem.findById(id)
     res.json(lineItemWithProduct)
   } catch (err) {
     next(err)

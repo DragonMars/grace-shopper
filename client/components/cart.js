@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-// import {postOrUpdateItem, fetchCartProductsForGuests} from '../store'
 import {setOrUpdateItem} from '../store'
 import {Button, List, Image, Header} from 'semantic-ui-react'
 
@@ -39,7 +38,6 @@ class Cart extends Component {
   render() {
     const {cartItems, isLoggedIn} = this.props
     const numberOfItems = this.numberOfItems()
-    console.log(numberOfItems)
     const subtotal = this.subtotal()
     const quantityOptions = []
     for (let i = 1; i < 10; i++) {

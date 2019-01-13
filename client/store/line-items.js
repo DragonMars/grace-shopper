@@ -63,9 +63,7 @@ export const setOrUpdateItem = newLineItem => async (dispatch, getState) => {
   }
   if (!itemToBeUpdated) {
     if (user.id) {
-      console.log(newLineItem)
       const {data} = await axios.post('/api/line-items', newLineItem)
-      console.log(data)
       dispatch(gotNewItem(data))
     } else {
       const cart = JSON.parse(localStorage.getItem('cart'))
