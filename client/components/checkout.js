@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {OrderProducts, ShippingAddressForm} from './index'
 import {postOrder} from '../store'
 import {Form} from 'semantic-ui-react'
+import StripeContainer from './stripe-components/StripeContainer'
 
 const fakeOrder = {
   id: 1,
@@ -85,6 +86,7 @@ class Checkout extends Component {
         {/* add Stripe - research Stripe UI */}
         <OrderProducts lineItems={fakeOrder.lineItems} />
         {/* order products will be hooked up to the LineItem model with a GET route */}
+        <StripeContainer />
         <Form onSubmit={this.handleSubmit}>
           <Form.Button>Place Your Order</Form.Button>
         </Form>
