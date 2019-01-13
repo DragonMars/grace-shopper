@@ -23,24 +23,67 @@ const updateQuantity = updatedLineItem => ({
 /**
  * THUNK CREATORS
  */
-export const postOrUpdateItem = newLineItem => async (dispatch, getState) => {
-  let inCart = false
+// export const postOrUpdateItem = newLineItem => async (dispatch, getState) => {
+//   let inCart = false
+//   const {productId} = newLineItem
+//   console.log(getState())
+//   getState().lineItems.forEach(async lineItem => {
+//     if (productId === lineItem.productId) {
+//       inCart = true
+//       const newQuantity = newLineItem.quantity || lineItem.quantity + 1
+//       const {data} = await axios.put('/api/line-items', {
+//         id: lineItem.id,
+//         quantity: newQuantity
+//       })
+//       dispatch(updateQuantity(data))
+//     }
+//   })
+//   if (!inCart) {
+//     const {data} = await axios.post('/api/line-items', newLineItem)
+//     dispatch(gotNewItem(data))
+//   }
+// }
+
+export const setOrUpdateItem = newLineItem => async (dispatch, getState) => {
   const {productId} = newLineItem
-  console.log(getState())
-  getState().lineItems.forEach(async lineItem => {
-    if (productId === lineItem.productId) {
-      inCart = true
-      const newQuantity = newLineItem.quantity || lineItem.quantity + 1
+  const [itemToBeUpdated] = getState().lineItems.filter(
+    lineItem => lineItem.productId === productId
+  )
+  const {user} = getState().user
+  if (itemToBeUpdated) {
+    if (user) {
+      const newQuantity = itemToBeUpdated.quantity + 1
       const {data} = await axios.put('/api/line-items', {
-        id: lineItem.id,
+        id: itemToBeUpdated.id,
         quantity: newQuantity
       })
       dispatch(updateQuantity(data))
+    } else {
+      const quantity = window.localStorage[productId]
+      window.localStorage[productId] = Number(quantity) + 1
+      dispatch(
+        updateQuantity({
+          productId: productId,
+          quantity: Number(window.localStorage[productId])
+        })
+      )
     }
-  })
-  if (!inCart) {
-    const {data} = await axios.post('/api/line-items', newLineItem)
-    dispatch(gotNewItem(data))
+  }
+  if (!itemToBeUpdated) {
+    if (user) {
+      console.log(newLineItem)
+      const {data} = await axios.post('/api/line-items', newLineItem)
+      console.log(data)
+      dispatch(gotNewItem(data))
+    } else {
+      window.localStorage.setItem(`${productId}`, '1')
+      dispatch(
+        gotNewItem({
+          quantity: 1,
+          productId: productId
+        })
+      )
+    }
   }
 }
 
@@ -59,6 +102,7 @@ export default function lineItemReducer(state = defaultCart, action) {
       updated.push(action.updatedLineItem)
       return updated
     }
+
     default:
       return state
   }
