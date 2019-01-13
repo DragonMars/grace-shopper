@@ -13,6 +13,7 @@ import {
   Checkout,
   OrderConfirmation
 } from './components'
+import StripeContainer from './components/stripe-components/StripeContainer'
 import {me} from './store'
 
 /**
@@ -36,6 +37,7 @@ class Routes extends Component {
         <Route path="/shipping-address" component={ShippingAddressForm} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/products/:productId" component={SingleProduct} />
+        <Route path="/test" component={StripeContainer} />
         {/* note that the "/product-item" route is exclusively for testing purposes. ProductItem should only ever be a child component of AllProducts or ProductsByCategory */}
         <Route path="/product-item" component={ProductItem} />
         {isLoggedIn && (
