@@ -1,29 +1,44 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {postOrUpdateItem} from '../store'
+import {setOrUpdateItem} from '../store'
 import {Button, List, Image, Header} from 'semantic-ui-react'
 
 class Cart extends Component {
   constructor(props) {
     super(props)
-    this.handleChange = this.handleChange.bind(this)
+    this.numberOfItems = this.numberOfItems.bind(this)
+    this.subtotal = this.subtotal.bind(this)
   }
 
-  handleChange(event) {
+  handleChange(productId, event) {
     this.props.updateQuantity({productId, quantity: event.target.value})
+  }
+
+  numberOfItems() {
+    let numberOfItems = 0
+    const {cartItems} = this.props
+    cartItems[0] &&
+      cartItems.forEach(cartItem => {
+        numberOfItems += Number(cartItem.quantity)
+      })
+    return numberOfItems
+  }
+
+  subtotal() {
+    let total = 0
+    const {cartItems} = this.props
+    cartItems[0] &&
+      cartItems.forEach(cartItem => {
+        total += cartItem.product.price * cartItem.quantity / 100
+      })
+    return total
   }
 
   render() {
     const {cartItems, isLoggedIn} = this.props
-    let total = 0
-    let numberOfItems = 0
-    cartItems &&
-      cartItems.forEach(cartItem => {
-        numberOfItems += cartItem.quantity
-        total += cartItem.product.price * cartItem.quantity / 100
-      })
-
+    const numberOfItems = this.numberOfItems()
+    const subtotal = this.subtotal()
     const quantityOptions = []
     for (let i = 1; i < 10; i++) {
       quantityOptions.push(i)
@@ -31,9 +46,9 @@ class Cart extends Component {
     return (
       <List divided relaxed>
         <Header as="h1">Cart:</Header>
-        {cartItems &&
+        {cartItems[0] &&
           cartItems.map(cartItem => (
-            <List.Item key={cartItem.id}>
+            <List.Item key={cartItem.product.id}>
               <List.Content>
                 <List.Header as="h3">{cartItem.product.name}</List.Header>
               </List.Content>
@@ -48,7 +63,9 @@ class Cart extends Component {
                   Quantity:{' '}
                   <select
                     defaultValue={cartItem.quantity}
-                    onChange={this.handleChange}
+                    onChange={event =>
+                      this.handleChange(cartItem.product.id, event)
+                    }
                   >
                     {quantityOptions.map(quantity => (
                       <option key={quantity} value={`${quantity}`}>
@@ -57,12 +74,22 @@ class Cart extends Component {
                     ))}
                   </select>{' '}
                 </p>
-                <p>Price: ${cartItem.product.price / 100}</p>
+                <p>
+                  Price:{' '}
+                  {(cartItem.product.price / 100).toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD'
+                  })}
+                </p>
               </List.Content>
             </List.Item>
           ))}
         <p>
-          Subtotal ({numberOfItems} items): ${total}
+          Subtotal ({numberOfItems} items):{' '}
+          {subtotal.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD'
+          })}
         </p>
         <Link to="/checkout">
           {isLoggedIn ? (
@@ -75,6 +102,7 @@ class Cart extends Component {
     )
   }
 }
+
 const mapStateToProps = state => ({
   isLoggedIn: !!state.user.id,
   cartItems: state.lineItems
@@ -82,7 +110,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   updateQuantity: ({productId, quantity}) =>
-    dispatch(postOrUpdateItem({productId, quantity}))
+    dispatch(setOrUpdateItem({productId, quantity}))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)

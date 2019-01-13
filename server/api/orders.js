@@ -28,7 +28,6 @@ router.post('/', async (req, res, next) => {
         userId: req.user.id,
         shippingAddressId: req.body.shippingAddressId
       })
-      console.log('newOrder is ', newOrder)
       const orderLineItems = await LineItem.update(
         {
           orderId: newOrder.id,
@@ -42,7 +41,6 @@ router.post('/', async (req, res, next) => {
           plain: true
         }
       )
-      console.log('orderLineItems is ', orderLineItems)
       res.json(orderLineItems[1])
 
       /*

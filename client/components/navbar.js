@@ -9,7 +9,7 @@ const Navbar = ({handleClick, isLoggedIn, cartItems}) => {
   let cartSize = 0
   cartItems &&
     cartItems.forEach(cartItem => {
-      cartSize += cartItem.quantity
+      cartSize += Number(cartItem.quantity)
     })
   return (
     <Menu>
