@@ -23,23 +23,73 @@ const updateQuantity = updatedLineItem => ({
 /**
  * THUNK CREATORS
  */
-export const postOrUpdateItem = newLineItem => async (dispatch, getState) => {
-  let inCart = false
+// export const postOrUpdateItem = newLineItem => async (dispatch, getState) => {
+//   let inCart = false
+//   const {productId} = newLineItem
+//   console.log(getState())
+//   getState().lineItems.forEach(async lineItem => {
+//     if (productId === lineItem.productId) {
+//       inCart = true
+//       const newQuantity = newLineItem.quantity || lineItem.quantity + 1
+//       const {data} = await axios.put('/api/line-items', {
+//         id: lineItem.id,
+//         quantity: newQuantity
+//       })
+//       dispatch(updateQuantity(data))
+//     }
+//   })
+//   if (!inCart) {
+//     const {data} = await axios.post('/api/line-items', newLineItem)
+//     dispatch(gotNewItem(data))
+//   }
+// }
+
+export const setOrUpdateItem = newLineItem => async (dispatch, getState) => {
+  if (!localStorage.getItem('cart')) {
+    localStorage.setItem('cart', JSON.stringify({}))
+  }
   const {productId} = newLineItem
-  getState().lineItems.forEach(async lineItem => {
-    if (productId === lineItem.productId) {
-      inCart = true
-      const newQuantity = newLineItem.quantity || lineItem.quantity + 1
+  const [itemToBeUpdated] = getState().lineItems.filter(
+    lineItem => lineItem.productId === productId
+  )
+  const {user} = getState()
+  if (itemToBeUpdated) {
+    if (user.id) {
+      const newQuantity = itemToBeUpdated.quantity + 1
       const {data} = await axios.put('/api/line-items', {
-        id: lineItem.id,
+        id: itemToBeUpdated.id,
         quantity: newQuantity
       })
       dispatch(updateQuantity(data))
+    } else {
+      const cart = JSON.parse(localStorage.getItem('cart'))
+      cart[productId] += 1
+      localStorage.setItem('cart', JSON.stringify(cart))
+      dispatch(
+        updateQuantity({
+          productId: productId,
+          quantity: cart[productId]
+        })
+      )
     }
-  })
-  if (!inCart) {
-    const {data} = await axios.post('/api/line-items', newLineItem)
-    dispatch(gotNewItem(data))
+  }
+  if (!itemToBeUpdated) {
+    if (user.id) {
+      console.log(newLineItem)
+      const {data} = await axios.post('/api/line-items', newLineItem)
+      console.log(data)
+      dispatch(gotNewItem(data))
+    } else {
+      const cart = JSON.parse(localStorage.getItem('cart'))
+      cart[productId] = 1
+      localStorage.setItem('cart', JSON.stringify(cart))
+      dispatch(
+        gotNewItem({
+          quantity: 1,
+          productId: productId
+        })
+      )
+    }
   }
 }
 
@@ -53,11 +103,12 @@ export default function lineItemReducer(state = defaultCart, action) {
     }
     case UPDATE_QUANTITY: {
       const updated = state.filter(
-        lineItem => lineItem.id !== action.updatedLineItem.id
+        lineItem => lineItem.productId !== action.updatedLineItem.productId
       )
-      updated.push(action.updatedLineItem)
-      return updated
+
+      return [...updated, action.updatedLineItem]
     }
+
     default:
       return state
   }

@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {OrderProducts} from './index'
+import {Container, Header} from 'semantic-ui-react'
 
 const order = {
   id: 1,
@@ -72,15 +73,15 @@ const OrderConfirmation = () => {
   const {lineItems, shippingAddress} = order
 
   return (
-    <div>
-      <h1>Thank you for your order!</h1>
+    <Container>
+      <Header as="h1">Thank you for your order!</Header>
       <p>
         Your order has been placed and will at {shippingAddress.streetAddress}{' '}
         arrive on {arrivalDate.toDateString()}.
       </p>
-      <h2>Order Details:</h2>
+      <Header as="h2">Order Details:</Header>
       <OrderProducts lineItems={lineItems} order={order} />
-    </div>
+    </Container>
   )
 }
 
