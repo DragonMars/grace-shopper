@@ -53,7 +53,6 @@ User.generateSalt = function() {
 }
 
 User.encryptPassword = function(plainText, salt) {
-  console.log('salt', salt)
   return crypto
     .createHash('RSA-SHA256')
     .update(plainText)

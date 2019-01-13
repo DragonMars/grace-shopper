@@ -1,16 +1,17 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {withRouter, Route, Switch} from 'react-router-dom'
+import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {
   Login,
   Signup,
   UserHome,
-  ShippingAddressForm,
   AllProductContainer,
-  SingleProduct,
   ProductItem,
+  SingleProduct,
+  Cart,
   Checkout,
+  ShippingAddressForm,
   OrderConfirmation
 } from './components'
 import StripeContainer from './components/stripe-components/StripeContainer'
@@ -31,18 +32,18 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/" component={AllProductContainer} />
+        <Route path="/products/:productId" component={SingleProduct} />
         <Route path="/success" component={OrderConfirmation} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/shipping-address" component={ShippingAddressForm} />
         <Route path="/checkout" component={Checkout} />
-        <Route path="/products/:productId" component={SingleProduct} />
-        <Route path="/test" component={StripeContainer} />
+        <Route path="/cart" component={Cart} />
         {/* note that the "/product-item" route is exclusively for testing purposes. ProductItem should only ever be a child component of AllProducts or ProductsByCategory */}
         <Route path="/product-item" component={ProductItem} />
         {isLoggedIn && (
           <Switch>
-            {/* Routes placed here are only available after logging in */}
+            {/* Routes placed here are only available after logging in */}s
             <Route path="/home" component={UserHome} />
           </Switch>
         )}
