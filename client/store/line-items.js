@@ -36,14 +36,14 @@ export const setOrUpdateItem = newLineItem => async (dispatch, getState) => {
   if (!localStorage.getItem('cart')) {
     localStorage.setItem('cart', JSON.stringify({}))
   }
-  const {productId} = newLineItem
+  const {productId, quantity} = newLineItem
   const [itemToBeUpdated] = getState().lineItems.filter(
     lineItem => lineItem.productId === productId
   )
   const {user} = getState()
   if (itemToBeUpdated) {
     if (user.id) {
-      const newQuantity = itemToBeUpdated.quantity + 1
+      const newQuantity = quantity || itemToBeUpdated.quantity + 1
       const {data} = await axios.put('/api/line-items', {
         id: itemToBeUpdated.id,
         quantity: newQuantity
@@ -51,7 +51,7 @@ export const setOrUpdateItem = newLineItem => async (dispatch, getState) => {
       dispatch(updateQuantity(data))
     } else {
       const cart = JSON.parse(localStorage.getItem('cart'))
-      cart[productId] += 1
+      quantity ? (cart[productId] = quantity) : (cart[productId] += 1)
       localStorage.setItem('cart', JSON.stringify(cart))
       dispatch(
         updateQuantity({

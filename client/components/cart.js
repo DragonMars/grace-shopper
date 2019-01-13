@@ -2,18 +2,17 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 // import {postOrUpdateItem, fetchCartProductsForGuests} from '../store'
-import {postOrUpdateItem} from '../store'
+import {setOrUpdateItem} from '../store'
 import {Button, List, Image, Header} from 'semantic-ui-react'
 
 class Cart extends Component {
   constructor(props) {
     super(props)
-    this.handleChange = this.handleChange.bind(this)
     this.numberOfItems = this.numberOfItems.bind(this)
     this.subtotal = this.subtotal.bind(this)
   }
 
-  handleChange(event) {
+  handleChange(productId, event) {
     this.props.updateQuantity({productId, quantity: event.target.value})
   }
 
@@ -22,7 +21,7 @@ class Cart extends Component {
     const {cartItems} = this.props
     cartItems[0] &&
       cartItems.forEach(cartItem => {
-        numberOfItems += cartItem.quantity
+        numberOfItems += Number(cartItem.quantity)
       })
     return numberOfItems
   }
@@ -39,8 +38,8 @@ class Cart extends Component {
 
   render() {
     const {cartItems, isLoggedIn} = this.props
-    console.log('cartItems', cartItems)
     const numberOfItems = this.numberOfItems()
+    console.log(numberOfItems)
     const subtotal = this.subtotal()
     const quantityOptions = []
     for (let i = 1; i < 10; i++) {
@@ -66,7 +65,9 @@ class Cart extends Component {
                   Quantity:{' '}
                   <select
                     defaultValue={cartItem.quantity}
-                    onChange={this.handleChange}
+                    onChange={event =>
+                      this.handleChange(cartItem.product.id, event)
+                    }
                   >
                     {quantityOptions.map(quantity => (
                       <option key={quantity} value={`${quantity}`}>
@@ -111,7 +112,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   updateQuantity: ({productId, quantity}) =>
-    dispatch(postOrUpdateItem({productId, quantity}))
+    dispatch(setOrUpdateItem({productId, quantity}))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
