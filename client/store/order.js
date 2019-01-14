@@ -12,35 +12,65 @@ const postedOrder = order => {
 }
 
 //THUNK CREATORS
-export const postOrder = (order, shippingAddressId, userId) => {
-  if (userId) {
-    return async dispatch => {
-      const {data} = await axios.post('/api/orders', {order, shippingAddressId})
-      dispatch(postedOrder(data))
-    }
+
+export const postOrder = (cartItems, shippingAddressId) => async (
+  dispatch,
+  getState
+) => {
+  if (getState().user.id) {
+    const {data} = await axios.post('/api/orders', {
+      cartItems,
+      shippingAddressId
+    })
+    dispatch(postedOrder(data))
   } else {
-    return async dispatch => {
-      const tmpCart = localStorage.setItem(
-        'cart',
-        JSON.stringify({1: 2, 2: 3, 4: 4})
-      )
-      const cart = JSON.parse(localStorage.getItem('cart'))
-      const cartArray = Object.keys(cart)
-      const lineItemData = cartArray.map(elem => {
-        return {
-          productId: elem,
-          quantity: cart[elem]
-          //price: Product.findById(parseInt(elem)).price
-        }
-      })
-      const {data} = await axios.post('/api/orders', {
-        lineItemData,
-        shippingAddressId
-      })
-      dispatch(postedOrder(data))
-    }
+    // const cart = JSON.parse(localStorage.getItem('cart'))
+    // const cartArray = Object.keys(cart)
+    // const lineItemData = cartItems.map(cartItem => {
+    //   return {
+    //     productId: cartItem.productId
+    //     quantity: cartItem
+    //     //price: Product.findById(parseInt(elem)).price
+    //   }
+    // })
+    const {data} = await axios.post('/api/orders', {
+      cartItems,
+      shippingAddressId
+    })
+    dispatch(postedOrder(data))
+    localStorage.clear()
   }
 }
+// export const postOrder = (cartItems, shippingAddressId) => {
+//   if () {
+//     console.log('we have the userId!')
+//     return async dispatch => {
+//       const {data} = await axios.post('/api/orders', {
+//         cartItems,
+//         shippingAddressId
+//       })
+//       dispatch(postedOrder(data))
+//     }
+//   } else {
+//     return async dispatch => {
+//       const cart = JSON.parse(localStorage.getItem('cart'))
+//       const cartArray = Object.keys(cart)
+//       const lineItemData = cartArray.map(elem => {
+//         return {
+//           productId: elem,
+//           quantity: cart[elem]
+//           //price: Product.findById(parseInt(elem)).price
+//         }
+//       })
+//       const {data} = await axios.post('/api/orders', {
+//         lineItemData,
+//         shippingAddressId
+//       })
+//       dispatch(postedOrder(data))
+//       localStorage.clear()
+//     }
+//   }
+// }
 
 //INITIAL STATE
 const initialState = {
