@@ -11,8 +11,8 @@ const OrderConfirmation = () => {
     <Container>
       <Header as="h1">Thank you for your order!</Header>
       <p>
-        Your order has been placed and will at {shippingAddress.streetAddress}{' '}
-        arrive on {arrivalDate.toDateString()}.
+        Your order has been placed and will arrive at{' '}
+        {shippingAddress.streetAddress} on {arrivalDate.toDateString()}.
       </p>
       <Header as="h2">Order Details:</Header>
       <OrderProducts lineItems={lineItems} order={order} />

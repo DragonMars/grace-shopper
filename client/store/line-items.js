@@ -88,6 +88,38 @@ export const clearCart = () => dispatch => {
   dispatch(clearItems())
 }
 
+export const fetchCart = () => async (dispatch, getState) => {
+  const cartOnState = getState().lineItems
+  // console.log('state', cartOnState)
+  const productIdsOnState = cartOnState.map(cartItem => cartItem.productId)
+  // console.log('state products', productIdsOnState)
+  const cartOnLocalStorage = JSON.parse(localStorage.getItem('cart'))
+  if (cartOnLocalStorage !== null) {
+    const productIdsOnLocalStorage = Object.keys(cartOnLocalStorage)
+    productIdsOnLocalStorage.forEach(productId => {
+      if (!productIdsOnState.includes(productId)) {
+        setOrUpdateItem({productId, quantity: cartOnLocalStorage[productId]})
+      }
+    })
+  }
+  const response = await axios.get('/api/line-items')
+  const cartInDB = response.data
+  if (cartInDB) {
+    const productIdsInDB = cartInDB.map(cartItem => cartItem.productId)
+    // console.log('db products', productIdsInDB)
+    productIdsInDB.forEach(productId => {
+      // console.log('productinDB', productId)
+      // console.log('db product on state?', productIdsOnState.includes(productId))
+      if (!productIdsOnState.includes(productId)) {
+        const selectedCartItem = cartInDB.filter(
+          cartItem => cartItem.productId === productId
+        )
+        dispatch(gotNewItem(selectedCartItem[0]))
+      }
+    })
+  }
+}
+
 /**
  * REDUCER
  */
