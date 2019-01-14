@@ -28,15 +28,6 @@ export const postOrder = (cartItems, shippingAddressId) => async (
     })
     dispatch(postedOrder(data))
   } else {
-    // const cart = JSON.parse(localStorage.getItem('cart'))
-    // const cartArray = Object.keys(cart)
-    // const lineItemData = cartItems.map(cartItem => {
-    //   return {
-    //     productId: cartItem.productId
-    //     quantity: cartItem
-    //     //price: Product.findById(parseInt(elem)).price
-    //   }
-    // })
     const {data} = await axios.post('/api/orders', {
       cartItems,
       shippingAddressId,

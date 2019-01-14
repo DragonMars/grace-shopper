@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {CardElement, injectStripe} from 'react-stripe-elements'
 import {connect} from 'react-redux'
 import {Container, Form} from 'semantic-ui-react'
-import {gotStripeToken} from '../../store'
+import {gotStripeToken} from '../../store/stripe-token.js'
 
 class CheckoutForm extends Component {
   constructor(props) {
@@ -33,7 +33,7 @@ class CheckoutForm extends Component {
       return (
         <Container>
           <div className="ui label">
-            Valid credit info, please press "Complete Purchase" to finalize your
+            Valid credit info, please press "Place Your Order" to finalize your
             order!
           </div>
         </Container>
