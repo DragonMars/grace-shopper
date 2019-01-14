@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout, fetchCart} from '../store'
 import {Menu, Icon, Button} from 'semantic-ui-react'
+import {logout, fetchCart} from '../store'
 
 class Navbar extends Component {
   componentDidMount() {

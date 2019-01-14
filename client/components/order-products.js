@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 
-const calculateTotal = function(order, lineItems) {
+const calculateTotal = function(lineItems) {
   let total = 0
   lineItems.forEach(lineItem => {
     total += lineItem.price * lineItem.quantity

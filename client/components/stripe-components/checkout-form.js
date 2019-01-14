@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {CardElement, injectStripe} from 'react-stripe-elements'
 import {connect} from 'react-redux'
 import {Container, Form, Divider, Label} from 'semantic-ui-react'
-import {gotStripeToken} from '../../store/stripe-token.js'
+import {gotStripeToken} from '../../store'
 
 class CheckoutForm extends Component {
   constructor(props) {
@@ -69,4 +69,3 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(
   injectStripe(CheckoutForm)
 )
-// export default injectStripe(CheckoutForm)

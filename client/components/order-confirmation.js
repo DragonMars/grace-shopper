@@ -1,8 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
-import {OrderProducts} from './index'
 import {Container, Header, Button} from 'semantic-ui-react'
+import {OrderProducts} from './index'
 import {clearCart} from '../store'
 
 class OrderConfirmation extends React.Component {

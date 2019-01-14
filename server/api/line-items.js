@@ -3,7 +3,7 @@ const {LineItem} = require('../db/models')
 module.exports = router
 
 // GET /api/line-items
-// get cart
+// gets cart for a single user
 router.get('/', async (req, res, next) => {
   try {
     if (req.user) {

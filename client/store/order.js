@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-//ACION TYPES
+//ACTION TYPES
 const POSTED_ORDER = 'POSTED_ORDER'
 
 //ACTION CREATORS
