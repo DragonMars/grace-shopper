@@ -22,7 +22,13 @@ User.hasMany(Order)
 Order.belongsTo(User)
 
 ShippingAddress.hasMany(Order)
-Order.belongsTo(ShippingAddress)
+Order.belongsTo(ShippingAddress, {
+  foreignKey: {
+    field: 'shippingAddressId',
+    allowNull: false
+  },
+  onDelete: 'cascade'
+})
 
 Order.hasMany(LineItem)
 LineItem.belongsTo(Order)

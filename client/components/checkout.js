@@ -9,7 +9,7 @@ class Checkout extends Component {
   constructor() {
     super()
     this.state = {
-      error: false
+      missingInfoError: false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -17,7 +17,7 @@ class Checkout extends Component {
   handleSubmit(event) {
     event.preventDefault()
     if (!this.props.stripeToken.length || !this.props.shippingAddress.id) {
-      this.setState({error: true})
+      this.setState({missingInfoError: true})
     } else {
       this.props.postOrder(
         this.props.cartItems,
@@ -36,7 +36,7 @@ class Checkout extends Component {
         {/* order products is hooked up to the LineItem model with a GET route */}
         <StripeContainer />
         <Form onSubmit={this.handleSubmit}>
-          {this.state.error === true ? (
+          {this.state.missingInfoError === true ? (
             <Label basic color="red" pointing="below">
               Please enter both a shipping address and credit card info!
             </Label>
