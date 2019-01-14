@@ -25,7 +25,7 @@ const Navbar = ({handleClick, isLoggedIn, cartItems}) => {
           </Menu.Item>
           <Menu.Item onClick={handleClick}>Logout</Menu.Item>
           <Menu.Item as={Link} to="/cart">
-            <Button animated="vertical">
+            <Button animated="fade">
               <Button.Content hidden>Cart ({cartSize})</Button.Content>
               <Button.Content visible>
                 <Icon name="shop" />
