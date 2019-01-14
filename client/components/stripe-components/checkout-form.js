@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {CardElement, injectStripe} from 'react-stripe-elements'
 import {connect} from 'react-redux'
 import {Container, Form, Divider, Label} from 'semantic-ui-react'
-import {gotStripeToken} from '../../store/stripe-token.js'
+import {gotStripeToken} from '../../store'
 
 class CheckoutForm extends Component {
   constructor(props) {
@@ -14,9 +14,7 @@ class CheckoutForm extends Component {
   }
 
   async handleSumbit(event) {
-    console.log('in handle submit')
     const {token} = await this.props.stripe.createToken({name: 'Name'})
-    //if token exists, everything was processed without issue and we should use redux to store this until we can make an axios request
     if (token) {
       this.props.gotStripeToken(token.id)
     } else {
@@ -71,4 +69,3 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(
   injectStripe(CheckoutForm)
 )
-// export default injectStripe(CheckoutForm)

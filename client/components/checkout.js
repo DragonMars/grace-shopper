@@ -1,10 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {OrderProducts, ShippingAddressForm} from './index'
-import {postOrder, clearStripeToken} from '../store'
-import {Form, Message, Label} from 'semantic-ui-react'
-import StripeContainer from './stripe-components/StripeContainer'
+import {Form, Label} from 'semantic-ui-react'
 import {Redirect} from 'react-router-dom'
+import {OrderProducts, ShippingAddressForm, StripeContainer} from './index'
+import {postOrder, clearStripeToken} from '../store'
 
 class Checkout extends Component {
   constructor() {
@@ -42,7 +41,6 @@ class Checkout extends Component {
         <h1>Checkout</h1>
         <ShippingAddressForm />
         <OrderProducts />
-        {/* order products is hooked up to the LineItem model with a GET route */}
         <StripeContainer />
         <Form onSubmit={this.handleSubmit}>
           {this.state.missingInfoError === true ? (

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {Elements, StripeProvider} from 'react-stripe-elements'
-import CheckoutForm from './CheckoutForm'
 import {Message, Divider} from 'semantic-ui-react'
+import CheckoutForm from '../index'
 
 export default class StripeContainer extends Component {
   render() {
