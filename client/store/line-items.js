@@ -75,7 +75,7 @@ export const setOrUpdateItem = newLineItem => async (dispatch, getState) => {
       dispatch(
         gotNewItem({
           quantity: 1,
-          productId: productId,
+          productId,
           product: data
         })
       )
@@ -90,15 +90,22 @@ export const clearCart = () => dispatch => {
 
 export const fetchCart = () => async (dispatch, getState) => {
   const cartOnState = getState().lineItems
-  // console.log('state', cartOnState)
+  console.log('state', cartOnState)
   const productIdsOnState = cartOnState.map(cartItem => cartItem.productId)
-  // console.log('state products', productIdsOnState)
+  console.log('state products', productIdsOnState)
   const cartOnLocalStorage = JSON.parse(localStorage.getItem('cart'))
   if (cartOnLocalStorage !== null) {
     const productIdsOnLocalStorage = Object.keys(cartOnLocalStorage)
-    productIdsOnLocalStorage.forEach(productId => {
+    productIdsOnLocalStorage.forEach(async productId => {
       if (!productIdsOnState.includes(productId)) {
-        setOrUpdateItem({productId, quantity: cartOnLocalStorage[productId]})
+        const {data} = await axios.get(`/api/products/${productId}`)
+        dispatch(
+          gotNewItem({
+            quantity: cartOnLocalStorage[productId],
+            productId,
+            product: data
+          })
+        )
       }
     })
   }
@@ -106,10 +113,7 @@ export const fetchCart = () => async (dispatch, getState) => {
   const cartInDB = response.data
   if (cartInDB) {
     const productIdsInDB = cartInDB.map(cartItem => cartItem.productId)
-    // console.log('db products', productIdsInDB)
     productIdsInDB.forEach(productId => {
-      // console.log('productinDB', productId)
-      // console.log('db product on state?', productIdsOnState.includes(productId))
       if (!productIdsOnState.includes(productId)) {
         const selectedCartItem = cartInDB.filter(
           cartItem => cartItem.productId === productId

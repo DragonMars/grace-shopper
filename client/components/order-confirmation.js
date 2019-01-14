@@ -37,7 +37,6 @@ class OrderConfirmation extends React.Component {
         </p>
         <Header as="h2">Order Details:</Header>
         <OrderProducts />
-        {/* cart need to be cleaned up after user submitted the purchase - I couldn't figure out a way to erase store data on this page, we might want to load order info from database - since that's already saved */}
         <Button onClick={this.handleClick}>Continue Shopping</Button>
       </Container>
     )
