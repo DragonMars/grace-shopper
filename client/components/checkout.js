@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {OrderProducts, ShippingAddressForm} from './index'
-import {postOrder} from '../store'
+import {postOrder, clearStripeToken} from '../store'
 import {Form, Message, Label} from 'semantic-ui-react'
 import StripeContainer from './stripe-components/StripeContainer'
 
@@ -14,16 +14,17 @@ class Checkout extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault()
     if (!this.props.stripeToken.length || !this.props.shippingAddress.id) {
       this.setState({missingInfoError: true})
     } else {
-      this.props.postOrder(
+      await this.props.postOrder(
         this.props.cartItems,
         this.props.shippingAddress.id,
         this.props.userId
       )
+      this.props.clearStripeToken()
     }
   }
 
@@ -61,7 +62,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    postOrder: (order, id) => dispatch(postOrder(order, id))
+    postOrder: (order, id) => dispatch(postOrder(order, id)),
+    clearStripeToken: () => dispatch(clearStripeToken())
   }
 }
 
