@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import SingleProductView from './all-product-single-view'
 import {fetchAllProducts} from '../store/product'
 import {Grid} from 'semantic-ui-react'
@@ -14,7 +13,6 @@ class AllProducts extends React.Component {
     const {products} = this.props
     return (
       <div>
-        <h1>Hello World</h1>
         <Grid>
           <Grid.Row columns={3}>
             {products &&
