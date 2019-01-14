@@ -12,7 +12,12 @@ class Cart extends Component {
   }
 
   handleChange(productId, event) {
-    this.props.updateQuantity({productId, quantity: event.target.value})
+    if (event.target.value !== '' && Number(event.target.value) > 0) {
+      this.props.updateQuantity({
+        productId,
+        quantity: Number(event.target.value)
+      })
+    }
   }
 
   numberOfItems() {
@@ -53,6 +58,7 @@ class Cart extends Component {
                 <List.Content>
                   <List.Header as="h3">{cartItem.product.name}</List.Header>
                 </List.Content>
+
                 <Image
                   src={cartItem.product.imageUrl}
                   alt={cartItem.product.altText}
@@ -61,21 +67,18 @@ class Cart extends Component {
                 />
               </Link>
               <List.Content floated="right">
-                <p>
+                <label htmlFor="quantity">
                   Quantity:{' '}
-                  <select
+                  <input
+                    type="number"
+                    name="quantity"
                     defaultValue={cartItem.quantity}
+                    min="1"
                     onChange={event =>
-                      this.handleChange(cartItem.product.id, event)
+                      this.handleChange(cartItem.productId, event)
                     }
-                  >
-                    {quantityOptions.map(quantity => (
-                      <option key={quantity} value={`${quantity}`}>
-                        {quantity}
-                      </option>
-                    ))}
-                  </select>{' '}
-                </p>
+                  />
+                </label>
                 <p>
                   Price:{' '}
                   {(cartItem.product.price / 100).toLocaleString('en-US', {
