@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {postShippingAddress} from '../store'
 import {Redirect} from 'react-router-dom'
-import {Form, Container, Header} from 'semantic-ui-react'
+import {Form, Container, Header, Message, Divider} from 'semantic-ui-react'
 
 class ShippingAddressForm extends Component {
   constructor() {
@@ -40,50 +40,74 @@ class ShippingAddressForm extends Component {
   }
 
   render() {
+    const {shippingAddress} = this.props
+    if (shippingAddress.id) {
+      return (
+        <Container>
+          <Message info>
+            <Message.Header>Your Shipping Address</Message.Header>
+            <Divider />
+            <p>{shippingAddress.name}</p>
+            <p>{shippingAddress.streetAddress}</p>
+            <p>{shippingAddress.city}</p>
+            <p>{shippingAddress.state}</p>
+            <p>{shippingAddress.zipcode}</p>
+          </Message>
+        </Container>
+      )
+    }
     return (
       <Container>
-        <Header size="large">Shipping Address</Header>
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Input
-            required
-            label="Name"
-            name="name"
-            placeholder="Name"
-            value={this.state.name}
-            onChange={this.handleChange}
-          />
-          <Form.Input
-            required
-            label="Street Address"
-            name="streetAddress"
-            value={this.state.streetAddress}
-            onChange={this.handleChange}
-          />
-          <Form.Input
-            required
-            label="City"
-            name="city"
-            value={this.state.city}
-            onChange={this.handleChange}
-          />
-          <Form.Input
-            required
-            label="State"
-            name="state"
-            value={this.state.state}
-            onChange={this.handleChange}
-          />
-          <Form.Input
-            required
-            label="Zipcode"
-            name="zipcode"
-            value={this.state.zipcode}
-            onChange={this.handleChange}
-          />
-          <Form.Button>Use this address</Form.Button>
-        </Form>
+        <Message info>
+          <Header size="large">Shipping Address</Header>
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Input
+              required
+              label="Name"
+              name="name"
+              placeholder="Name"
+              value={this.state.name}
+              onChange={this.handleChange}
+            />
+            <Form.Input
+              required
+              label="Street Address"
+              name="streetAddress"
+              value={this.state.streetAddress}
+              onChange={this.handleChange}
+            />
+            <Form.Input
+              required
+              label="City"
+              name="city"
+              value={this.state.city}
+              onChange={this.handleChange}
+            />
+            <Form.Input
+              required
+              label="State"
+              name="state"
+              value={this.state.state}
+              onChange={this.handleChange}
+            />
+            <Form.Input
+              required
+              label="Zipcode"
+              name="zipcode"
+              value={this.state.zipcode}
+              onChange={this.handleChange}
+            />
+            <Form.Button>Use this address</Form.Button>
+          </Form>
+        </Message>
       </Container>
     )
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    shippingAddress: state.shippingAddress.shippingAddress
   }
 }
 
@@ -94,4 +118,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(ShippingAddressForm)
+export default connect(mapStateToProps, mapDispatchToProps)(ShippingAddressForm)

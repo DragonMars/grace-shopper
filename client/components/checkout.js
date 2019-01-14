@@ -2,13 +2,16 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {OrderProducts, ShippingAddressForm} from './index'
 import {postOrder} from '../store'
-import {Form} from 'semantic-ui-react'
+import {Form, Message, Label} from 'semantic-ui-react'
 import StripeContainer from './stripe-components/StripeContainer'
 import {Redirect} from 'react-router-dom'
 
 class Checkout extends Component {
   constructor() {
     super()
+    this.state = {
+      missingInfoError: false
+    }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.state = {
       redirect: false
@@ -23,6 +26,15 @@ class Checkout extends Component {
       this.props.userId
     )
     this.setState({redirect: true})
+    if (!this.props.stripeToken.length || !this.props.shippingAddress.id) {
+      this.setState({missingInfoError: true})
+    } else {
+      this.props.postOrder(
+        this.props.cartItems,
+        this.props.shippingAddress.id,
+        this.props.userId
+      )
+    }
   }
 
   render() {
@@ -34,11 +46,17 @@ class Checkout extends Component {
       <div>
         <h1>Checkout</h1>
         <ShippingAddressForm />
-        {/* add Stripe - research Stripe UI */}
         <OrderProducts />
-        {/* order products will be hooked up to the LineItem model with a GET route */}
+        {/* order products is hooked up to the LineItem model with a GET route */}
         <StripeContainer />
         <Form onSubmit={this.handleSubmit}>
+          {this.state.missingInfoError === true ? (
+            <Label basic color="red" pointing="below">
+              Please enter both a shipping address and credit card info!
+            </Label>
+          ) : (
+            <br />
+          )}
           <Form.Button>Place Your Order</Form.Button>
         </Form>
       </div>
@@ -50,7 +68,8 @@ const mapStateToProps = state => {
   return {
     shippingAddress: state.shippingAddress.shippingAddress,
     cartItems: state.lineItems,
-    userId: state.user.id
+    userId: state.user.id,
+    stripeToken: state.stripeToken
   }
 }
 
