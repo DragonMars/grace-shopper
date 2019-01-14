@@ -1,8 +1,6 @@
 import axios from 'axios'
 
 //ACTION TYPES
-
-//THUNK TYPES
 const GOT_SHIPPING_ADDRESS = 'GOT_SHIPPING_ADDRESS'
 
 //INITIAL STATE
@@ -23,6 +21,12 @@ export const postShippingAddress = shippingAddress => {
   return async function(dispatch) {
     const response = await axios.post('/api/shipping-address', shippingAddress)
     dispatch(gotShippingAddress(response.data))
+  }
+}
+export const fetchShippingAddress = orderId => {
+  return async dispatch => {
+    const {data} = await axios.get(`/api/orders/${orderId}`)
+    dispatch(gotShippingAddress(data))
   }
 }
 

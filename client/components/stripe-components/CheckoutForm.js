@@ -1,12 +1,15 @@
 import React, {Component} from 'react'
 import {CardElement, injectStripe} from 'react-stripe-elements'
 import {connect} from 'react-redux'
-import {Container, Form} from 'semantic-ui-react'
+import {Container, Form, Divider, Label} from 'semantic-ui-react'
 import {gotStripeToken} from '../../store/stripe-token.js'
 
 class CheckoutForm extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      stripeError: false
+    }
     this.handleSumbit = this.handleSumbit.bind(this)
   }
 
@@ -14,17 +17,12 @@ class CheckoutForm extends Component {
     console.log('in handle submit')
     const {token} = await this.props.stripe.createToken({name: 'Name'})
     //if token exists, everything was processed without issue and we should use redux to store this until we can make an axios request
-    //TODO make store file for stripe-token.js with reducer to store this on redux store (will not persist).
-    //token.id is what we're storing
-    //then render "payment complete!"
     if (token) {
-      console.log('create token response', token)
       this.props.gotStripeToken(token.id)
-      console.log()
     } else {
-      //if token is undefined, then the payment didn't go through
-      //TODO render error message
-      console.log('invalid payment')
+      this.setState({
+        stripeError: true
+      })
     }
   }
 
@@ -34,17 +32,24 @@ class CheckoutForm extends Component {
         <Container>
           <div className="ui label">
             Valid credit info, please press "Place Your Order" to finalize your
-            order!
+            purchase!
           </div>
         </Container>
       )
     } else {
       return (
         <Container>
-          <div className="ui label">Please enter your credit card info!</div>
           <CardElement />
+          <Divider />
           <Form onSubmit={this.handleSumbit}>
-            <Form.Button>Send</Form.Button>
+            <Form.Button>Use this card</Form.Button>
+            {this.state.stripeError === true ? (
+              <Label basic color="red" pointing>
+                Please enter valid credit information!
+              </Label>
+            ) : (
+              <br />
+            )}
           </Form>
         </Container>
       )

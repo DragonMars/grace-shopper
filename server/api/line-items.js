@@ -10,8 +10,6 @@ router.get('/', async (req, res, next) => {
       const userId = req.user.id
       const lineItems = await LineItem.findAll({where: {userId, orderId: null}})
       res.json(lineItems)
-    } else {
-      res.json(null)
     }
   } catch (err) {
     next(err)
