@@ -8,6 +8,7 @@ import category from './category'
 import lineItems from './line-items'
 import shippingAddress from './shipping-address'
 import order from './order'
+import stripeToken from './stripe-token'
 
 const reducer = combineReducers({
   user,
@@ -15,7 +16,8 @@ const reducer = combineReducers({
   category,
   lineItems,
   shippingAddress,
-  order
+  order,
+  stripeToken
 })
 
 const middleware = composeWithDevTools(
@@ -30,3 +32,4 @@ export * from './category'
 export * from './line-items'
 export * from './shipping-address'
 export * from './order'
+export * from './stripe-token'

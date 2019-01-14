@@ -7,6 +7,7 @@ import axios from 'axios'
 const GOT_ITEMS = 'GOT_ITEMS'
 const GOT_NEW_ITEM = 'GOT_NEW_ITEM'
 const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
+const CLEAR_ITEMS = 'CLEAR_ITEMS'
 
 /**
  * INITIAL STATE
@@ -22,6 +23,7 @@ const updateQuantity = updatedLineItem => ({
   type: UPDATE_QUANTITY,
   updatedLineItem
 })
+const clearItems = () => ({type: CLEAR_ITEMS})
 
 /**
  * THUNK CREATORS
@@ -81,6 +83,12 @@ export const setOrUpdateItem = newLineItem => async (dispatch, getState) => {
   }
 }
 
+export const clearCart = () => dispatch => {
+  localStorage.clear()
+  console.log(localStorage)
+  dispatch(clearItems())
+}
+
 /**
  * REDUCER
  */
@@ -100,6 +108,9 @@ export default function lineItemReducer(state = defaultCart, action) {
           return {...lineItem}
         }
       })
+    }
+    case CLEAR_ITEMS: {
+      return []
     }
 
     default:

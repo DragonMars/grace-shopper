@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const {Order, ShippingAddress, LineItem, Product} = require('../db/models')
 module.exports = router
+const stripe = require('stripe')('sk_test_E7S8wDRxDd6WZNERgFE92BK7')
 
 // assume order localStorage is:
 // localOrder {
@@ -17,54 +18,66 @@ module.exports = router
 //   )
 // )
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    const orderId = req.params.id
+    const {data} = Order.findById(orderId)
+    res.json(data)
+  } catch (err) {
+    next(err)
+  }
+})
 router.post('/', async (req, res, next) => {
   try {
-    //to read the data read the item as string then convert to JSON object
-    // assumes localStorage.setItem('localOrders', JSON.stringify(array))
+    //get total price of cart items
+    const total = req.body.cartItems.reduce(
+      (acc, cur) => acc + cur.product.price * cur.quantity,
+      0
+    )
+
+    //create stripe charge
+    const response = await stripe.charges.create({
+      amount: total,
+      currency: 'usd',
+      description: 'a test charge',
+      source: req.body.stripeToken
+    })
+
     if (req.user) {
       const newOrder = await Order.create({
-        stripeTransactionId: '297379GHKOU0', // ???
+        stripeTransactionId: req.body.stripeToken,
         userId: req.user.id,
-        shippingAddressId: req.body.order.shippingAddress.id
+        shippingAddressId: req.body.shippingAddressId
       })
-      const orderLineItems = await LineItem.update(
-        {
-          orderId: newOrder.id,
-          userId: null
-        },
-        {
-          where: {
-            userId: req.user.id
+
+      const {cartItems} = req.body
+      const updatedLineItems = cartItems.map(async cartItem => {
+        const [rowsAffected, updatedLineItem] = await LineItem.update(
+          {
+            orderId: newOrder.id,
+            userId: null,
+            price: cartItem.product.price
           },
-          returning: true,
-          plain: true
-        }
-      )
-      res.json(orderLineItems[1])
-
-      /*
-
-      localStorageCart = {
-        1: {quantity: 2},
-        2: {quantity: 3},
-        4: {quantity: 4}
-      }
-
-      */
+          {where: {id: cartItem.id}, returning: true, plain: true}
+        )
+        return updatedLineItem
+      })
+      res.json(newOrder)
     } else {
       const newOrder = await Order.create({
-        stripeTransactionId: '297379GHKOU0', // ???
+        stripeTransactionId: req.body.stripeToken,
         userId: null,
         shippingAddressId: req.body.shippingAddressId
       })
-      const newLineItemDataWithPrice = req.body.lineItemData.map(
+      console.log(req.body.lineItemData)
+      const newLineItemDataWithPrice = req.body.cartItems.map(
         async lineItem => {
-          const idx = lineItem.productId
-          const product = await Product.findById(idx)
+          // const idx = lineItem.productId
+          // const product = await Product.findById(idx)
           const newLineItem = await LineItem.create({
             quantity: lineItem.quantity,
-            price: product.price,
-            productId: product.id,
+            price: lineItem.product.price,
+            productId: lineItem.productId,
             orderId: newOrder.id
           })
           return newLineItem

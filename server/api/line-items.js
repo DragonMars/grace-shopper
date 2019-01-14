@@ -6,13 +6,15 @@ module.exports = router
 // get cart
 router.get('/', async (req, res, next) => {
   try {
-    const userId = 2
+    const userId = req.user.id
     const lineItems = await LineItem.findAll({where: {userId, orderId: null}})
     res.json(lineItems)
   } catch (err) {
     next(err)
   }
 })
+
+//get order
 
 // POST /api/line-items
 // add to cart
