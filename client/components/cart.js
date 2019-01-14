@@ -49,15 +49,17 @@ class Cart extends Component {
         {cartItems[0] &&
           cartItems.map(cartItem => (
             <List.Item key={cartItem.product.id}>
-              <List.Content>
-                <List.Header as="h3">{cartItem.product.name}</List.Header>
-              </List.Content>
-              <Image
-                src={cartItem.product.imageUrl}
-                alt={cartItem.product.altText}
-                height="200px"
-                width="auto"
-              />
+              <Link to={`/products/${cartItem.product.id}`}>
+                <List.Content>
+                  <List.Header as="h3">{cartItem.product.name}</List.Header>
+                </List.Content>
+                <Image
+                  src={cartItem.product.imageUrl}
+                  alt={cartItem.product.altText}
+                  height="200px"
+                  width="auto"
+                />
+              </Link>
               <List.Content floated="right">
                 <p>
                   Quantity:{' '}
