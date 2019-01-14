@@ -52,6 +52,105 @@ const productData = [
     description:
       'Think you are the expert on being lazy? THINK AGAIN! You are nowhere near being the ultimate lazibutt without the Sloth Kigurumi! The soft fleece material, the easy-to-wear button opening, the oh-so adorable three finger sleeve, those cute droopy eyes...it just screams-I mean yawns laziness? And we mean that in a good way! Prepare to spend your Fridays, Saturdays, Sundays, Mondays, Tuesdays... EVERYDAY actually, snuggled up in your Sloth Kigurumi and just being plain lazy! Be proud my fellow lazibutts!',
     price: 5999
+  },
+  {
+    name: 'Surfing Sloth Tandem Sloth Art Print',
+    imageUrl:
+      'https://images.urbanoutfitters.com/is/image/UrbanOutfitters/37491271_095_b?$xlarge$&hei=900&qlt=80&fit=constrain',
+    altText: 'sloth art print',
+    description:
+      'Sloth-like-its-hot-exclusive print from Luka Va at Surfing Sloth, who juxtaposes elements of nature with a busy + urban landscape to create unique prints. Printed on archival paper made from cotton pressed in Italian mills, this high-quality art print is available in sizes and frames just right for your space. First select your frame (or go frameless), then select your size.',
+    price: 2999
+  },
+  {
+    name: 'Sloths Shower Curtain',
+    imageUrl:
+      'https://images.urbanoutfitters.com/is/image/UrbanOutfitters/45304920_000_b?$xlarge$&hei=900&qlt=80&fit=constrain',
+    altText: 'sloth shower curtain',
+    description:
+      'Soft cotton shower curtain print with an allover sloth pattern. Topped with holes for hanging from any of our shower hooks; sold separately.',
+    price: 3999
+  },
+  {
+    name: 'Furry Sloth Pillow',
+    imageUrl:
+      'https://images.urbanoutfitters.com/is/image/UrbanOutfitters/43515592_014_b?$xlarge$&hei=900&qlt=80&fit=constrain',
+    altText: 'furry sloth pillow',
+    description:
+      'Lazy days are better with this fuzzy sloth pillow in a big, cushy shape that is perfect to spoon or sit up with. Complete with embroidered details and plush allover faux fur!',
+    price: 4999
+  },
+  {
+    name: 'Party Sloth Pillow',
+    imageUrl:
+      'https://images.urbanoutfitters.com/is/image/UrbanOutfitters/47645908_020_b?$xlarge$&hei=900&qlt=80&fit=constrain',
+    altText: 'party sloth pillow',
+    description:
+      'Just hanging around with this super fluffy sloth pillow that’s ready to party. Plush pillow in a big, cushy shape that is perfect to cuddle with. Complete with embroidered details and allover faux fur!',
+    price: 4999
+  },
+  {
+    name: 'Mini Sloth Pushie',
+    imageUrl:
+      'https://images.urbanoutfitters.com/is/image/UrbanOutfitters/50441468_004_b?$xlarge$&hei=900&qlt=80&fit=constrain',
+    altText: 'mini sloth',
+    description:
+      'The cutest little animal bean bag plushies, made super mini in a soft, squishable design that’s cuter than you can even believe. With felted accents + stretchy loop you can attach to your keychain, bag strap, belt loop + more.',
+    price: 699
+  },
+  {
+    name: 'Let’s Hang Bath Mat',
+    imageUrl:
+      'https://images.urbanoutfitters.com/is/image/UrbanOutfitters/49555691_015_b?$xlarge$&hei=900&qlt=80&fit=constrain',
+    altText: 'sloth bath mat',
+    description:
+      'Just hanging around like a happy little sloth with this cuddly bath mat. Made from a plushy cotton terry with a non-slip backing + shaped design.',
+    price: 3999
+  },
+  {
+    name: 'Sloth-Shaped Mug',
+    imageUrl:
+      'https://images.urbanoutfitters.com/is/image/UrbanOutfitters/46197109_012_b?$xlarge$&hei=900&qlt=80&fit=constrain',
+    altText: 'sloth shape mug',
+    description:
+      "Make your morning cup o’ joe feel even more like a hug with this sloth-shaped mug, found exclusively at Sloth Like It's Hot. Speckled ceramic mug with a matte finish. Food safe.",
+    price: 1699
+  },
+  {
+    name: 'Etched Sloth Mug',
+    imageUrl:
+      'https://images.urbanoutfitters.com/is/image/UrbanOutfitters/45130846_010_b?$xlarge$&hei=900&qlt=80&fit=constrain',
+    altText: 'etched sloth mug',
+    description:
+      'Genuine china mug etched with a bunch of sloths just hanging out! Please note, color may vary with a blue tone from what is pictured due to glazed finish. Food safe.',
+    price: 1299
+  },
+  {
+    name: 'Huggable Sloth Cooling + Heating Pad',
+    imageUrl:
+      'https://images.urbanoutfitters.com/is/image/UrbanOutfitters/47489257_004_b?$xlarge$&hei=900&qlt=80&fit=constrain',
+    altText: 'sloth pad',
+    description:
+      'Heat up, hug + laze around with this sloth plushie for warmth and relaxation whenever you need it! Microwave it to keep you warm or even freeze it to cool you off. Filled with natural buckwheat grains and lavender said to help soothe sore spots, too.',
+    price: 2999
+  },
+  {
+    name: 'MojiPower Sloth Portable Power Bank',
+    imageUrl:
+      'https://images.urbanoutfitters.com/is/image/UrbanOutfitters/48787782_020_b?$xlarge$&hei=900&qlt=80&fit=constrain',
+    altText: 'sloth power bank',
+    description:
+      'Speed up your tech with your slowest buddy clinging on thanks to this sloth-shaped portable power bank from MojiPower. Design hugs the side of your phone. Compatible with iOS and Android devices to provide up to 1.5x full charge when your device is losing steam.',
+    price: 2899
+  },
+  {
+    name: 'Huebucket Sloth Yoga Art Print',
+    imageUrl:
+      'https://images.urbanoutfitters.com/is/image/UrbanOutfitters/48704787_010_b?$xlarge$&hei=900&qlt=80&fit=constrain',
+    altText: 'sloth yogo art print',
+    description:
+      'Your favorite little lazy sloth friend twisting into every yoga position imaginable with this graphic art print by Huebucket. Printed on archival paper made from cotton pressed in Italian mills, this high-quality art print is available in sizes and frames just right for your space. ',
+    price: 2999
   }
 ]
 
