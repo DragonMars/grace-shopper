@@ -33,7 +33,7 @@ class CheckoutForm extends Component {
       return (
         <Container>
           <div className="ui label">
-            Valid credit info, please press "Complete Purchase" to finalize your
+            Valid credit info, please press "Place Your Order" to finalize your
             order!
           </div>
         </Container>
