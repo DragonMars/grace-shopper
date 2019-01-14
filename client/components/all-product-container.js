@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import SingleProductView from './all-product-single-view'
 import {fetchAllProducts} from '../store/product'
 import {Grid} from 'semantic-ui-react'
+import {withRouter} from 'react-router-dom'
 
 class AllProducts extends React.Component {
   componentDidMount() {
@@ -10,7 +11,14 @@ class AllProducts extends React.Component {
   }
 
   render() {
-    const {products} = this.props
+    let {products} = this.props
+    const category = this.props.match.params.category
+    const productsByCategory = products.filter(
+      product => product.category.name === category
+    )
+    if (category) {
+      products = productsByCategory
+    }
     return (
       <div>
         <Grid>
@@ -33,9 +41,9 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => {
-  return {
-    products: state.product
-  }
+  return {products: state.product}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(AllProducts)
+)

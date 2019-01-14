@@ -2,26 +2,27 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {Menu} from 'semantic-ui-react'
-import {fetchAllCategories, fetchAllProducts} from '../store'
+import {fetchAllCategories} from '../store'
 
 class CategoryBar extends Component {
   componentDidMount() {
     this.props.loadCategories()
   }
   render() {
-    const {categories, loadProductsByCategory} = this.props
+    const {categories} = this.props
     return (
       <Menu>
         {categories.length &&
           categories.map(category => (
             <Menu.Item
               key={category.id}
-              onClick={() => loadProductsByCategory(category.name)}
+              as={Link}
+              to={`/category/${category.name}`}
             >
               {category.name}
             </Menu.Item>
           ))}
-        <Menu.Item onClick={() => loadProductsByCategory(null)}>
+        <Menu.Item as={Link} to="/">
           All Products
         </Menu.Item>
       </Menu>
@@ -37,8 +38,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadCategories: () => dispatch(fetchAllCategories()),
-    loadProductsByCategory: category => dispatch(fetchAllProducts(category))
+    loadCategories: () => dispatch(fetchAllCategories())
   }
 }
 
