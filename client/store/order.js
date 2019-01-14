@@ -17,10 +17,12 @@ export const postOrder = (cartItems, shippingAddressId) => async (
   dispatch,
   getState
 ) => {
+  const {stripeToken} = getState()
   if (getState().user.id) {
     const {data} = await axios.post('/api/orders', {
       cartItems,
-      shippingAddressId
+      shippingAddressId,
+      stripeToken
     })
     dispatch(postedOrder(data))
   } else {
@@ -35,7 +37,8 @@ export const postOrder = (cartItems, shippingAddressId) => async (
     // })
     const {data} = await axios.post('/api/orders', {
       cartItems,
-      shippingAddressId
+      shippingAddressId,
+      stripeToken
     })
     dispatch(postedOrder(data))
     localStorage.clear()

@@ -14,7 +14,6 @@ import {
   ShippingAddressForm,
   OrderConfirmation
 } from './components'
-import StripeContainer from './components/stripe-components/StripeContainer'
 import {me} from './store'
 
 /**

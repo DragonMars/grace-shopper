@@ -21,7 +21,7 @@ router.post('/', async (req, res, next) => {
   try {
     if (req.user) {
       const newOrder = await Order.create({
-        stripeTransactionId: '297379GHKOU0', // ???
+        stripeTransactionId: req.body.stripeToken,
         userId: req.user.id,
         shippingAddressId: req.body.shippingAddressId
       })
@@ -40,7 +40,7 @@ router.post('/', async (req, res, next) => {
       res.json(newOrder)
     } else {
       const newOrder = await Order.create({
-        stripeTransactionId: '297379GHKOU0', // ???
+        stripeTransactionId: req.body.stripeToken,
         userId: null,
         shippingAddressId: req.body.shippingAddressId
       })
