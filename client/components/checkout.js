@@ -4,12 +4,14 @@ import {OrderProducts, ShippingAddressForm} from './index'
 import {postOrder, clearStripeToken} from '../store'
 import {Form, Message, Label} from 'semantic-ui-react'
 import StripeContainer from './stripe-components/StripeContainer'
+import {Redirect} from 'react-router-dom'
 
 class Checkout extends Component {
   constructor() {
     super()
     this.state = {
-      missingInfoError: false
+      missingInfoError: false,
+      redirect: false
     }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -19,6 +21,7 @@ class Checkout extends Component {
     if (!this.props.stripeToken.length || !this.props.shippingAddress.id) {
       this.setState({missingInfoError: true})
     } else {
+      this.setState({redirect: true})
       await this.props.postOrder(
         this.props.cartItems,
         this.props.shippingAddress.id,
@@ -29,6 +32,11 @@ class Checkout extends Component {
   }
 
   render() {
+    const {redirect} = this.state
+
+    if (redirect) {
+      return <Redirect to="/success" />
+    }
     return (
       <div>
         <h1>Checkout</h1>
@@ -44,7 +52,13 @@ class Checkout extends Component {
           ) : (
             <br />
           )}
-          <Form.Button>Place Your Order</Form.Button>
+          <Form.Button
+            disabled={
+              !this.props.stripeToken.length || !this.props.shippingAddress.id
+            }
+          >
+            Place Your Order
+          </Form.Button>
         </Form>
       </div>
     )

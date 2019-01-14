@@ -3,6 +3,15 @@ const {Order, LineItem} = require('../db/models')
 module.exports = router
 const stripe = require('stripe')('sk_test_E7S8wDRxDd6WZNERgFE92BK7')
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    const orderId = req.params.id
+    const {data} = Order.findById(orderId)
+    res.json(data)
+  } catch (err) {
+    next(err)
+  }
+})
 router.post('/', async (req, res, next) => {
   try {
     //get total price of cart items
