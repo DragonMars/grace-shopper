@@ -18,9 +18,7 @@ class CheckoutForm extends Component {
     const {token} = await this.props.stripe.createToken({name: 'Name'})
     //if token exists, everything was processed without issue and we should use redux to store this until we can make an axios request
     if (token) {
-      console.log('create token response', token)
       this.props.gotStripeToken(token.id)
-      console.log()
     } else {
       this.setState({
         stripeError: true
