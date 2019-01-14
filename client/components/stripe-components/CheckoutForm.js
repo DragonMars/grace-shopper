@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {CardElement, injectStripe} from 'react-stripe-elements'
 import {connect} from 'react-redux'
 import {Container, Form} from 'semantic-ui-react'
-import {gotStripeToken} from '/Users/laurawaters/Documents/GH1810/SeniorPhase/grace-shopper/client/store/stripe-token.js'
+import {gotStripeToken} from '../../store/stripe-token.js'
 
 class CheckoutForm extends Component {
   constructor(props) {
