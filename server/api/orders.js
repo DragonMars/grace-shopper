@@ -52,7 +52,6 @@ router.post('/', async (req, res, next) => {
         userId: null,
         shippingAddressId: req.body.shippingAddressId
       })
-      console.log(req.body.lineItemData)
       req.body.cartItems.map(async lineItem => {
         const newLineItem = await LineItem.create({
           quantity: lineItem.quantity,

@@ -12,7 +12,6 @@ const gotCategories = categories => ({
 export const fetchAllCategories = () => async dispatch => {
   try {
     const {data} = await axios.get('/api/category')
-    console.log('fetchallcategories data is ', data)
     dispatch(gotCategories(data))
   } catch (err) {
     console.error(err)

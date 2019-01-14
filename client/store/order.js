@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-//ACION TYPES
+//ACTION TYPES
 const POSTED_ORDER = 'POSTED_ORDER'
 
 //ACTION CREATORS
@@ -17,9 +17,7 @@ export const postOrder = (cartItems, shippingAddressId) => async (
   dispatch,
   getState
 ) => {
-  //pull necessary info from state
   const {stripeToken, user} = getState()
-
   if (user.id) {
     const {data} = await axios.post('/api/orders', {
       cartItems,
@@ -37,36 +35,6 @@ export const postOrder = (cartItems, shippingAddressId) => async (
     localStorage.clear()
   }
 }
-// export const postOrder = (cartItems, shippingAddressId) => {
-//   if () {
-//     console.log('we have the userId!')
-//     return async dispatch => {
-//       const {data} = await axios.post('/api/orders', {
-//         cartItems,
-//         shippingAddressId
-//       })
-//       dispatch(postedOrder(data))
-//     }
-//   } else {
-//     return async dispatch => {
-//       const cart = JSON.parse(localStorage.getItem('cart'))
-//       const cartArray = Object.keys(cart)
-//       const lineItemData = cartArray.map(elem => {
-//         return {
-//           productId: elem,
-//           quantity: cart[elem]
-//           //price: Product.findById(parseInt(elem)).price
-//         }
-//       })
-//       const {data} = await axios.post('/api/orders', {
-//         lineItemData,
-//         shippingAddressId
-//       })
-//       dispatch(postedOrder(data))
-//       localStorage.clear()
-//     }
-//   }
-// }
 
 //INITIAL STATE
 const initialState = {

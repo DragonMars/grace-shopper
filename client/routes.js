@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
+import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {
   Login,
@@ -38,8 +38,6 @@ class Routes extends Component {
         <Route path="/shipping-address" component={ShippingAddressForm} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/cart" component={Cart} />
-        {/* note that the "/product-item" route is exclusively for testing purposes. ProductItem should only ever be a child component of AllProducts or ProductsByCategory */}
-        <Route path="/product-item" component={ProductItem} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}s

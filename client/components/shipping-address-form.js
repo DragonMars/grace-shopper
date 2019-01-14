@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {postShippingAddress} from '../store'
-import {Redirect} from 'react-router-dom'
 import {Form, Container, Header, Message, Divider} from 'semantic-ui-react'
+import {postShippingAddress} from '../store'
 
 class ShippingAddressForm extends Component {
   constructor() {
@@ -26,8 +25,6 @@ class ShippingAddressForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    //mapDispatchToProps must pass us a dispatcher function that calls POST '/orders'
-    //navigate to OrderConfirmation
     this.props.postShippingAddress(this.state)
     this.setState({
       name: '',
@@ -36,7 +33,6 @@ class ShippingAddressForm extends Component {
       state: '',
       zipcode: ''
     })
-    // <Redirect to={Checkout} />
   }
 
   render() {

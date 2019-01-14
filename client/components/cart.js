@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {setOrUpdateItem, clearCart} from '../store'
 import {Button, List, Image, Header} from 'semantic-ui-react'
+import {setOrUpdateItem, clearCart} from '../store'
 
 class Cart extends Component {
   constructor(props) {

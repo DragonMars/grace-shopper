@@ -3,7 +3,7 @@ const GOT_STRIPE_TOKEN = 'GOT_STRIPE_TOKEN'
 
 const CLEAR_STRIPE_TOKEN = 'CLEAR_STRIPE_TOKEN'
 
-//const ACTION CREATORS
+//ACTION CREATORS
 export const gotStripeToken = token => {
   return {
     type: GOT_STRIPE_TOKEN,

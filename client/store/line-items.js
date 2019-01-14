@@ -29,7 +29,7 @@ const clearItems = () => ({type: CLEAR_ITEMS})
  * THUNK CREATORS
  */
 
-export const fetchItems = () => async (dispatch, getState) => {
+export const fetchItems = () => async dispatch => {
   const {data} = await axios.get('/api/line-items')
   dispatch(gotItems(data))
 }
@@ -39,7 +39,7 @@ export const setOrUpdateItem = newLineItem => async (dispatch, getState) => {
     localStorage.setItem('cart', JSON.stringify({}))
   }
   const {productId, quantity} = newLineItem
-  const [itemToBeUpdated] = getState().lineItems.filter(
+  const itemToBeUpdated = getState().lineItems.find(
     lineItem => lineItem.productId === productId
   )
   const {user} = getState()
@@ -53,7 +53,11 @@ export const setOrUpdateItem = newLineItem => async (dispatch, getState) => {
       dispatch(updateQuantity(data))
     } else {
       const cart = JSON.parse(localStorage.getItem('cart'))
-      quantity ? (cart[productId] = quantity) : (cart[productId] += 1)
+      if (quantity) {
+        cart[productId] = quantity
+      } else {
+        cart[productId] += 1
+      }
       localStorage.setItem('cart', JSON.stringify(cart))
       dispatch(
         updateQuantity({
@@ -75,7 +79,7 @@ export const setOrUpdateItem = newLineItem => async (dispatch, getState) => {
       dispatch(
         gotNewItem({
           quantity: 1,
-          productId: productId,
+          productId,
           product: data
         })
       )
@@ -86,6 +90,40 @@ export const setOrUpdateItem = newLineItem => async (dispatch, getState) => {
 export const clearCart = () => dispatch => {
   localStorage.clear()
   dispatch(clearItems())
+}
+
+export const fetchCart = () => async (dispatch, getState) => {
+  const cartOnState = getState().lineItems
+  const productIdsOnState = cartOnState.map(cartItem => cartItem.productId)
+  const cartOnLocalStorage = JSON.parse(localStorage.getItem('cart'))
+  if (cartOnLocalStorage !== null) {
+    const productIdsOnLocalStorage = Object.keys(cartOnLocalStorage)
+    productIdsOnLocalStorage.forEach(async productId => {
+      if (!productIdsOnState.includes(productId)) {
+        const {data} = await axios.get(`/api/products/${productId}`)
+        dispatch(
+          gotNewItem({
+            quantity: cartOnLocalStorage[productId],
+            productId,
+            product: data
+          })
+        )
+      }
+    })
+  }
+  const response = await axios.get('/api/line-items')
+  const cartInDB = response.data
+  if (cartInDB) {
+    const productIdsInDB = cartInDB.map(cartItem => cartItem.productId)
+    productIdsInDB.forEach(productId => {
+      if (!productIdsOnState.includes(productId)) {
+        const selectedCartItem = cartInDB.find(
+          cartItem => cartItem.productId === productId
+        )
+        dispatch(gotNewItem(selectedCartItem))
+      }
+    })
+  }
 }
 
 /**
