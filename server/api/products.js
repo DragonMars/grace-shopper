@@ -16,11 +16,12 @@ router.get('/', async (req, res, next) => {
         ]
       })
       res.json(productsByCategory)
+    } else {
+      const products = await Product.findAll({
+        include: {model: Category}
+      })
+      res.json(products)
     }
-    const products = await Product.findAll({
-      include: {model: Category}
-    })
-    res.json(products)
   } catch (err) {
     next(err)
   }
