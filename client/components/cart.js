@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {setOrUpdateItem} from '../store'
+import {setOrUpdateItem, clearCart} from '../store'
 import {Button, List, Image, Header} from 'semantic-ui-react'
 
 class Cart extends Component {
@@ -9,15 +9,7 @@ class Cart extends Component {
     super(props)
     this.numberOfItems = this.numberOfItems.bind(this)
     this.subtotal = this.subtotal.bind(this)
-  }
-
-  handleChange(productId, event) {
-    if (event.target.value !== '' && Number(event.target.value) > 0) {
-      this.props.updateQuantity({
-        productId,
-        quantity: Number(event.target.value)
-      })
-    }
+    this.clearCart = this.clearCart.bind(this)
   }
 
   numberOfItems() {
@@ -38,6 +30,19 @@ class Cart extends Component {
         total += cartItem.product.price * cartItem.quantity / 100
       })
     return total
+  }
+
+  handleChange(productId, event) {
+    if (event.target.value !== '' && Number(event.target.value) > 0) {
+      this.props.updateQuantity({
+        productId,
+        quantity: Number(event.target.value)
+      })
+    }
+  }
+
+  clearCart() {
+    this.props.clear()
   }
 
   render() {
@@ -96,6 +101,7 @@ class Cart extends Component {
             currency: 'USD'
           })}
         </p>
+        <Button onClick={this.clearCart}>Clear Cart</Button>
         <Link to="/checkout">
           {isLoggedIn ? (
             <Button>Checkout</Button>
@@ -115,7 +121,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   updateQuantity: ({productId, quantity}) =>
-    dispatch(setOrUpdateItem({productId, quantity}))
+    dispatch(setOrUpdateItem({productId, quantity})),
+  clear: () => dispatch(clearCart())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)

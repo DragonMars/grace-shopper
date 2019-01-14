@@ -85,13 +85,13 @@ export const setOrUpdateItem = newLineItem => async (dispatch, getState) => {
 
 export const clearCart = () => dispatch => {
   localStorage.clear()
-  console.log(localStorage)
   dispatch(clearItems())
 }
 
 /**
  * REDUCER
  */
+
 export default function lineItemReducer(state = defaultCart, action) {
   switch (action.type) {
     case GOT_ITEMS: {
