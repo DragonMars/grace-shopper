@@ -58,6 +58,7 @@ class Cart extends Component {
                 <List.Content>
                   <List.Header as="h3">{cartItem.product.name}</List.Header>
                 </List.Content>
+
                 <Image
                   src={cartItem.product.imageUrl}
                   alt={cartItem.product.altText}
