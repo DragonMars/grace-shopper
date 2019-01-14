@@ -50,3 +50,20 @@ router.put('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.delete('/:productId', async (req, res, next) => {
+  try {
+    //if a user is logged in, delete from database
+    const numberAffectedRows = await LineItem.destroy({
+      where: {
+        productId: req.params.productId,
+        userId: req.user.id
+      }
+    })
+
+    //send back the id
+    res.json(req.params.productId)
+  } catch (err) {
+    next(err)
+  }
+})
