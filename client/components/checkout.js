@@ -4,6 +4,7 @@ import {OrderProducts, ShippingAddressForm} from './index'
 import {postOrder} from '../store'
 import {Form} from 'semantic-ui-react'
 import StripeContainer from './stripe-components/StripeContainer'
+import {Redirect} from 'react-router-dom'
 
 class Checkout extends Component {
   constructor() {
@@ -21,6 +22,7 @@ class Checkout extends Component {
       this.props.shippingAddress.id,
       this.props.userId
     )
+    this.setState({redirect: true})
   }
 
   render() {

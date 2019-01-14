@@ -160,6 +160,15 @@ const categoryData = [
   },
   {
     name: 'accessories'
+  },
+  {
+    name: 'décor'
+  },
+  {
+    name: 'home'
+  },
+  {
+    name: 'tech'
   }
 ]
 
@@ -221,32 +230,48 @@ const seed = async () => {
     db.models.order.bulkCreate(orderData, {returning: true})
   ])
 
-  const [geoff, cody, murphy] = users
-  const [hangers, socks, scarf, onesie] = products
-  const [apparel, accessories] = categories
+  const [geoff] = users
   const [
-    firstOrderProduct,
-    secondOrderProduct,
-    firstCartProduct,
-    secondCartProduct
-  ] = lineitems
+    hangers,
+    socks,
+    scarf,
+    onesie,
+    tandem,
+    showerCurtain,
+    furryPillow,
+    partyPillow,
+    pushie,
+    bathMat,
+    mug1,
+    mug2,
+    pad,
+    powerBank,
+    yoga
+  ] = products
+  const [apparel, accessories, décor, home, tech] = categories
+  const [firstOrderProduct] = lineitems
   const [yemenLn] = shippingAddresses
   const [firstOrder] = orders
 
   await firstOrder.setUser(geoff)
   await firstOrder.setShippingAddress(yemenLn)
   await firstOrderProduct.setOrder(firstOrder)
-  await secondOrderProduct.setOrder(firstOrder)
   await firstOrderProduct.setProduct(hangers)
-  await secondOrderProduct.setProduct(socks)
   await socks.setCategory(apparel)
   await scarf.setCategory(apparel)
   await onesie.setCategory(apparel)
   await hangers.setCategory(accessories)
-  await firstCartProduct.setProduct(scarf)
-  await secondCartProduct.setProduct(onesie)
-  await firstCartProduct.setUser(cody)
-  await secondCartProduct.setUser(murphy)
+  await tandem.setCategory(décor)
+  await showerCurtain.setCategory(home)
+  await furryPillow.setCategory(décor)
+  await partyPillow.setCategory(décor)
+  await pushie.setCategory(accessories)
+  await bathMat.setCategory(home)
+  await mug1.setCategory(home)
+  await mug2.setCategory(home)
+  await pad.setCategory(accessories)
+  await powerBank.setCategory(tech)
+  await yoga.setCategory(décor)
 
   console.log(green('As seedy as Killarny Rose!'))
   db.close()
