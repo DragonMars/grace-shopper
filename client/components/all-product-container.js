@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Grid} from 'semantic-ui-react'
-import SingleProductView from './index'
+import {SingleProductView} from './index'
 import {fetchAllProducts} from '../store'
 
 class AllProducts extends React.Component {
