@@ -33,6 +33,7 @@ describe('Order model', () => {
         product = await Product.create({
           name: 'coolProduct',
           description: 'a cool product',
+          altText: 'a cool product',
           price: 2,
           imageUrl: 'https://www.sockittome.com/images/detailed/1/F0171.jpg'
         })
