@@ -17,8 +17,10 @@ export const postOrder = (cartItems, shippingAddressId) => async (
   dispatch,
   getState
 ) => {
-  const {stripeToken} = getState()
-  if (getState().user.id) {
+  //pull necessary info from state
+  const {stripeToken, user} = getState()
+
+  if (user.id) {
     const {data} = await axios.post('/api/orders', {
       cartItems,
       shippingAddressId,

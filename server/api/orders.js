@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const {Order, ShippingAddress, LineItem, Product} = require('../db/models')
 module.exports = router
+const stripe = require('stripe')('sk_test_E7S8wDRxDd6WZNERgFE92BK7')
 
 // assume order localStorage is:
 // localOrder {
@@ -19,12 +20,27 @@ module.exports = router
 
 router.post('/', async (req, res, next) => {
   try {
+    //get total price of cart items
+    const total = req.body.cartItems.reduce(
+      (acc, cur) => acc + cur.product.price * cur.quantity,
+      0
+    )
+
+    //create stripe charge
+    const response = await stripe.charges.create({
+      amount: total,
+      currency: 'usd',
+      description: 'a test charge',
+      source: req.body.stripeToken
+    })
+
     if (req.user) {
       const newOrder = await Order.create({
         stripeTransactionId: req.body.stripeToken,
         userId: req.user.id,
         shippingAddressId: req.body.shippingAddressId
       })
+
       const {cartItems} = req.body
       const updatedLineItems = cartItems.map(async cartItem => {
         const [rowsAffected, updatedLineItem] = await LineItem.update(
