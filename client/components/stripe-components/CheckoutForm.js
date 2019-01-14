@@ -14,9 +14,7 @@ class CheckoutForm extends Component {
   }
 
   async handleSumbit(event) {
-    console.log('in handle submit')
     const {token} = await this.props.stripe.createToken({name: 'Name'})
-    //if token exists, everything was processed without issue and we should use redux to store this until we can make an axios request
     if (token) {
       this.props.gotStripeToken(token.id)
     } else {

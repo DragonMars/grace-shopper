@@ -13,15 +13,8 @@ class Navbar extends Component {
   render() {
     const {handleClick, isLoggedIn, cartItems} = this.props
     let cartSize = 0
-    cartItems.length && console.log('cart in navbar', cartItems)
     cartItems.length &&
       cartItems.forEach(cartItem => {
-        console.log(
-          'item product ',
-          cartItem.productId,
-          ' item quantity ',
-          cartItem.quantity
-        )
         cartSize += Number(cartItem.quantity)
       })
     return (

@@ -90,9 +90,7 @@ export const clearCart = () => dispatch => {
 
 export const fetchCart = () => async (dispatch, getState) => {
   const cartOnState = getState().lineItems
-  console.log('state', cartOnState)
   const productIdsOnState = cartOnState.map(cartItem => cartItem.productId)
-  console.log('state products', productIdsOnState)
   const cartOnLocalStorage = JSON.parse(localStorage.getItem('cart'))
   if (cartOnLocalStorage !== null) {
     const productIdsOnLocalStorage = Object.keys(cartOnLocalStorage)
