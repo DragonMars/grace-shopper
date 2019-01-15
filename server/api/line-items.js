@@ -52,12 +52,16 @@ router.put('/', async (req, res, next) => {
 })
 
 //DELETE /api/line-items/id
+//remove from cart
 router.delete('/:id', async (req, res, next) => {
   try {
-    const {id} = req.params
-    await LineItem.destroy({
-      where: {id}
-    })
+    if (req.user) {
+      const {id} = req.params
+      const {userId} = req.user
+      await LineItem.destroy({
+        where: {id, userId, orderId: null}
+      })
+    }
     res.sendStatus(204)
   } catch (err) {
     next(err)
