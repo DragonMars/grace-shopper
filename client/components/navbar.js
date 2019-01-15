@@ -51,8 +51,8 @@ class Navbar extends Component {
             </Menu.Item>
             <Menu.Item as={Link} to="/cart">
               <Button animated="vertical">
-                <Button.Content hidden>Cart ({cartSize})</Button.Content>
-                <Button.Content visible>
+                <Button.Content visible>Cart ({cartSize})</Button.Content>
+                <Button.Content hidden>
                   <Icon name="shop" />
                 </Button.Content>
               </Button>

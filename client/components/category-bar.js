@@ -23,7 +23,7 @@ class CategoryBar extends Component {
             </Menu.Item>
           ))}
         <Menu.Item as={Link} to="/">
-          All Products
+          all products
         </Menu.Item>
       </Menu>
     )
