@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {Menu} from 'semantic-ui-react'
+import {Menu, Container} from 'semantic-ui-react'
 import {fetchAllCategories} from '../store'
 
 class CategoryBar extends Component {
@@ -16,22 +16,24 @@ class CategoryBar extends Component {
     const {activeItem} = this.state
     const {categories} = this.props
     return (
-      <Menu>
-        {categories.length &&
-          categories.map(category => (
-            <Menu.Item
-              key={category.id}
-              as={Link}
-              active={activeItem === category.name}
-              to={`/category/${category.name}`}
-            >
-              {category.name}
-            </Menu.Item>
-          ))}
-        <Menu.Item as={Link} to="/">
-          all products
-        </Menu.Item>
-      </Menu>
+      <Container>
+        <Menu fluid widths={categories.length + 1}>
+          {categories.length &&
+            categories.map(category => (
+              <Menu.Item
+                key={category.id}
+                as={Link}
+                active={activeItem === category.name}
+                to={`/category/${category.name}`}
+              >
+                {category.name}
+              </Menu.Item>
+            ))}
+          <Menu.Item as={Link} to="/">
+            all products
+          </Menu.Item>
+        </Menu>
+      </Container>
     )
   }
 }

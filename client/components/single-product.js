@@ -25,20 +25,12 @@ class SingleProduct extends Component {
     console.log('singleProduct', singleProduct)
     return (
       <Container>
-        <Card id="single-product-information">
-          <Image
-            id="single-product-image"
-            alt={singleProduct.altText}
-            src={singleProduct.imageUrl}
-          />
-          <Card.Content id="single-product-details">
-            <Card.Header id="single-product-name">
-              {singleProduct.name}
-            </Card.Header>
-            <Card.Description id="single-product-description">
-              {singleProduct.description}
-            </Card.Description>
-            <Card.Content extra id="single-product-price">
+        <Card>
+          <Image alt={singleProduct.altText} src={singleProduct.imageUrl} />
+          <Card.Content>
+            <Card.Header>{singleProduct.name}</Card.Header>
+            <Card.Description>{singleProduct.description}</Card.Description>
+            <Card.Content extra>
               Price: ${singleProduct.price / 100}
             </Card.Content>
           </Card.Content>

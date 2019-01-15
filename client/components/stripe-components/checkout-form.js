@@ -40,7 +40,7 @@ class CheckoutForm extends Component {
           <CardElement />
           <Divider />
           <Form onSubmit={this.handleSumbit}>
-            <Form.Button>Use this card</Form.Button>
+            <Form.Button color="teal">Use this card</Form.Button>
             {this.state.stripeError === true ? (
               <Label basic color="red" pointing>
                 Please enter valid credit information!

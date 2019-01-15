@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {Segment, Item} from 'semantic-ui-react'
 
 const calculateTotal = function(lineItems) {
   let total = 0
@@ -22,27 +23,34 @@ class OrderProducts extends Component {
       })
     }
     return (
-      <div>
-        {lineItems.map(lineItem => (
-          <div key={lineItem.id}>
-            <h4>{lineItem.product.name}</h4>
-            <img
-              src={lineItem.product.imageUrl}
-              alt={lineItem.product.altText}
-              height="200px"
-              width="auto"
-            />
-
-            <p>Quantity: {lineItem.quantity} </p>
-            {lineItem.orderId ? (
-              <p>Price: ${lineItem.price / 100}</p>
-            ) : (
-              <p>Price: ${lineItem.product.price / 100}</p>
-            )}
-          </div>
-        ))}
+      <Segment>
+        <Item.Group>
+          {lineItems.map(lineItem => (
+            <Item key={lineItem.id}>
+              <Item.Image
+                src={lineItem.product.imageUrl}
+                alt={lineItem.product.altText}
+                height="200px"
+                width="auto"
+              />
+              <Item.Content>
+                <Item.Header as="h4">{lineItem.product.name}</Item.Header>
+                <Item.Description>
+                  <p>Quantity: {lineItem.quantity} </p>
+                </Item.Description>
+                <Item.Extra>
+                  {lineItem.orderId ? (
+                    <p>Price: ${lineItem.price / 100}</p>
+                  ) : (
+                    <p>Price: ${lineItem.product.price / 100}</p>
+                  )}
+                </Item.Extra>
+              </Item.Content>
+            </Item>
+          ))}
+        </Item.Group>
         <p>Total: ${total}</p>
-      </div>
+      </Segment>
     )
   }
 }
