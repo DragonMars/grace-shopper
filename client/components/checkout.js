@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Form, Label} from 'semantic-ui-react'
+import {Form, Label, Container, Segment, Header} from 'semantic-ui-react'
 import {Redirect} from 'react-router-dom'
 import {
   ConnectedOrderProducts,
@@ -41,28 +41,33 @@ class Checkout extends Component {
       return <Redirect to="/success" />
     }
     return (
-      <div>
-        <h1>Checkout</h1>
-        <ShippingAddressForm />
-        <ConnectedOrderProducts />
-        <StripeContainer />
-        <Form onSubmit={this.handleSubmit}>
-          {this.state.missingInfoError === true ? (
-            <Label basic color="red" pointing="below">
-              Please enter both a shipping address and credit card info!
-            </Label>
-          ) : (
-            <br />
-          )}
-          <Form.Button
-            disabled={
-              !this.props.stripeToken.length || !this.props.shippingAddress.id
-            }
-          >
-            Place Your Order
-          </Form.Button>
-        </Form>
-      </div>
+      <Container>
+        <Segment>
+          <Header as="h1" color="teal">
+            checkout
+          </Header>
+          <ShippingAddressForm />
+          <ConnectedOrderProducts />
+          <StripeContainer />
+          <Form onSubmit={this.handleSubmit}>
+            {this.state.missingInfoError === true ? (
+              <Label basic color="red" pointing="below">
+                Please enter both a shipping address and credit card info!
+              </Label>
+            ) : (
+              <br />
+            )}
+            <Form.Button
+              color="teal"
+              disabled={
+                !this.props.stripeToken.length || !this.props.shippingAddress.id
+              }
+            >
+              Place Your Order
+            </Form.Button>
+          </Form>
+        </Segment>
+      </Container>
     )
   }
 }

@@ -2,7 +2,16 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link, Redirect} from 'react-router-dom'
 import {setOrUpdateItem, clearCart, removeItemFromCart} from '../store'
-import {Button, List, Image, Header} from 'semantic-ui-react'
+import {
+  Button,
+  List,
+  Image,
+  Header,
+  Container,
+  Item,
+  Grid,
+  Segment
+} from 'semantic-ui-react'
 
 class Cart extends Component {
   constructor(props) {
@@ -70,71 +79,96 @@ class Cart extends Component {
         {redirect ? (
           <Redirect to="/checkout" />
         ) : (
-          <List divided relaxed>
-            <Header as="h1">Cart:</Header>
-            {cartItems[0] &&
-              cartItems.map(cartItem => (
-                <List.Item key={cartItem.product.id}>
-                  <Button
-                    basic
-                    color="red"
-                    icon="close"
-                    floated="right"
-                    onClick={() => this.removeFromCart(cartItem)}
-                  />
-                  <Link to={`/products/${cartItem.product.id}`}>
-                    <List.Content>
-                      <List.Header as="h3">{cartItem.product.name}</List.Header>
-                    </List.Content>
-
-                    <Image
-                      src={cartItem.product.imageUrl}
-                      alt={cartItem.product.altText}
-                      height="200px"
-                      width="auto"
-                    />
-                  </Link>
-                  <List.Content floated="right">
-                    <label htmlFor="quantity">
-                      Quantity:{' '}
-                      <input
-                        type="number"
-                        name="quantity"
-                        defaultValue={cartItem.quantity}
-                        min="1"
-                        onChange={event =>
-                          this.changeQuantity(cartItem.productId, event)
-                        }
+          <Container>
+            <Segment>
+              <p />
+              <p />
+              <p />
+              <Header as="h1" color="teal">
+                cart:
+              </Header>
+              <Item.Group>
+                {cartItems[0] &&
+                  cartItems.map(cartItem => (
+                    <Item key={cartItem.product.id}>
+                      <Item.Image
+                        as={Link}
+                        src={cartItem.product.imageUrl}
+                        alt={cartItem.product.altText}
+                        height="200px"
+                        width="auto"
+                        to={`/products/${cartItem.product.id}`}
                       />
-                    </label>
-                    <p>
-                      Price:{' '}
-                      {(cartItem.product.price / 100).toLocaleString('en-US', {
-                        style: 'currency',
-                        currency: 'USD'
-                      })}
-                    </p>
-                  </List.Content>
-                </List.Item>
-              ))}
-            <p>
-              Subtotal ({numberOfItems} items):{' '}
-              {subtotal.toLocaleString('en-US', {
-                style: 'currency',
-                currency: 'USD'
-              })}
-            </p>
-            <Button onClick={this.clearCart}>Clear Cart</Button>
-            {isLoggedIn ? (
-              <Button disabled={subtotal <= 0} onClick={this.checkout}>
-                Checkout
-              </Button>
-            ) : (
-              <Button disabled={subtotal <= 0} onClick={this.checkout}>
-                Checkout as Guest
-              </Button>
-            )}
-          </List>
+                      <Item.Content>
+                        <Button
+                          basic
+                          color="red"
+                          icon="close"
+                          floated="right"
+                          onClick={() => this.removeFromCart(cartItem)}
+                        />
+                        <Link to={`/products/${cartItem.product.id}`}>
+                          <Item.Header as="h3">
+                            {cartItem.product.name}
+                          </Item.Header>
+                        </Link>
+                        <Item.Extra>
+                          Price:{' '}
+                          {(cartItem.product.price / 100).toLocaleString(
+                            'en-US',
+                            {
+                              style: 'currency',
+                              currency: 'USD'
+                            }
+                          )}
+                        </Item.Extra>
+                        <Item.Description>
+                          <label htmlFor="quantity">
+                            Quantity:{' '}
+                            <input
+                              type="number"
+                              name="quantity"
+                              defaultValue={cartItem.quantity}
+                              min="1"
+                              onChange={event =>
+                                this.changeQuantity(cartItem.productId, event)
+                              }
+                            />
+                          </label>
+                        </Item.Description>
+                      </Item.Content>
+                    </Item>
+                  ))}
+                <Item.Header as="h4">
+                  Subtotal ({numberOfItems} items):{' '}
+                  {subtotal.toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD'
+                  })}
+                </Item.Header>
+              </Item.Group>
+            </Segment>
+            <Segment>
+              <Button onClick={this.clearCart}>Clear Cart</Button>
+              {isLoggedIn ? (
+                <Button
+                  color="teal"
+                  disabled={subtotal <= 0}
+                  onClick={this.checkout}
+                >
+                  Checkout
+                </Button>
+              ) : (
+                <Button
+                  color="teal"
+                  disabled={subtotal <= 0}
+                  onClick={this.checkout}
+                >
+                  Checkout as Guest
+                </Button>
+              )}
+            </Segment>
+          </Container>
         )}
       </div>
     )

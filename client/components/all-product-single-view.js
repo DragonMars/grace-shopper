@@ -4,14 +4,12 @@ import {Card, Image} from 'semantic-ui-react'
 
 function SingleProductViewForAllProduct({product}) {
   return (
-    <Card>
-      <Link to={`/products/${product.id}`}>
-        <Image src={product.imageUrl} alt={product.altText} />
-        <Card.Content>
-          <Card.Header>{product.name}</Card.Header>
-        </Card.Content>
-      </Link>
-      <Card.Content extra>
+    <Card fluid as={Link} to={`/products/${product.id}`}>
+      <Image src={product.imageUrl} alt={product.altText} />
+      <Card.Header textAlign="center" as="h3">
+        {product.name}
+      </Card.Header>
+      <Card.Content textAlign="center" extra>
         {(product.price / 100).toLocaleString('en-US', {
           style: 'currency',
           currency: 'USD'

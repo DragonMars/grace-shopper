@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {Menu, Icon, Button} from 'semantic-ui-react'
+import {Menu, Icon, Button, Header, Container} from 'semantic-ui-react'
 import {logout, fetchCart} from '../store'
 
 class Navbar extends Component {
@@ -18,48 +18,52 @@ class Navbar extends Component {
         cartSize += Number(cartItem.quantity)
       })
     return (
-      <Menu>
-        <Menu.Item header as={Link} name="slothItLikeItsHot" to="/">
-          Sloth It Like It's Hot
-        </Menu.Item>
-        {isLoggedIn ? (
-          <Menu.Menu position="right">
-            {/* The navbar will show these links after you log in */}
-            <Menu.Item as={Link} to="/home">
-              {' '}
-              Home
-            </Menu.Item>
-            <Menu.Item onClick={handleClick}>Logout</Menu.Item>
-            <Menu.Item as={Link} to="/cart">
-              <Button animated="fade">
-                <Button.Content hidden>Cart ({cartSize})</Button.Content>
-                <Button.Content visible>
-                  <Icon name="shop" />
-                </Button.Content>
-              </Button>
-            </Menu.Item>
-          </Menu.Menu>
-        ) : (
-          <Menu.Menu position="right">
-            {/* The navbar will show these links before you log in */}
-            <Menu.Item as={Link} to="/login">
-              <Icon name="user circle" />
-              Login
-            </Menu.Item>
-            <Menu.Item as={Link} to="/signup">
-              Sign Up
-            </Menu.Item>
-            <Menu.Item as={Link} to="/cart">
-              <Button animated="vertical">
-                <Button.Content hidden>Cart ({cartSize})</Button.Content>
-                <Button.Content visible>
-                  <Icon name="shop" />
-                </Button.Content>
-              </Button>
-            </Menu.Item>
-          </Menu.Menu>
-        )}
-      </Menu>
+      <Container>
+        <Menu>
+          <Menu.Item as={Link} to="/">
+            <Header color="teal" as="h1">
+              sloth it like it's hot
+            </Header>
+          </Menu.Item>
+          {isLoggedIn ? (
+            <Menu.Menu position="right">
+              {/* The navbar will show these links after you log in */}
+              <Menu.Item as={Link} to="/home">
+                {' '}
+                Home
+              </Menu.Item>
+              <Menu.Item onClick={handleClick}>Logout</Menu.Item>
+              <Menu.Item as={Link} to="/cart">
+                <Button color="teal" animated="fade">
+                  <Button.Content visible>cart ({cartSize})</Button.Content>
+                  <Button.Content hidden>
+                    <Icon name="shop" />
+                  </Button.Content>
+                </Button>
+              </Menu.Item>
+            </Menu.Menu>
+          ) : (
+            <Menu.Menu position="right">
+              {/* The navbar will show these links before you log in */}
+              <Menu.Item as={Link} to="/login">
+                <Icon name="user circle" />
+                login
+              </Menu.Item>
+              <Menu.Item as={Link} to="/signup">
+                sign up
+              </Menu.Item>
+              <Menu.Item as={Link} to="/cart">
+                <Button color="teal" animated="vertical">
+                  <Button.Content visible>cart ({cartSize})</Button.Content>
+                  <Button.Content hidden>
+                    <Icon name="shop" />
+                  </Button.Content>
+                </Button>
+              </Menu.Item>
+            </Menu.Menu>
+          )}
+        </Menu>
+      </Container>
     )
   }
 }
