@@ -7,13 +7,12 @@ import {withRouter} from 'react-router-dom'
 class SingleProduct extends Component {
   constructor(props) {
     super(props)
-    this.handleClick = this.handleClick.bind(this)
+    this.addToCart = this.addToCart.bind(this)
   }
 
-  handleClick() {
-    const {products, setOrUpdateCart} = this.props
-    setOrUpdateCart({productId: products[0].id})
-    console.log('product', products[0])
+  addToCart(productId) {
+    const {setOrUpdateCart} = this.props
+    setOrUpdateCart({productId})
   }
 
   render() {
@@ -43,7 +42,11 @@ class SingleProduct extends Component {
               Price: ${singleProduct.price / 100}
             </Card.Content>
           </Card.Content>
-          <Button type="submit" onClick={this.handleClick} id="add-to-cart">
+          <Button
+            type="submit"
+            onClick={event => this.addToCart(singleProduct.id, event)}
+            id="add-to-cart"
+          >
             Add to Cart
           </Button>
         </Card>
