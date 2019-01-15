@@ -24,7 +24,6 @@ export class UserHome extends Component {
   render() {
     const {email} = this.props
     const {orderHistory} = this.state
-    console.log('orderHistory', orderHistory)
     return (
       <div>
         <h3>Welcome, {email}</h3>
@@ -46,17 +45,6 @@ export class UserHome extends Component {
     )
   }
 }
-
-//TO DELETE
-// export const UserHome = props => {
-//   const {email} = props
-
-//   return (
-//     <div>
-//       <h3>Welcome, {email}</h3>
-//     </div>
-//   )
-// }
 
 /**
  * CONTAINER
