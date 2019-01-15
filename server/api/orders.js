@@ -76,7 +76,7 @@ router.post('/', async (req, res, next) => {
         userId: req.user.id,
         shippingAddressId: req.body.shippingAddressId
       })
-
+      console.log('newORderId', newOrder.id)
       const {cartItems} = req.body
       cartItems.map(async cartItem => {
         const [rowsAffected, updatedLineItem] = await LineItem.update(
