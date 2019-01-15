@@ -22,6 +22,8 @@ class CategoryBar extends Component {
             <Menu.Item
               key={category.id}
               as={Link}
+              name={category.name}
+              onClick={this.handleItemClick}
               active={activeItem === category.name}
               to={`/category/${category.name}`}
             >
