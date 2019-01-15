@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Grid} from 'semantic-ui-react'
+import {Grid, Container, Card} from 'semantic-ui-react'
 import {withRouter} from 'react-router-dom'
 import {SingleProductView} from './index'
 import {fetchAllProducts} from '../store'
@@ -20,18 +20,20 @@ class AllProducts extends React.Component {
       products = productsByCategory
     }
     return (
-      <div>
-        <Grid>
-          <Grid.Row columns={3}>
+      <Container>
+        <Grid relaxed columns={3}>
+          <Grid.Row>
             {products &&
               products.map(product => (
                 <Grid.Column key={product.id}>
-                  <SingleProductView product={product} />
+                  <Card.Group centered>
+                    <SingleProductView product={product} />
+                  </Card.Group>
                 </Grid.Column>
               ))}
           </Grid.Row>
         </Grid>
-      </div>
+      </Container>
     )
   }
 }

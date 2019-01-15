@@ -12,7 +12,10 @@ export {default as SingleProduct} from './single-product'
 export {default as Cart} from './cart'
 export {default as Checkout} from './checkout'
 export {default as ShippingAddressForm} from './shipping-address-form'
-export {default as OrderProducts} from './order-products'
+export {
+  default as ConnectedOrderProducts,
+  OrderProducts
+} from './order-products'
 export {default as OrderConfirmation} from './order-confirmation'
 export {default as CategoryBar} from './category-bar'
 export {default as CheckoutForm} from './stripe-components/checkout-form'

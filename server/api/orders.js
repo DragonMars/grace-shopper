@@ -3,8 +3,21 @@ const {Order, LineItem} = require('../db/models')
 module.exports = router
 const stripe = require('stripe')(process.env.stripeToken)
 
-//GET /api/orders/orderId
+//GET /api/order/admin - shows all orders
+router.get('/admin', async (req, res, next) => {
+  try {
+    if (req.user && req.user.isAdmin) {
+      const orders = await Order.findAll()
+      res.json(orders)
+    } else {
+      res.status(418).send('get outta here')
+    }
+  } catch (err) {
+    next(err)
+  }
+})
 
+//GET /api/orders/orderId
 router.get('/:orderId', async (req, res, next) => {
   try {
     const {user} = req
@@ -23,6 +36,19 @@ router.get('/:orderId', async (req, res, next) => {
       res
         .status(401)
         .send('You do not have authorization to view these order details.')
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/', async (req, res, next) => {
+  try {
+    if (req.user) {
+      const orders = await Order.findAll({where: {userId: req.user.id}})
+      res.json(orders)
+    } else {
+      res.status(401).send('You must be logged in to see your order history')
     }
   } catch (err) {
     next(err)
@@ -50,7 +76,7 @@ router.post('/', async (req, res, next) => {
         userId: req.user.id,
         shippingAddressId: req.body.shippingAddressId
       })
-
+      console.log('newORderId', newOrder.id)
       const {cartItems} = req.body
       cartItems.map(async cartItem => {
         const [rowsAffected, updatedLineItem] = await LineItem.update(

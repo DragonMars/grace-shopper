@@ -15,6 +15,7 @@ import {
   Item
 } from 'semantic-ui-react'
 import {withRouter, Link} from 'react-router-dom'
+import axios from 'axios'
 
 class SingleProduct extends Component {
   constructor(props) {
@@ -23,6 +24,10 @@ class SingleProduct extends Component {
     this.addToCart = this.addToCart.bind(this)
     this.handleHideClick = this.handleHideClick.bind(this)
     this.handleShowClick = this.handleShowClick.bind(this)
+    this.state = {
+      singleProduct: {},
+      visible: false
+    }
   }
 
   handleHideClick = () => this.setState({visible: false})
@@ -34,13 +39,16 @@ class SingleProduct extends Component {
     this.setState({visible: true})
   }
 
+  async componentDidMount() {
+    const {data} = await axios.get(
+      `/api/products/${this.props.match.params.productId}`
+    )
+    this.setState({singleProduct: data})
+  }
+
   render() {
-    const {visible} = this.state
-    const {products, lineItems} = this.props
-    const productId = Number(this.props.match.params.productId)
-    const [singleProduct] = products.filter(product => {
-      return product.id === productId
-    })
+    const {visible, singleProduct} = this.state
+    const {lineItems} = this.props
     return (
       <Sidebar.Pushable as={Segment}>
         <Sidebar
@@ -96,31 +104,33 @@ class SingleProduct extends Component {
         </Sidebar>
         <Sidebar.Pusher>
           <Container>
-            <Card id="single-product-information">
-              <Image
-                id="single-product-image"
-                alt={singleProduct.altText}
-                src={singleProduct.imageUrl}
-              />
-              <Card.Content id="single-product-details">
-                <Card.Header id="single-product-name">
-                  {singleProduct.name}
-                </Card.Header>
-                <Card.Description id="single-product-description">
-                  {singleProduct.description}
-                </Card.Description>
-                <Card.Content extra id="single-product-price">
-                  Price: ${singleProduct.price / 100}
+            {singleProduct.id !== undefined && (
+              <Card id="single-product-information">
+                <Image
+                  id="single-product-image"
+                  alt={singleProduct.altText}
+                  src={singleProduct.imageUrl}
+                />
+                <Card.Content id="single-product-details">
+                  <Card.Header id="single-product-name">
+                    {singleProduct.name}
+                  </Card.Header>
+                  <Card.Description id="single-product-description">
+                    {singleProduct.description}
+                  </Card.Description>
+                  <Card.Content extra id="single-product-price">
+                    Price: ${singleProduct.price / 100}
+                  </Card.Content>
                 </Card.Content>
-              </Card.Content>
-              <Button
-                type="submit"
-                onClick={event => this.addToCart(singleProduct.id, event)}
-                id="add-to-cart"
-              >
-                Add to Cart
-              </Button>
-            </Card>
+                <Button
+                  type="submit"
+                  onClick={event => this.addToCart(singleProduct.id, event)}
+                  id="add-to-cart"
+                >
+                  Add to Cart
+                </Button>
+              </Card>
+            )}
           </Container>
         </Sidebar.Pusher>
       </Sidebar.Pushable>
@@ -130,7 +140,6 @@ class SingleProduct extends Component {
 
 const mapStateToProps = state => {
   return {
-    products: state.product,
     lineItems: state.lineItems
   }
 }
