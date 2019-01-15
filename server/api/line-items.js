@@ -51,18 +51,19 @@ router.put('/', async (req, res, next) => {
   }
 })
 
-router.delete('/:productId', async (req, res, next) => {
+//DELETE /api/line-items/id
+//remove from cart
+router.delete('/:id', async (req, res, next) => {
   try {
-    //if a user is logged in, delete from database
-    const numberAffectedRows = await LineItem.destroy({
-      where: {
-        productId: req.params.productId,
-        userId: req.user.id
-      }
-    })
-
-    //send back the id
-    res.json(req.params.productId)
+    if (req.user) {
+      const {id} = req.params
+      const userId = req.user.id
+      console.log('userId', userId)
+      await LineItem.destroy({
+        where: {id, userId, orderId: null}
+      })
+    }
+    res.sendStatus(204)
   } catch (err) {
     next(err)
   }

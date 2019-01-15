@@ -89,16 +89,24 @@ export const setOrUpdateItem = newLineItem => async (dispatch, getState) => {
   }
 }
 
-export const clearCart = () => dispatch => {
+export const clearCart = () => (dispatch, getState) => {
   localStorage.clear()
+  const cartItems = getState().lineItems
+  if (getState().user.id) {
+    cartItems.forEach(async cartItem => {
+      console.log(cartItem.id)
+      await axios.delete(`/api/line-items/${cartItem.id}`)
+    })
+  }
   dispatch(clearItems())
 }
 
 //this thunk creator removes one lineItem (item in the cart)
-export const removeItemFromCart = productId => async (dispatch, getState) => {
+export const removeItemFromCart = cartItem => async (dispatch, getState) => {
   const {user} = getState()
+  const {productId} = cartItem
   if (user.id) {
-    const {data} = await axios.delete(`/api/line-items/${productId}`)
+    await axios.delete(`/api/line-items/${cartItem.id}`)
     dispatch(removeItem(productId))
   } else {
     const cart = JSON.parse(localStorage.getItem('cart'))

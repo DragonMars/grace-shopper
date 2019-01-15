@@ -10,7 +10,7 @@ class Cart extends Component {
     this.numberOfItems = this.numberOfItems.bind(this)
     this.subtotal = this.subtotal.bind(this)
     this.clearCart = this.clearCart.bind(this)
-    this.handleClick = this.handleClick.bind(this)
+    this.removeFromCart = this.removeFromCart.bind(this)
   }
 
   numberOfItems() {
@@ -46,9 +46,8 @@ class Cart extends Component {
     this.props.clear()
   }
 
-  handleClick(productId) {
-    console.log('product id in handleClick', productId)
-    this.props.removeItem(productId)
+  removeFromCart(cartItem) {
+    this.props.removeItem(cartItem)
   }
 
   render() {
@@ -70,7 +69,7 @@ class Cart extends Component {
                 color="red"
                 icon="close"
                 floated="right"
-                onClick={() => this.handleClick(cartItem.product.id)}
+                onClick={() => this.removeFromCart(cartItem)}
               />
               <Link to={`/products/${cartItem.product.id}`}>
                 <List.Content>
