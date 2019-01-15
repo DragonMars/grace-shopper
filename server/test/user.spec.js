@@ -1,11 +1,14 @@
 /* global describe beforeEach it */
 
 const {expect} = require('chai')
-const db = require('../index')
-const User = db.model('user')
+const db = require('../db/index')
+const User = db.models.user
 
 describe('User model', () => {
   beforeEach(() => {
+    return db.sync({force: true})
+  })
+  afterEach(() => {
     return db.sync({force: true})
   })
 
@@ -14,10 +17,15 @@ describe('User model', () => {
       let cody
 
       beforeEach(async () => {
-        cody = await User.create({
-          email: 'cody@puppybook.com',
-          password: 'bones'
-        })
+        try {
+          cody = await User.create({
+            email: 'cody@puppybook.com',
+            password: 'bones',
+            name: 'Cody'
+          })
+        } catch (error) {
+          console.error(error.message)
+        }
       })
 
       it('returns true if the password is correct', () => {

@@ -1,18 +1,52 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import axios from 'axios'
+import {OrderProducts} from './index'
+import {Header, Divider} from 'semantic-ui-react'
 
 /**
  * COMPONENT
  */
-export const UserHome = props => {
-  const {email} = props
+export class UserHome extends Component {
+  constructor() {
+    super()
+    this.state = {
+      orderHistory: []
+    }
+  }
 
-  return (
-    <div>
-      <h3>Welcome, {email}</h3>
-    </div>
-  )
+  async componentDidMount() {
+    const {data} = await axios.get('/api/orders')
+    this.setState({orderHistory: data})
+  }
+
+  render() {
+    const {email} = this.props
+    const {orderHistory} = this.state
+    return (
+      <div>
+        <h3>Welcome, {email}</h3>
+
+        {orderHistory.length > 0 && (
+          <div>
+            <Header as="h1">Your Order History:</Header>
+            <Divider />
+            {orderHistory.map(order => (
+              <div key={order.id}>
+                <Header>
+                  Order sent to {order.shippingAddress.streetAddress} placed on{' '}
+                  {new Date(order.createdAt).toDateString()}
+                </Header>
+                <OrderProducts lineItems={order.lineItems} order={order} />
+                <Divider />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
 }
 
 /**

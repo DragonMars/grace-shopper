@@ -1,49 +1,87 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import {Menu, Icon, Button, Header, Container} from 'semantic-ui-react'
+import {logout, fetchCart} from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>Dragon Mars</h1>
-    <nav>
-      {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
-      ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
-    </nav>
-    <hr />
-  </div>
-)
+class Navbar extends Component {
+  componentDidMount() {
+    this.props.loadCart()
+  }
+
+  render() {
+    const {handleClick, isLoggedIn, cartItems} = this.props
+    let cartSize = 0
+    cartItems.length &&
+      cartItems.forEach(cartItem => {
+        cartSize += Number(cartItem.quantity)
+      })
+    return (
+      <Container>
+        <Menu>
+          <Menu.Item as={Link} to="/">
+            <Header color="teal" as="h1">
+              sloth it like it's hot
+            </Header>
+          </Menu.Item>
+          {isLoggedIn ? (
+            <Menu.Menu position="right">
+              {/* The navbar will show these links after you log in */}
+              <Menu.Item as={Link} to="/home">
+                {' '}
+                Home
+              </Menu.Item>
+              <Menu.Item onClick={handleClick}>Logout</Menu.Item>
+              <Menu.Item as={Link} to="/cart">
+                <Button color="teal" animated="fade">
+                  <Button.Content visible>cart ({cartSize})</Button.Content>
+                  <Button.Content hidden>
+                    <Icon name="shop" />
+                  </Button.Content>
+                </Button>
+              </Menu.Item>
+            </Menu.Menu>
+          ) : (
+            <Menu.Menu position="right">
+              {/* The navbar will show these links before you log in */}
+              <Menu.Item as={Link} to="/login">
+                <Icon name="user circle" />
+                login
+              </Menu.Item>
+              <Menu.Item as={Link} to="/signup">
+                sign up
+              </Menu.Item>
+              <Menu.Item as={Link} to="/cart">
+                <Button color="teal" animated="vertical">
+                  <Button.Content visible>cart ({cartSize})</Button.Content>
+                  <Button.Content hidden>
+                    <Icon name="shop" />
+                  </Button.Content>
+                </Button>
+              </Menu.Item>
+            </Menu.Menu>
+          )}
+        </Menu>
+      </Container>
+    )
+  }
+}
 
 /**
  * CONTAINER
  */
-const mapState = state => {
-  return {
-    isLoggedIn: !!state.user.id
-  }
-}
+const mapState = state => ({
+  isLoggedIn: !!state.user.id,
+  cartItems: state.lineItems
+})
 
-const mapDispatch = dispatch => {
-  return {
-    handleClick() {
-      dispatch(logout())
-    }
-  }
-}
+const mapDispatch = dispatch => ({
+  handleClick() {
+    dispatch(logout())
+  },
+  loadCart: () => dispatch(fetchCart())
+})
 
 export default connect(mapState, mapDispatch)(Navbar)
 

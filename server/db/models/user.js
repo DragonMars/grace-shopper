@@ -6,7 +6,10 @@ const User = db.define('user', {
   email: {
     type: Sequelize.STRING,
     unique: true,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      isEmail: true
+    }
   },
   password: {
     type: Sequelize.STRING,
@@ -15,6 +18,10 @@ const User = db.define('user', {
     get() {
       return () => this.getDataValue('password')
     }
+  },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   },
   salt: {
     type: Sequelize.STRING,
@@ -57,6 +64,11 @@ User.encryptPassword = function(plainText, salt) {
  * hooks
  */
 const setSaltAndPassword = user => {
+  user.salt = User.generateSalt()
+  user.password = User.encryptPassword(user.password(), user.salt())
+}
+
+const updateSaltAndPassword = user => {
   if (user.changed('password')) {
     user.salt = User.generateSalt()
     user.password = User.encryptPassword(user.password(), user.salt())
@@ -64,4 +76,10 @@ const setSaltAndPassword = user => {
 }
 
 User.beforeCreate(setSaltAndPassword)
-User.beforeUpdate(setSaltAndPassword)
+User.beforeBulkCreate(users => {
+  users.forEach(setSaltAndPassword)
+})
+User.beforeUpdate(updateSaltAndPassword)
+User.beforeBulkUpdate(users => {
+  users.forEach(setSaltAndPassword)
+})
