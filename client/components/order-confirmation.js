@@ -19,6 +19,11 @@ class OrderConfirmation extends React.Component {
     this.props.clearCart()
     this.setState({redirect: true})
   }
+
+  componentWillUnmount() {
+    this.props.clearCart()
+  }
+
   render() {
     const arrivalDate = new Date()
     arrivalDate.setDate(arrivalDate.getDate() + 2)
