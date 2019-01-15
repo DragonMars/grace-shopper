@@ -60,7 +60,7 @@ const productData = [
       'https://images.urbanoutfitters.com/is/image/UrbanOutfitters/37491271_095_b?$xlarge$&hei=900&qlt=80&fit=constrain',
     altText: 'sloth art print',
     description:
-      'Sloth-like-its-hot-exclusive print from Luka Va at Surfing Sloth, who juxtaposes elements of nature with a busy + urban landscape to create unique prints. Printed on archival paper made from cotton pressed in Italian mills, this high-quality art print is available in sizes and frames just right for your space. First select your frame (or go frameless), then select your size.',
+      'Sloth-it-like-its-hot-exclusive print from Luka Va at Surfing Sloth, who juxtaposes elements of nature with a busy + urban landscape to create unique prints. Printed on archival paper made from cotton pressed in Italian mills, this high-quality art print is available in sizes and frames just right for your space. First select your frame (or go frameless), then select your size.',
     price: 2999
   },
   {

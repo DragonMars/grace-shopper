@@ -23,7 +23,6 @@ class SingleProduct extends Component {
     const {data} = await axios.get(
       `/api/products/${this.props.match.params.productId}`
     )
-    console.log('single product', data)
     this.setState({singleProduct: data})
   }
 

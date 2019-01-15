@@ -2,7 +2,11 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Form, Label} from 'semantic-ui-react'
 import {Redirect} from 'react-router-dom'
-import {OrderProducts, ShippingAddressForm, StripeContainer} from './index'
+import {
+  ConnectedOrderProducts,
+  ShippingAddressForm,
+  StripeContainer
+} from './index'
 import {postOrder, clearStripeToken} from '../store'
 
 class Checkout extends Component {
@@ -40,7 +44,7 @@ class Checkout extends Component {
       <div>
         <h1>Checkout</h1>
         <ShippingAddressForm />
-        <OrderProducts />
+        <ConnectedOrderProducts />
         <StripeContainer />
         <Form onSubmit={this.handleSubmit}>
           {this.state.missingInfoError === true ? (
