@@ -11,13 +11,13 @@ class SingleProduct extends Component {
   }
 
   handleClick() {
-    const {product, setOrUpdateCart} = this.props
-    setOrUpdateCart({productId: product[0].id})
+    const {products, setOrUpdateCart} = this.props
+    setOrUpdateCart({productId: products[0].id})
   }
 
   render() {
-    const products = this.props.products
-    const productId = this.props.match.params.productId
+    const {products} = this.props
+    const productId = Number(this.props.match.params.productId)
     const [singleProduct] = products.filter(product => {
       console.log('product.id', product.id)
       return product.id === productId
@@ -51,9 +51,9 @@ class SingleProduct extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  products: state.product
-})
+const mapStateToProps = state => {
+  return {products: state.product}
+}
 
 const mapDispatchToProps = dispatch => ({
   setOrUpdateCart: ({productId}) => {
