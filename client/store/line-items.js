@@ -41,6 +41,9 @@ export const setOrUpdateItem = newLineItem => async (dispatch, getState) => {
     localStorage.setItem('cart', JSON.stringify({}))
   }
   const {productId, quantity} = newLineItem
+  console.log('newLineItem')
+  console.log('productId', productId)
+  console.log('quantity', quantity)
   const itemToBeUpdated = getState().lineItems.find(
     lineItem => lineItem.productId === productId
   )
