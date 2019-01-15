@@ -8,7 +8,7 @@ import {Header, Divider} from 'semantic-ui-react'
 /**
  * COMPONENT
  */
-class UserHome extends Component {
+export class UserHome extends Component {
   constructor() {
     super()
     this.state = {
