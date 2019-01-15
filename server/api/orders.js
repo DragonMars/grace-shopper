@@ -3,15 +3,32 @@ const {Order, LineItem} = require('../db/models')
 module.exports = router
 const stripe = require('stripe')(process.env.stripeToken)
 
-router.get('/:id', async (req, res, next) => {
+//GET /api/orders/orderId
+
+router.get('/:orderId', async (req, res, next) => {
   try {
-    const orderId = req.params.id
-    const {data} = Order.findById(orderId)
-    res.json(data)
+    const {user} = req
+    if (user) {
+      const userId = user.id
+      const {orderId} = req.params
+      const order = await Order.findById(orderId)
+      if (order.userId === userId || user.isAdmin) {
+        res.json(order)
+      } else {
+        res
+          .status(403)
+          .send('You do not have authorization to view these order details.')
+      }
+    } else {
+      res
+        .status(401)
+        .send('You do not have authorization to view these order details.')
+    }
   } catch (err) {
     next(err)
   }
 })
+
 router.post('/', async (req, res, next) => {
   try {
     //get total price of cart items

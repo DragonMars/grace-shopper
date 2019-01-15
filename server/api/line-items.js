@@ -37,10 +37,11 @@ router.post('/', async (req, res, next) => {
 router.put('/', async (req, res, next) => {
   try {
     const {id, quantity} = req.body
+    const userId = req.user.id
     await LineItem.update(
       {quantity: quantity},
       {
-        where: {id},
+        where: {id, userId},
         plain: true
       }
     )
@@ -58,7 +59,6 @@ router.delete('/:id', async (req, res, next) => {
     if (req.user) {
       const {id} = req.params
       const userId = req.user.id
-      console.log('userId', userId)
       await LineItem.destroy({
         where: {id, userId, orderId: null}
       })

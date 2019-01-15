@@ -12,7 +12,7 @@ router.get('/', async (req, res, next) => {
         })
         res.json(users)
       } else {
-        res.status(401).send('You are not authorized to view this page.')
+        res.status(403).send('You are not authorized to view this page.')
       }
     } else {
       res.status(401).send('You are not authorized to view this page.')
