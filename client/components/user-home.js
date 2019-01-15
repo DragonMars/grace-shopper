@@ -28,11 +28,12 @@ class UserHome extends Component {
     return (
       <div>
         <h3>Welcome, {email}</h3>
-        <Header as="h1">Your Order History:</Header>
-        <Divider />
-        {orderHistory.length &&
+
+        {orderHistory.length > 0 &&
           orderHistory.map(order => (
             <div key={order.id}>
+              <Header as="h1">Your Order History:</Header>
+              <Divider />
               <Header>
                 Order sent to {order.shippingAddress.streetAddress} placed on{' '}
                 {new Date(order.createdAt).toDateString()}
