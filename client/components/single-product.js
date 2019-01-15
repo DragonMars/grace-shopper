@@ -59,13 +59,15 @@ class SingleProduct extends Component {
               </Header>
               <Divider />
             </List.Item>
+          </List>
+          <Item.Group>
             {lineItems.map(lineItem => (
               <Item key={lineItem.id}>
-                <Image
+                <Item.Image
                   size="tiny"
                   src={lineItem.product.imageUrl}
                   rounded
-                  spaced
+                  spaced="left"
                   verticalAlign="middle"
                 />
                 <Item.Content verticalAlign="middle">
@@ -74,9 +76,11 @@ class SingleProduct extends Component {
                     quantity: {lineItem.quantity}
                   </Item.Description>
                 </Item.Content>
-                <Divider />
               </Item>
             ))}
+          </Item.Group>
+          <Divider />
+          <List>
             <List.Item>
               <Header as="h3" textAlign="center">
                 CurrentTotal: ${lineItems.reduce((acc, curVal) => {
