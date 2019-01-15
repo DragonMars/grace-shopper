@@ -50,3 +50,16 @@ router.put('/', async (req, res, next) => {
     next(err)
   }
 })
+
+//DELETE /api/line-items/id
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const {id} = req.params
+    await LineItem.destroy({
+      where: {id}
+    })
+    res.sendStatus(204)
+  } catch (err) {
+    next(err)
+  }
+})
