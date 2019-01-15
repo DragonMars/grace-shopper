@@ -37,10 +37,11 @@ router.post('/', async (req, res, next) => {
 router.put('/', async (req, res, next) => {
   try {
     const {id, quantity} = req.body
+    const userId = req.user.id
     await LineItem.update(
       {quantity: quantity},
       {
-        where: {id},
+        where: {id, userId},
         plain: true
       }
     )
