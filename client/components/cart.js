@@ -46,9 +46,8 @@ class Cart extends Component {
     this.props.clear()
   }
 
-  handleClick(productId) {
-    console.log('product id in handleClick', productId)
-    this.props.removeItem(productId)
+  removeFromCart(cartItem) {
+    this.props.removeItem(cartItem)
   }
 
   render() {
@@ -70,8 +69,10 @@ class Cart extends Component {
                 color="red"
                 icon="close"
                 floated="right"
-                onClick={() => this.handleClick(cartItem.product.id)}
-              />
+                onClick={() => this.removeFromCart(cartItem)}
+              >
+                Remove From Cart
+              </Button>
               <Link to={`/products/${cartItem.product.id}`}>
                 <List.Content>
                   <List.Header as="h3">{cartItem.product.name}</List.Header>

@@ -95,10 +95,11 @@ export const clearCart = () => dispatch => {
 }
 
 //this thunk creator removes one lineItem (item in the cart)
-export const removeItemFromCart = productId => async (dispatch, getState) => {
+export const removeItemFromCart = cartItem => async (dispatch, getState) => {
   const {user} = getState()
+  const {productId} = cartItem
   if (user.id) {
-    const {data} = await axios.delete(`/api/line-items/${productId}`)
+    await axios.delete(`/api/line-items/${cartItem.id}`)
     dispatch(removeItem(productId))
   } else {
     const cart = JSON.parse(localStorage.getItem('cart'))
