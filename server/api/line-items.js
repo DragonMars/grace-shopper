@@ -57,7 +57,8 @@ router.delete('/:id', async (req, res, next) => {
   try {
     if (req.user) {
       const {id} = req.params
-      const {userId} = req.user
+      const userId = req.user.id
+      console.log('userId', userId)
       await LineItem.destroy({
         where: {id, userId, orderId: null}
       })
