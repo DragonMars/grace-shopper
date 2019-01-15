@@ -11,7 +11,8 @@ import {
   Segment,
   Header,
   Divider,
-  Icon
+  Icon,
+  Item
 } from 'semantic-ui-react'
 import {withRouter, Link} from 'react-router-dom'
 
@@ -59,7 +60,7 @@ class SingleProduct extends Component {
               <Divider />
             </List.Item>
             {lineItems.map(lineItem => (
-              <List.Item key={lineItem.id}>
+              <Item key={lineItem.id}>
                 <Image
                   size="tiny"
                   src={lineItem.product.imageUrl}
@@ -67,14 +68,14 @@ class SingleProduct extends Component {
                   spaced
                   verticalAlign="middle"
                 />
-                <List.Content verticalAlign="middle">
-                  <List.Header>{lineItem.product.name}</List.Header>
-                  <List.Description>
+                <Item.Content verticalAlign="middle">
+                  <Item.Header>{lineItem.product.name}</Item.Header>
+                  <Item.Description>
                     quantity: {lineItem.quantity}
-                  </List.Description>
-                </List.Content>
+                  </Item.Description>
+                </Item.Content>
                 <Divider />
-              </List.Item>
+              </Item>
             ))}
             <List.Item>
               <Header as="h3" textAlign="center">
@@ -86,7 +87,7 @@ class SingleProduct extends Component {
           </List>
           <Button fluid icon labelPosition="left" as={Link} to="/cart">
             <Icon name="shop" />
-            Go to Cart
+            View Cart
           </Button>
         </Sidebar>
         <Sidebar.Pusher>
