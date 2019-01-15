@@ -12,8 +12,6 @@ router.get('/:orderId', async (req, res, next) => {
       const userId = user.id
       const {orderId} = req.params
       const order = await Order.findById(orderId)
-      console.log('user in session', userId)
-      console.log('order user', order.userId)
       if (order.userId === userId || user.isAdmin) {
         res.json(order)
       } else {

@@ -94,7 +94,6 @@ export const clearCart = () => (dispatch, getState) => {
   const cartItems = getState().lineItems
   if (getState().user.id) {
     cartItems.forEach(async cartItem => {
-      console.log(cartItem.id)
       await axios.delete(`/api/line-items/${cartItem.id}`)
     })
   }
