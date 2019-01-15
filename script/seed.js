@@ -19,39 +19,40 @@ const userData = [
 
 const productData = [
   {
-    name: 'Fred Sloths On a Vine Picture Hangers, Set of 6',
+    name: 'Sloth Hanging Planter',
     imageUrl:
-      'https://images-na.ssl-images-amazon.com/images/I/61AZ243PatL._SL1092_.jpg',
-    altText: 'adorable sloth hangers',
+      'https://images.urbanoutfitters.com/is/image/UrbanOutfitters/48279103_004_b?$xlarge$&hei=900&qlt=80&fit=constrain',
+    altText: 'planter',
     description:
-      "Six sloths included in each package 36 inch 'vine' included Everyone's favorite so-so mammal ready to hang onto your pictures 3 different sloth poses Fun and functional",
-    price: 1027
+      'Lazy little sloth-shaped planter hanging around like a hammock for your favorite succulents. Shiny ceramic planter with etched detailing and twine for hanging.',
+    price: 1699
   },
   {
-    name: 'Sloth Womens Knee High Sock',
-    imageUrl: 'https://www.sockittome.com/images/detailed/1/F0171.jpg',
-    altText: 'purple socks featuring sloths hanging from vines',
+    name: 'Sloth Duvet Cover',
+    imageUrl:
+      'https://images.urbanoutfitters.com/is/image/UrbanOutfitters/45384708_018_b?$xlarge$&hei=900&qlt=80&fit=constrain',
+    altText: 'sloth duvet cover',
     description:
-      'Feeling lazy? Want everyone to get off your back so you can just hang out? Send out the message strong with our new contest winner Sloth socks. 54% Cotton, 44% Polyester, 2% Spandex.Made in Korea. Our threads are certified by OEKO- TEX® Standard 100, which means we leave out harmful chemicals to keep your skin safe and happy. Approximately fits womens shoe size 5-10.',
-    price: 1200
+      'Need some nap time inspiration? Just look to the assorted sloths print on this cotton duvet cover for an instant chill-out. With a solid back for a reversible finish, equipped with hidden side openings for easily removing from your duvet to wash; duvet insert sold separately.',
+    price: 12000
   },
   {
-    name: 'Sloth Infinity Scarf',
+    name: 'Sloth Life iPhone 6/7/8 Case',
     imageUrl:
-      'https://i.etsystatic.com/13290041/r/il/edb205/1461060044/il_570xN.1461060044_3cvv.jpg',
-    altText: 'knitted jersey infinity scarf',
+      'https://images.urbanoutfitters.com/is/image/UrbanOutfitters/47028766_100_b?$xlarge$&hei=900&qlt=80&fit=constrain',
+    altText: 'phone case',
     description:
-      'A handmade Infinity Scarf made from either a soft high quality knitted jersey fabric or a floaty chiffon fabric, with this funky design you are sure to turn some heads! Perfect for every occasion!',
+      'Just hangin’ around with this sloth patterned, clear hard shell phone case. Easily snaps on to protect phone edges from bumps + scratches with a transparent finish to show off your phone underneath.',
     price: 1715
   },
   {
-    name: 'Sloth Kigurumi Onesie Costume',
+    name: 'Sloth Tube Tee',
     imageUrl:
-      'https://images-na.ssl-images-amazon.com/images/I/81%2BnmF2J9ZL._UY741_.jpg',
+      'https://images.urbanoutfitters.com/is/image/UrbanOutfitters/47335534_085_b?$xlarge$&hei=900&qlt=80&fit=constrain',
     altText: 'sloth onesie',
     description:
-      'Think you are the expert on being lazy? THINK AGAIN! You are nowhere near being the ultimate lazibutt without the Sloth Kigurumi! The soft fleece material, the easy-to-wear button opening, the oh-so adorable three finger sleeve, those cute droopy eyes...it just screams-I mean yawns laziness? And we mean that in a good way! Prepare to spend your Fridays, Saturdays, Sundays, Mondays, Tuesdays... EVERYDAY actually, snuggled up in your Sloth Kigurumi and just being plain lazy! Be proud my fellow lazibutts!',
-    price: 5999
+      'Lazy days in this sloth t-shirt from Altru Apparel. Cut in a standard fit and finished with a banded crew neck.',
+    price: 2999
   },
   {
     name: 'Surfing Sloth Tandem Sloth Art Print',
@@ -230,10 +231,10 @@ const seed = async () => {
 
   const [geoff] = users
   const [
-    hangers,
-    socks,
-    scarf,
-    onesie,
+    planter,
+    duvet,
+    phoneCase,
+    Tee,
     tandem,
     showerCurtain,
     furryPillow,
@@ -254,11 +255,11 @@ const seed = async () => {
   await firstOrder.setUser(geoff)
   await firstOrder.setShippingAddress(yemenLn)
   await firstOrderProduct.setOrder(firstOrder)
-  await firstOrderProduct.setProduct(hangers)
-  await socks.setCategory(apparel)
-  await scarf.setCategory(apparel)
-  await onesie.setCategory(apparel)
-  await hangers.setCategory(accessories)
+  await firstOrderProduct.setProduct(planter)
+  await duvet.setCategory(home)
+  await phoneCase.setCategory(tech)
+  await Tee.setCategory(apparel)
+  await planter.setCategory(home)
   await tandem.setCategory(décor)
   await showerCurtain.setCategory(home)
   await furryPillow.setCategory(décor)
