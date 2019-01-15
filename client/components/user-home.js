@@ -28,19 +28,22 @@ export class UserHome extends Component {
       <div>
         <h3>Welcome, {email}</h3>
 
-        {orderHistory.length > 0 &&
-          orderHistory.map(order => (
-            <div key={order.id}>
-              <Header as="h1">Your Order History:</Header>
-              <Divider />
-              <Header>
-                Order sent to {order.shippingAddress.streetAddress} placed on{' '}
-                {new Date(order.createdAt).toDateString()}
-              </Header>
-              <OrderProducts lineItems={order.lineItems} order={order} />
-              <Divider />
-            </div>
-          ))}
+        {orderHistory.length > 0 && (
+          <div>
+            <Header as="h1">Your Order History:</Header>
+            <Divider />
+            {orderHistory.map(order => (
+              <div key={order.id}>
+                <Header>
+                  Order sent to {order.shippingAddress.streetAddress} placed on{' '}
+                  {new Date(order.createdAt).toDateString()}
+                </Header>
+                <OrderProducts lineItems={order.lineItems} order={order} />
+                <Divider />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     )
   }
