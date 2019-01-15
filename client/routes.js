@@ -31,6 +31,7 @@ class Routes extends Component {
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route exact path="/" component={AllProductContainer} />
+        <Route path="/category/:category" component={AllProductContainer} />
         <Route path="/products/:productId" component={SingleProduct} />
         <Route path="/success" component={OrderConfirmation} />
         <Route path="/login" component={Login} />
