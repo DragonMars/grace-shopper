@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
 import {Segment, Item} from 'semantic-ui-react'
 
@@ -10,50 +10,117 @@ const calculateTotal = function(lineItems) {
   return total / 100
 }
 
-class OrderProducts extends Component {
-  render() {
-    let total
-    const {lineItems, order} = this.props
-    if (order.id) {
-      total = calculateTotal(order, lineItems)
-    } else {
-      total = 0
-      lineItems.forEach(lineItem => {
-        total += lineItem.product.price * lineItem.quantity / 100
-      })
-    }
-    return (
-      <Segment>
-        <Item.Group>
-          {lineItems.map(lineItem => (
-            <Item key={lineItem.id}>
-              <Item.Image
-                src={lineItem.product.imageUrl}
-                alt={lineItem.product.altText}
-                height="200px"
-                width="auto"
-              />
-              <Item.Content>
-                <Item.Header as="h4">{lineItem.product.name}</Item.Header>
-                <Item.Description>
-                  <p>Quantity: {lineItem.quantity} </p>
-                </Item.Description>
-                <Item.Extra>
-                  {lineItem.orderId ? (
-                    <p>Price: ${lineItem.price / 100}</p>
-                  ) : (
-                    <p>Price: ${lineItem.product.price / 100}</p>
-                  )}
-                </Item.Extra>
-              </Item.Content>
-            </Item>
-          ))}
-        </Item.Group>
-        <p>Total: ${total}</p>
-      </Segment>
-    )
+export const OrderProducts = ({lineItems, order}) => {
+  let total
+  if (order.id) {
+    total = calculateTotal(lineItems)
+  } else {
+    total = 0
+    lineItems.forEach(lineItem => {
+      total += lineItem.product.price * lineItem.quantity / 100
+    })
   }
+  return (
+    <Segment>
+      <Item.Group>
+        {lineItems.map(lineItem => (
+          <Item key={lineItem.id}>
+            <Item.Image
+              src={lineItem.product.imageUrl}
+              alt={lineItem.product.altText}
+              height="200px"
+              width="auto"
+            />
+            <Item.Content>
+              <Item.Header as="h4">{lineItem.product.name}</Item.Header>
+              <Item.Description>
+                <p>Quantity: {lineItem.quantity} </p>
+              </Item.Description>
+              <Item.Extra>
+                {lineItem.orderId ? (
+                  <p>
+                    Price:{' '}
+                    {(lineItem.price / 100).toLocaleString('en-US', {
+                      style: 'currency',
+                      currency: 'USD'
+                    })}
+                  </p>
+                ) : (
+                  <p>
+                    Price:{' '}
+                    {(lineItem.product.price / 100).toLocaleString('en-US', {
+                      style: 'currency',
+                      currency: 'USD'
+                    })}
+                  </p>
+                )}
+              </Item.Extra>
+            </Item.Content>
+          </Item>
+        ))}
+      </Item.Group>
+      <p>
+        Total:{' '}
+        {total.toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD'
+        })}
+      </p>
+    </Segment>
+  )
 }
+// export const OrderProducts = ({lineItems, order}) => {
+//   let total
+//   if (order.id) {
+//     total = calculateTotal(lineItems)
+//   } else {
+//     total = 0
+//     lineItems.forEach(lineItem => {
+//       total += lineItem.product.price * lineItem.quantity / 100
+//     })
+//   }
+//   return (
+//     <div>
+//       {lineItems.map(lineItem => (
+//         <div key={lineItem.id}>
+//           <h4>{lineItem.product.name}</h4>
+//           <img
+//             src={lineItem.product.imageUrl}
+//             alt={lineItem.product.altText}
+//             height="200px"
+//             width="auto"
+//           />
+
+//           <p>Quantity: {lineItem.quantity} </p>
+//           {lineItem.orderId ? (
+//             <p>
+//               Price:{' '}
+//               {(lineItem.price / 100).toLocaleString('en-US', {
+//                 style: 'currency',
+//                 currency: 'USD'
+//               })}
+//             </p>
+//           ) : (
+//             <p>
+//               Price:{' '}
+//               {(lineItem.product.price / 100).toLocaleString('en-US', {
+//                 style: 'currency',
+//                 currency: 'USD'
+//               })}
+//             </p>
+//           )}
+//         </div>
+//       ))}
+//       <p>
+//         Total:{' '}
+//         {total.toLocaleString('en-US', {
+//           style: 'currency',
+//           currency: 'USD'
+//         })}
+//       </p>
+//     </div>
+//   )
+// }
 
 const mapStateToProps = state => {
   return {

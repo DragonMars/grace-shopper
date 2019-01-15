@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import {Container, Header, Button} from 'semantic-ui-react'
-import {OrderProducts} from './index'
+import {ConnectedOrderProducts} from './index'
 import {clearCart} from '../store'
 
 class OrderConfirmation extends React.Component {
@@ -19,6 +19,11 @@ class OrderConfirmation extends React.Component {
     this.props.clearCart()
     this.setState({redirect: true})
   }
+
+  componentWillUnmount() {
+    this.props.clearCart()
+  }
+
   render() {
     const arrivalDate = new Date()
     arrivalDate.setDate(arrivalDate.getDate() + 2)
@@ -36,7 +41,7 @@ class OrderConfirmation extends React.Component {
           {arrivalDate.toDateString()}.
         </p>
         <Header as="h2">Order Details:</Header>
-        <OrderProducts />
+        <ConnectedOrderProducts />
         <Button onClick={this.handleClick}>Continue Shopping</Button>
       </Container>
     )

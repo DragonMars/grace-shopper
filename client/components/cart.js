@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import {setOrUpdateItem, clearCart, removeItemFromCart} from '../store'
 import {
   Button,
@@ -16,10 +16,12 @@ import {
 class Cart extends Component {
   constructor(props) {
     super(props)
+    this.state = {redirect: false}
     this.numberOfItems = this.numberOfItems.bind(this)
     this.subtotal = this.subtotal.bind(this)
     this.clearCart = this.clearCart.bind(this)
     this.removeFromCart = this.removeFromCart.bind(this)
+    this.checkout = this.checkout.bind(this)
   }
 
   numberOfItems() {
@@ -42,7 +44,7 @@ class Cart extends Component {
     return total
   }
 
-  handleChange(productId, event) {
+  changeQuantity(productId, event) {
     if (event.target.value !== '' && Number(event.target.value) > 0) {
       this.props.updateQuantity({
         productId,
@@ -59,8 +61,13 @@ class Cart extends Component {
     this.props.removeItem(cartItem)
   }
 
+  checkout() {
+    this.setState({redirect: true})
+  }
+
   render() {
     const {cartItems, isLoggedIn} = this.props
+    const {redirect} = this.state
     const numberOfItems = this.numberOfItems()
     const subtotal = this.subtotal()
     const quantityOptions = []
@@ -68,81 +75,102 @@ class Cart extends Component {
       quantityOptions.push(i)
     }
     return (
-      <Container>
-        <Segment>
-          <p />
-          <p />
-          <p />
-          <Header as="h1" color="teal">
-            cart:
-          </Header>
-          <Item.Group>
-            {cartItems[0] &&
-              cartItems.map(cartItem => (
-                <Item key={cartItem.product.id}>
-                  <Item.Image
-                    as={Link}
-                    src={cartItem.product.imageUrl}
-                    alt={cartItem.product.altText}
-                    height="200px"
-                    width="auto"
-                    to={`/products/${cartItem.product.id}`}
-                  />
-                  <Item.Content>
-                    <Button
-                      basic
-                      color="red"
-                      icon="close"
-                      floated="right"
-                      onClick={() => this.removeFromCart(cartItem)}
-                    />
-                    <Link to={`/products/${cartItem.product.id}`}>
-                      <Item.Header as="h3">{cartItem.product.name}</Item.Header>
-                    </Link>
-                    <Item.Extra>
-                      Price:{' '}
-                      {(cartItem.product.price / 100).toLocaleString('en-US', {
-                        style: 'currency',
-                        currency: 'USD'
-                      })}
-                    </Item.Extra>
-                    <Item.Description>
-                      <label htmlFor="quantity">
-                        Quantity:{' '}
-                        <input
-                          type="number"
-                          name="quantity"
-                          defaultValue={cartItem.quantity}
-                          min="1"
-                          onChange={event =>
-                            this.handleChange(cartItem.productId, event)
-                          }
+      <div>
+        {redirect ? (
+          <Redirect to="/checkout" />
+        ) : (
+          <Container>
+            <Segment>
+              <p />
+              <p />
+              <p />
+              <Header as="h1" color="teal">
+                cart:
+              </Header>
+              <Item.Group>
+                {cartItems[0] &&
+                  cartItems.map(cartItem => (
+                    <Item key={cartItem.product.id}>
+                      <Item.Image
+                        as={Link}
+                        src={cartItem.product.imageUrl}
+                        alt={cartItem.product.altText}
+                        height="200px"
+                        width="auto"
+                        to={`/products/${cartItem.product.id}`}
+                      />
+                      <Item.Content>
+                        <Button
+                          basic
+                          color="red"
+                          icon="close"
+                          floated="right"
+                          onClick={() => this.removeFromCart(cartItem)}
                         />
-                      </label>
-                    </Item.Description>
-                  </Item.Content>
-                </Item>
-              ))}
-            <Item.Header as="h4">
-              Subtotal ({numberOfItems} items):{' '}
-              {subtotal.toLocaleString('en-US', {
-                style: 'currency',
-                currency: 'USD'
-              })}
-            </Item.Header>
-          </Item.Group>
-        </Segment>
-        <Segment>
-          <Button onClick={this.clearCart}>Clear Cart</Button>
-          <Link to="/checkout">
-            {isLoggedIn ? (
-              <Button color="teal">Checkout</Button>
-            ) : (
-              <Button color="teal">Checkout as Guest</Button>
-            )}
-          </Link>
-        </Segment>
-      </Container>
+                        <Link to={`/products/${cartItem.product.id}`}>
+                          <Item.Header as="h3">
+                            {cartItem.product.name}
+                          </Item.Header>
+                        </Link>
+                        <Item.Extra>
+                          Price:{' '}
+                          {(cartItem.product.price / 100).toLocaleString(
+                            'en-US',
+                            {
+                              style: 'currency',
+                              currency: 'USD'
+                            }
+                          )}
+                        </Item.Extra>
+                        <Item.Description>
+                          <label htmlFor="quantity">
+                            Quantity:{' '}
+                            <input
+                              type="number"
+                              name="quantity"
+                              defaultValue={cartItem.quantity}
+                              min="1"
+                              onChange={event =>
+                                this.changeQuantity(cartItem.productId, event)
+                              }
+                            />
+                          </label>
+                        </Item.Description>
+                      </Item.Content>
+                    </Item>
+                  ))}
+                <Item.Header as="h4">
+                  Subtotal ({numberOfItems} items):{' '}
+                  {subtotal.toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD'
+                  })}
+                </Item.Header>
+              </Item.Group>
+            </Segment>
+            <Segment>
+              <Button onClick={this.clearCart}>Clear Cart</Button>
+              {isLoggedIn ? (
+                <Button
+                  color="teal"
+                  disabled={subtotal <= 0}
+                  onClick={this.checkout}
+                >
+                  Checkout
+                </Button>
+              ) : (
+                <Button
+                  color="teal"
+                  disabled={subtotal <= 0}
+                  onClick={this.checkout}
+                >
+                  Checkout as Guest
+                </Button>
+              )}
+            </Segment>
+          </Container>
+        )}
+      </div>
     )
   }
 }
