@@ -2,8 +2,6 @@ const db = require('../db')
 const Sequelize = require('sequelize')
 const Product = require('./product')
 
-//note that the "price" field is not include here but will be generated through eager loading in db/index.js
-
 const LineItem = db.define(
   'lineItem',
   {
@@ -17,7 +15,7 @@ const LineItem = db.define(
     },
     price: {
       type: Sequelize.INTEGER //price in cents
-      //should be null for all open orders
+      //should be null for all open orders to allow for future changes in price
     }
   },
   {

@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const {Order, LineItem} = require('../db/models')
 module.exports = router
-const stripe = require('stripe')('sk_test_E7S8wDRxDd6WZNERgFE92BK7')
+const stripe = require('stripe')(process.env.stripeToken)
 
 router.get('/:id', async (req, res, next) => {
   try {
@@ -52,7 +52,6 @@ router.post('/', async (req, res, next) => {
         userId: null,
         shippingAddressId: req.body.shippingAddressId
       })
-      console.log(req.body.lineItemData)
       req.body.cartItems.map(async lineItem => {
         const newLineItem = await LineItem.create({
           quantity: lineItem.quantity,

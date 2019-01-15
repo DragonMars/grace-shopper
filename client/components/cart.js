@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {setOrUpdateItem, clearCart} from '../store'
+import {setOrUpdateItem, clearCart, removeItemFromCart} from '../store'
 import {Button, List, Image, Header} from 'semantic-ui-react'
 
 class Cart extends Component {
@@ -10,6 +10,7 @@ class Cart extends Component {
     this.numberOfItems = this.numberOfItems.bind(this)
     this.subtotal = this.subtotal.bind(this)
     this.clearCart = this.clearCart.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
 
   numberOfItems() {
@@ -45,6 +46,11 @@ class Cart extends Component {
     this.props.clear()
   }
 
+  handleClick(productId) {
+    console.log('product id in handleClick', productId)
+    this.props.removeItem(productId)
+  }
+
   render() {
     const {cartItems, isLoggedIn} = this.props
     const numberOfItems = this.numberOfItems()
@@ -59,6 +65,13 @@ class Cart extends Component {
         {cartItems[0] &&
           cartItems.map(cartItem => (
             <List.Item key={cartItem.product.id}>
+              <Button
+                basic
+                color="red"
+                icon="close"
+                floated="right"
+                onClick={() => this.handleClick(cartItem.product.id)}
+              />
               <Link to={`/products/${cartItem.product.id}`}>
                 <List.Content>
                   <List.Header as="h3">{cartItem.product.name}</List.Header>
@@ -122,7 +135,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   updateQuantity: ({productId, quantity}) =>
     dispatch(setOrUpdateItem({productId, quantity})),
-  clear: () => dispatch(clearCart())
+  clear: () => dispatch(clearCart()),
+  removeItem: productId => dispatch(removeItemFromCart(productId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)

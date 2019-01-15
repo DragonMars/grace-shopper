@@ -208,8 +208,6 @@ const orderData = [
 ]
 
 const seed = async () => {
-  console.log('within seed func')
-
   await db.sync({force: true})
 
   const [
@@ -273,12 +271,12 @@ const seed = async () => {
   await powerBank.setCategory(tech)
   await yoga.setCategory(décor)
 
-  console.log(green('As seedy as Killarny Rose!'))
+  console.log(green('As seedy as Killarny Rose! (Seed Successful)'))
   db.close()
 }
 
 seed().catch(err => {
-  console.error(red('not seedy at all!'))
+  console.error(red('Not seedy at all! (Seed Failed)'))
   console.error(err)
   db.close()
 })

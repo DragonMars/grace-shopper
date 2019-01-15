@@ -26,8 +26,7 @@ Order.belongsTo(ShippingAddress, {
   foreignKey: {
     field: 'shippingAddressId',
     allowNull: false
-  },
-  onDelete: 'cascade'
+  }
 })
 
 Order.hasMany(LineItem)

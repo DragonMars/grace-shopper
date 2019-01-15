@@ -1,9 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {auth, fetchAllProducts} from '../store'
 import {Form, Container, Message} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
+import {auth} from '../store'
 
 /**
  * COMPONENT
