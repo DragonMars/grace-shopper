@@ -7,7 +7,6 @@ import {
   Signup,
   UserHome,
   AllProductContainer,
-  ProductItem,
   SingleProduct,
   Cart,
   Checkout,
