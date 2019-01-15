@@ -46,6 +46,7 @@ router.get('/', async (req, res, next) => {
   try {
     if (req.user) {
       const orders = await Order.findAll({where: {userId: req.user.id}})
+      console.log('req.user.id', req.user.id)
       res.json(orders)
     } else {
       res.status(401).send('You must be logged in to see your order history')

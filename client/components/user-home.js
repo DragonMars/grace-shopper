@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import axios from 'axios'
+import {OrderProducts} from './index'
+import {Header, Divider} from 'semantic-ui-react'
 
 /**
  * COMPONENT
@@ -15,21 +17,28 @@ class UserHome extends Component {
   }
 
   async componentDidMount() {
-    const orderHistory = await axios.get('/api/orders')
-    this.setState({orderHistory})
+    const {data} = await axios.get('/api/orders')
+    this.setState({orderHistory: data})
   }
 
   render() {
     const {email} = this.props
     const {orderHistory} = this.state
+    console.log('orderHistory', orderHistory)
     return (
       <div>
         <h3>Welcome, {email}</h3>
+        <Header as="h1">Your Order History:</Header>
+        <Divider />
         {orderHistory.length &&
           orderHistory.map(order => (
             <div key={order.id}>
-              <p>{order.lineItems}</p>
-              <p>{order.shippingAddress}</p>
+              <Header>
+                Order sent to {order.shippingAddress.streetAddress} placed on{' '}
+                {new Date(order.createdAt).toDateString()}
+              </Header>
+              <OrderProducts lineItems={order.lineItems} order={order} />
+              <Divider />
             </div>
           ))}
       </div>
