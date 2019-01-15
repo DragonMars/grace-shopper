@@ -5,10 +5,15 @@ import {Menu} from 'semantic-ui-react'
 import {fetchAllCategories} from '../store'
 
 class CategoryBar extends Component {
+  state = {}
+
+  handleItemClick = (e, {name}) => this.setState({activeItem: name})
+
   componentDidMount() {
     this.props.loadCategories()
   }
   render() {
+    const {activeItem} = this.state
     const {categories} = this.props
     return (
       <Menu>
@@ -17,6 +22,7 @@ class CategoryBar extends Component {
             <Menu.Item
               key={category.id}
               as={Link}
+              active={activeItem === category.name}
               to={`/category/${category.name}`}
             >
               {category.name}

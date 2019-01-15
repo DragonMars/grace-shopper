@@ -13,6 +13,7 @@ class SingleProduct extends Component {
   handleClick() {
     const {products, setOrUpdateCart} = this.props
     setOrUpdateCart({productId: products[0].id})
+    console.log('product', products[0])
   }
 
   render() {

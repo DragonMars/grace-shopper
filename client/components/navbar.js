@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {Menu, Icon, Button} from 'semantic-ui-react'
+import {Menu, Icon, Button, Header} from 'semantic-ui-react'
 import {logout, fetchCart} from '../store'
 
 class Navbar extends Component {
@@ -19,8 +19,10 @@ class Navbar extends Component {
       })
     return (
       <Menu>
-        <Menu.Item header as={Link} name="slothItLikeItsHot" to="/">
-          Sloth It Like It's Hot
+        <Menu.Item as={Link} to="/">
+          <Header color="teal" as="h1">
+            sloth it like it's hot
+          </Header>
         </Menu.Item>
         {isLoggedIn ? (
           <Menu.Menu position="right">
