@@ -1,16 +1,18 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import {setOrUpdateItem, clearCart, removeItemFromCart} from '../store'
 import {Button, List, Image, Header} from 'semantic-ui-react'
 
 class Cart extends Component {
   constructor(props) {
     super(props)
+    this.state = {redirect: false}
     this.numberOfItems = this.numberOfItems.bind(this)
     this.subtotal = this.subtotal.bind(this)
     this.clearCart = this.clearCart.bind(this)
     this.removeFromCart = this.removeFromCart.bind(this)
+    this.checkout = this.checkout.bind(this)
   }
 
   numberOfItems() {
@@ -33,7 +35,7 @@ class Cart extends Component {
     return total
   }
 
-  handleChange(productId, event) {
+  changeQuantity(productId, event) {
     if (event.target.value !== '' && Number(event.target.value) > 0) {
       this.props.updateQuantity({
         productId,
@@ -50,8 +52,13 @@ class Cart extends Component {
     this.props.removeItem(cartItem)
   }
 
+  checkout() {
+    this.setState({redirect: true})
+  }
+
   render() {
     const {cartItems, isLoggedIn} = this.props
+    const {redirect} = this.state
     const numberOfItems = this.numberOfItems()
     const subtotal = this.subtotal()
     const quantityOptions = []
@@ -59,69 +66,77 @@ class Cart extends Component {
       quantityOptions.push(i)
     }
     return (
-      <List divided relaxed>
-        <Header as="h1">Cart:</Header>
-        {cartItems[0] &&
-          cartItems.map(cartItem => (
-            <List.Item key={cartItem.product.id}>
-              <Button
-                basic
-                color="red"
-                icon="close"
-                floated="right"
-                onClick={() => this.removeFromCart(cartItem)}
-              />
-              <Link to={`/products/${cartItem.product.id}`}>
-                <List.Content>
-                  <List.Header as="h3">{cartItem.product.name}</List.Header>
-                </List.Content>
-
-                <Image
-                  src={cartItem.product.imageUrl}
-                  alt={cartItem.product.altText}
-                  height="200px"
-                  width="auto"
-                />
-              </Link>
-              <List.Content floated="right">
-                <label htmlFor="quantity">
-                  Quantity:{' '}
-                  <input
-                    type="number"
-                    name="quantity"
-                    defaultValue={cartItem.quantity}
-                    min="1"
-                    onChange={event =>
-                      this.handleChange(cartItem.productId, event)
-                    }
+      <div>
+        {redirect ? (
+          <Redirect to="/checkout" />
+        ) : (
+          <List divided relaxed>
+            <Header as="h1">Cart:</Header>
+            {cartItems[0] &&
+              cartItems.map(cartItem => (
+                <List.Item key={cartItem.product.id}>
+                  <Button
+                    basic
+                    color="red"
+                    icon="close"
+                    floated="right"
+                    onClick={() => this.removeFromCart(cartItem)}
                   />
-                </label>
-                <p>
-                  Price:{' '}
-                  {(cartItem.product.price / 100).toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'USD'
-                  })}
-                </p>
-              </List.Content>
-            </List.Item>
-          ))}
-        <p>
-          Subtotal ({numberOfItems} items):{' '}
-          {subtotal.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
-          })}
-        </p>
-        <Button onClick={this.clearCart}>Clear Cart</Button>
-        <Link to="/checkout">
-          {isLoggedIn ? (
-            <Button>Checkout</Button>
-          ) : (
-            <Button>Checkout as Guest</Button>
-          )}
-        </Link>
-      </List>
+                  <Link to={`/products/${cartItem.product.id}`}>
+                    <List.Content>
+                      <List.Header as="h3">{cartItem.product.name}</List.Header>
+                    </List.Content>
+
+                    <Image
+                      src={cartItem.product.imageUrl}
+                      alt={cartItem.product.altText}
+                      height="200px"
+                      width="auto"
+                    />
+                  </Link>
+                  <List.Content floated="right">
+                    <label htmlFor="quantity">
+                      Quantity:{' '}
+                      <input
+                        type="number"
+                        name="quantity"
+                        defaultValue={cartItem.quantity}
+                        min="1"
+                        onChange={event =>
+                          this.changeQuantity(cartItem.productId, event)
+                        }
+                      />
+                    </label>
+                    <p>
+                      Price:{' '}
+                      {(cartItem.product.price / 100).toLocaleString('en-US', {
+                        style: 'currency',
+                        currency: 'USD'
+                      })}
+                    </p>
+                  </List.Content>
+                </List.Item>
+              ))}
+            <p>
+              Subtotal ({numberOfItems} items):{' '}
+              {subtotal.toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD'
+              })}
+            </p>
+            <Button onClick={this.clearCart}>Clear Cart</Button>
+            {isLoggedIn ? (
+              <Button disabled={subtotal <= 0} onClick={this.checkout}>
+                Checkout
+              </Button>
+            ) : (
+              <Button disabled={subtotal <= 0} onClick={this.checkout}>
+                Checkout as Guest
+              </Button>
+            )}
+          </List>
+        )}
+      </div>
     )
   }
 }
