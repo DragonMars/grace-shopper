@@ -8,6 +8,7 @@ const GOT_ITEMS = 'GOT_ITEMS'
 const GOT_NEW_ITEM = 'GOT_NEW_ITEM'
 const UPDATE_QUANTITY = 'UPDATE_QUANTITY'
 const CLEAR_ITEMS = 'CLEAR_ITEMS'
+const REMOVE_ITEM = 'REMOVE_ITEM'
 
 /**
  * INITIAL STATE
@@ -24,6 +25,7 @@ const updateQuantity = updatedLineItem => ({
   updatedLineItem
 })
 const clearItems = () => ({type: CLEAR_ITEMS})
+const removeItem = productId => ({type: REMOVE_ITEM, productId})
 
 /**
  * THUNK CREATORS
@@ -99,6 +101,21 @@ export const clearCart = () => (dispatch, getState) => {
   dispatch(clearItems())
 }
 
+//this thunk creator removes one lineItem (item in the cart)
+export const removeItemFromCart = cartItem => async (dispatch, getState) => {
+  const {user} = getState()
+  const {productId} = cartItem
+  if (user.id) {
+    await axios.delete(`/api/line-items/${cartItem.id}`)
+    dispatch(removeItem(productId))
+  } else {
+    const cart = JSON.parse(localStorage.getItem('cart'))
+    delete cart[productId]
+    localStorage.setItem('cart', JSON.stringify(cart))
+    dispatch(removeItem(productId))
+  }
+}
+
 export const fetchCart = () => async (dispatch, getState) => {
   const cartOnState = getState().lineItems
   const productIdsOnState = cartOnState.map(cartItem => cartItem.productId)
@@ -156,6 +173,14 @@ export default function lineItemReducer(state = defaultCart, action) {
     }
     case CLEAR_ITEMS: {
       return []
+    }
+    case REMOVE_ITEM: {
+      const newState = state.filter(lineItem => {
+        if (lineItem.productId !== action.productId) {
+          return lineItem
+        }
+      })
+      return newState
     }
 
     default:
