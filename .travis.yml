@@ -22,7 +22,7 @@ before_deploy:
 deploy:
   skip_cleanup: true # prevents travis from deleting the build
   provider: heroku
-  app: dragonmars # see README
+  app: sloth-it-like-its-hot # see README
   api_key:
     secure: hwUezF7QPOah3q5xRbKzgDk2ilfjWgj2I72+d/CF2ErFWbAq9L4hZtNvHg2K9H/Ew82RzeQVbUscXphKb9OYGuTvsgY8tEffn4R6rnruw8HwFGkXNsZm/Yy8GHpA3hMaSNZtKTMX925SF2wAhkqqPEOdMBUYuP7v18jYF6/kLyON2aeuKwx6kL7m9RrkJghC2pcZZYYiDmi1yHZ/aoeyEOzv2u8iL6WjjgYWYIXCYz6iwfoWqLAOpVj08IYUasNBeuUL3uHkgJzrhjTsJxHZI2KAzJzdUaYtPdwitn7Mie3rbLbJXv+x9c6pHOZmFqOe3CZ1kAWw20fe6uUTIiQjduEU/V0YajAJbcZi86bz/fQBLLdUqEqFNHWeujM1mg+wLI8NBvscxCoEpcSHhjU1VkXemCs4UiaQzor1JrAs5E417DIf8zKvw4KtqfHpElavoGmXAIKONo3ZD18fF/D47cBzkSRmDiFhA0ju94oLnZtmQ0afpbhKjoVr2aCTjPVNt4P1LIgnYqPVgbOgi2HP7rIJ25fxh9Sccbmqk1WY69f9Du9JFnhGaRXb80/j4hoHfdObKWp61KoD5j3CgSobC9YlwxYKo0pNIePcw3wdDeUnsPImmQOpkJnuqq7AMKxklwBY1kIG69B5Shn50M5qPlk0fD5RtYUycHOug83nA24= # see README
 
