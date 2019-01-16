@@ -85,7 +85,7 @@ class Cart extends Component {
               <p />
               <p />
               <Header as="h1" color="teal">
-                cart:
+                cart
               </Header>
               <Item.Group>
                 {cartItems[0] &&

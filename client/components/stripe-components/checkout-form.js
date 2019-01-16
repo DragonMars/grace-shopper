@@ -13,7 +13,7 @@ class CheckoutForm extends Component {
     this.handleSumbit = this.handleSumbit.bind(this)
   }
 
-  async handleSumbit(event) {
+  async handleSumbit() {
     const {token} = await this.props.stripe.createToken({name: 'Name'})
     if (token) {
       this.props.gotStripeToken(token.id)
@@ -29,8 +29,7 @@ class CheckoutForm extends Component {
       return (
         <Container>
           <div className="ui label">
-            Valid credit info, please press "Place Your Order" to finalize your
-            purchase!
+            Please press "Place Your Order" to finalize your purchase.
           </div>
         </Container>
       )
@@ -43,7 +42,7 @@ class CheckoutForm extends Component {
             <Form.Button color="teal">Use this card</Form.Button>
             {this.state.stripeError === true ? (
               <Label basic color="red" pointing>
-                Please enter valid credit information!
+                Please enter valid credit information.
               </Label>
             ) : (
               <br />
