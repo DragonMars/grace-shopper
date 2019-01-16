@@ -7,11 +7,14 @@ import {fetchAllCategories} from '../store'
 class CategoryBar extends Component {
   state = {}
 
-  handleItemClick = (e, {name}) => this.setState({activeItem: name})
+  handleItemClick = (e, {name}) => {
+    this.setState({activeItem: name})
+  }
 
   componentDidMount() {
     this.props.loadCategories()
   }
+
   render() {
     const {activeItem} = this.state
     const {categories} = this.props
@@ -23,13 +26,21 @@ class CategoryBar extends Component {
               <Menu.Item
                 key={category.id}
                 as={Link}
+                name={category.name}
                 active={activeItem === category.name}
+                onClick={this.handleItemClick}
                 to={`/category/${category.name}`}
               >
                 {category.name}
               </Menu.Item>
             ))}
-          <Menu.Item as={Link} to="/">
+          <Menu.Item
+            as={Link}
+            name="inactive"
+            to="/"
+            active={activeItem === name}
+            onClick={this.handleItemClick}
+          >
             all products
           </Menu.Item>
         </Menu>
