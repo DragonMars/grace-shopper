@@ -36,7 +36,7 @@ export class UserHome extends Component {
         <Grid centered>
           <Grid.Row>
             <br />
-            <Header icon>
+            <Header id="headerForTesting" icon>
               <Icon name="user outline" />
               Welcome, {email}!
             </Header>

@@ -16,9 +16,10 @@ describe('UserHome', () => {
     userHome = shallow(<UserHome email="cody@email.com" />)
   })
 
-  it('renders the email in an Header', () => {
-    expect(userHome.find('Header').text()).to.be.equal(
-      'Welcome, cody@email.com!'
-    )
+  it.only('renders the email in a Header', () => {
+    console.log(userHome.length)
+    expect(userHome.length).to.equal(1)
+    // ('headerForTesting').text()).to.be.equal(
+    // 'Welcome, cody@email.com!'
   })
 })
