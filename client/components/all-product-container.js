@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Grid, Container, Card} from 'semantic-ui-react'
+import {Grid, Container, Card, Segment} from 'semantic-ui-react'
 import {withRouter} from 'react-router-dom'
 import {SingleProductView} from './index'
 import {fetchAllProducts} from '../store'
