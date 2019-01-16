@@ -1,6 +1,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import {Form, Container, Header, Message, Divider} from 'semantic-ui-react'
+import {
+  Form,
+  Container,
+  Header,
+  Message,
+  Divider,
+  Segment
+} from 'semantic-ui-react'
 import {postShippingAddress} from '../store'
 
 class ShippingAddressForm extends Component {
@@ -41,7 +48,7 @@ class ShippingAddressForm extends Component {
       return (
         <Container>
           <Message info>
-            <Message.Header>Your Shipping Address</Message.Header>
+            <Message.Header>shipping address</Message.Header>
             <Divider />
             <p>{shippingAddress.name}</p>
             <p>{shippingAddress.streetAddress}</p>
@@ -55,46 +62,50 @@ class ShippingAddressForm extends Component {
     return (
       <Container>
         <Message info>
-          <Header size="large">Shipping Address</Header>
-          <Form onSubmit={this.handleSubmit}>
-            <Form.Input
-              required
-              label="Name"
-              name="name"
-              placeholder="Name"
-              value={this.state.name}
-              onChange={this.handleChange}
-            />
-            <Form.Input
-              required
-              label="Street Address"
-              name="streetAddress"
-              value={this.state.streetAddress}
-              onChange={this.handleChange}
-            />
-            <Form.Input
-              required
-              label="City"
-              name="city"
-              value={this.state.city}
-              onChange={this.handleChange}
-            />
-            <Form.Input
-              required
-              label="State"
-              name="state"
-              value={this.state.state}
-              onChange={this.handleChange}
-            />
-            <Form.Input
-              required
-              label="Zipcode"
-              name="zipcode"
-              value={this.state.zipcode}
-              onChange={this.handleChange}
-            />
-            <Form.Button>Use this address</Form.Button>
-          </Form>
+          <Segment>
+            <Header size="large">shipping address</Header>
+          </Segment>
+          <Segment>
+            <Form onSubmit={this.handleSubmit}>
+              <Form.Input
+                required
+                label="name"
+                name="name"
+                placeholder="Name"
+                value={this.state.name}
+                onChange={this.handleChange}
+              />
+              <Form.Input
+                required
+                label="street address"
+                name="streetAddress"
+                value={this.state.streetAddress}
+                onChange={this.handleChange}
+              />
+              <Form.Input
+                required
+                label="city"
+                name="city"
+                value={this.state.city}
+                onChange={this.handleChange}
+              />
+              <Form.Input
+                required
+                label="state"
+                name="state"
+                value={this.state.state}
+                onChange={this.handleChange}
+              />
+              <Form.Input
+                required
+                label="zipcode"
+                name="zipcode"
+                value={this.state.zipcode}
+                onChange={this.handleChange}
+              />
+              <Form.Button color="teal">Use this address</Form.Button>
+            </Form>
+          </Segment>
         </Message>
       </Container>
     )

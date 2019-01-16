@@ -7,9 +7,7 @@ export default class StripeContainer extends Component {
   render() {
     return (
       <Message>
-        <Message.Header>
-          Please enter your credit card info below!
-        </Message.Header>
+        <Message.Header>payment information</Message.Header>
         <Divider />
         <StripeProvider apiKey="pk_test_k1vWjSPlizUvlTz3HOzIKfQd">
           <Elements>

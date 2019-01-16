@@ -91,7 +91,7 @@ class SingleProduct extends Component {
           <List>
             <List.Item>
               <Header as="h3" textAlign="center">
-                CurrentTotal: ${lineItems.reduce((acc, curVal) => {
+                Current Total: ${lineItems.reduce((acc, curVal) => {
                   return acc + curVal.quantity * curVal.product.price
                 }, 0) / 100}
               </Header>
