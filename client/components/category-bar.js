@@ -7,8 +7,8 @@ import {fetchAllCategories} from '../store'
 class CategoryBar extends Component {
   state = {}
 
-  handleItemClick = (e, {name}) => {
-    this.setState({activeItem: name})
+  handleItemClick = (e, obj) => {
+    this.setState({activeItem: obj.name})
   }
 
   componentDidMount() {
@@ -36,9 +36,9 @@ class CategoryBar extends Component {
             ))}
           <Menu.Item
             as={Link}
-            name="inactive"
+            name="all products"
             to="/"
-            active={activeItem === name}
+            active={activeItem === 'all products'}
             onClick={this.handleItemClick}
           >
             all products

@@ -36,7 +36,7 @@ class SingleProduct extends Component {
   addToCart(productId) {
     const {setOrUpdateCart} = this.props
     setOrUpdateCart({productId})
-    this.setState({visible: true})
+    this.handleShowClick()
   }
 
   async componentDidMount() {
