@@ -68,7 +68,6 @@ class ShippingAddressForm extends Component {
           <Segment>
             <Form onSubmit={this.handleSubmit}>
               <Form.Input
-                fluid
                 required
                 label="name"
                 name="name"
@@ -77,7 +76,6 @@ class ShippingAddressForm extends Component {
                 onChange={this.handleChange}
               />
               <Form.Input
-                fluid
                 required
                 label="street address"
                 name="streetAddress"
@@ -85,7 +83,6 @@ class ShippingAddressForm extends Component {
                 onChange={this.handleChange}
               />
               <Form.Input
-                fluid
                 required
                 label="city"
                 name="city"
@@ -93,7 +90,6 @@ class ShippingAddressForm extends Component {
                 onChange={this.handleChange}
               />
               <Form.Input
-                fluid
                 required
                 label="state"
                 name="state"
@@ -101,7 +97,6 @@ class ShippingAddressForm extends Component {
                 onChange={this.handleChange}
               />
               <Form.Input
-                fluid
                 required
                 label="zipcode"
                 name="zipcode"

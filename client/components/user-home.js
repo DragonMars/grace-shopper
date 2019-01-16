@@ -46,13 +46,16 @@ export class UserHome extends Component {
         <br />
         {orderHistory.length > 0 && (
           <Container>
-            <Header as="h1">Your Order History:</Header>
-            <Divider />
+            <Header as="h1" color="teal">
+              your order history
+            </Header>
             {orderHistory.map(order => (
               <Segment key={order.id}>
                 <Header>
-                  Order sent to {order.shippingAddress.streetAddress} placed on{' '}
-                  {new Date(order.createdAt).toDateString()}
+                  Placed on {new Date(order.createdAt).toDateString()}
+                </Header>
+                <Header as="h5">
+                  Sent to {order.shippingAddress.streetAddress}{' '}
                 </Header>
                 <OrderProducts lineItems={order.lineItems} order={order} />
               </Segment>

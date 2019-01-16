@@ -42,7 +42,7 @@ class OrderConfirmation extends React.Component {
             {arrivalDate.toDateString()}.
           </p>
           <Header as="h2" color="teal">
-            order details:
+            order details
           </Header>
           <ConnectedOrderProducts />
           <Button onClick={this.handleClick} color="teal">
